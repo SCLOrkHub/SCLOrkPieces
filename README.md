@@ -1,19 +1,19 @@
 # sclork
 Demos and examples for the Santa Clara Laptop Orchestra (SCLOrk)
 
-[ ] Simple OSC messaging between computers
+* Simple OSC messaging between computers
 
-[ ] Shared TempoClock
-- simple example; sender computer, receiving computer
+* Shared TempoClock
+  * simple example with sender computer, receiving computer
 
 * QuNeo load samples
-** accepts stereo OR mono files
-- outputs always same mono signal to L/R (to allow for headphone listening)
-- example with drum kit
-- example with nature samples
+  * accepts stereo OR mono files
+  * outputs always same mono signal to L/R (to allow for headphone listening)
+  * example with drum kit
+  * example with nature samples
 
 * QuNeo plays a SynthDef
-- either single notes or chords
+  * either single notes or chords (similar as Ken's example)
 
 * QuNeo plays Patterns (Pbindefs)
 
@@ -21,7 +21,6 @@ Demos and examples for the Santa Clara Laptop Orchestra (SCLOrk)
 
 * QuNeo playing SuperCollider Pbindefs playing Yoshimi
 
-* ...
+* Theremin into SuperCollider as a controller
 
-* ...
-theremin into supercollider as controller
+* nanoKONTROL2 with Calf plugins
