@@ -1,9 +1,9 @@
 # sclork
 Demos and examples for the Santa Clara Laptop Orchestra (SCLOrk)
 
-* Simple OSC messaging between computers
+[ ] Simple OSC messaging between computers
 
-* Shared TempoClock
+[ ] Shared TempoClock
 - simple example; sender computer, receiving computer
 
 * QuNeo load samples
@@ -24,4 +24,4 @@ Demos and examples for the Santa Clara Laptop Orchestra (SCLOrk)
 * ...
 
 * ...
-
+theremin into supercollider as controller
