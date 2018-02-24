@@ -7,7 +7,7 @@ Demos and examples for the Santa Clara Laptop Orchestra (SCLOrk)
 - simple example; sender computer, receiving computer
 
 * QuNeo load samples
-- accepts stereo OR mono files
+** accepts stereo OR mono files
 - outputs always same mono signal to L/R (to allow for headphone listening)
 - example with drum kit
 - example with nature samples
