@@ -24,3 +24,5 @@ Demos and examples for the Santa Clara Laptop Orchestra (SCLOrk)
 * Theremin into SuperCollider as a controller
 
 * nanoKONTROL2 with Calf plugins
+
+* Cups and GameTrak example code
