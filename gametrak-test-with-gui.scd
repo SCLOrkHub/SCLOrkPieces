@@ -5,6 +5,38 @@ HID.postAvailable;
 
 ~myhid = HID.open( 5303, 2434 );
 
+// =========================================================
+// Calibration
+// Run block below, then bring left tether to your desired max height position
+// note: raw numbers from GameTrak are: 1.0=bottom, 0.0=top
+// =========================================================
+
+(
+
+~calibrated_Top = 1.0; // just a initial value
+
+HIDdef.usage(
+	key: \left_v,
+	func: {
+		arg currentValue;
+		if(currentValue < ~calibrated_Top, { ["new value", currentValue].postln });
+		~calibrated_Top = min(currentValue, ~calibrated_Top);
+
+	},
+	elUsageName: \X // left up and down
+);
+
+)// end of calibration code
+
+// hit control+period to stop calibration
+// check calibrated value here:
+
+~calibrated_Top;
+
+
+// ==============
+// RUN THE GUI
+// ==============
 
 (
 // some variables
@@ -46,6 +78,9 @@ HIDdef.usage( \right_fb, { |value| ~rh_frontback = value }, \Z );
 ~dotR_left = 0;
 ~dotR_top = 0;
 
+~dotL_size = 1;
+~dotR_size = 1;
+
 ~dotL_color = Color.white;
 ~dotR_color = Color.black;
 
@@ -62,8 +97,8 @@ Window.closeAll;
 		Rect(
 			left: ~dotL_left,
 			top: ~dotL_top,
-			width: ~dotL_width,
-			height: ~dotL_height)
+			width: ~dotL_width * ~dotL_size,
+			height: ~dotL_height * ~dotL_size)
 	);
 	Pen.fill
 };
@@ -77,8 +112,8 @@ Window.closeAll;
 		Rect(
 			left: ~dotR_left,
 			top: ~dotR_top,
-			width: ~dotR_width,
-			height: ~dotR_height)
+			width: ~dotR_width * ~dotR_size,
+			height: ~dotR_height * ~dotR_size)
 	);
 	Pen.fill
 };
@@ -87,10 +122,12 @@ Window.closeAll;
 r = {
 
 	inf.do{
-		~dotL_top = ~lh_vertical.linlin(0.0, 1.0, 0, ~win_height - ~dotL_height);
+		~dotL_top = ~lh_vertical.linlin(~calibrated_Top, 1.0, 0, ~win_height - ~dotL_height);
 		~dotL_left = ~lh_sideways.linlin(0.0, 1.0, 0, (~win_width / 2) - ~dotL_width);
-		~dotR_top = ~rh_vertical.linlin(0.0, 1.0, 0, ~win_height - ~dotR_height);
+		~dotR_top = ~rh_vertical.linlin(~calibrated_Top, 1.0, 0, ~win_height - ~dotR_height);
 		~dotR_left = ~rh_sideways.linlin(0.0, 1.0, 0, (~win_width / 2) - ~dotR_width);
+		~dotL_size = ~lh_frontback.linexp(0.0, 1.0, 3, 0.25);
+		~dotR_size = ~rh_frontback.linexp(0.0, 1.0, 3, 0.25);
 
 		{
 			if(~footswitch==1, {
