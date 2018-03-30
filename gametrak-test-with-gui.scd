@@ -19,7 +19,7 @@ HIDdef.usage(
 	key: \left_v,
 	func: {
 		arg currentValue;
-		if(currentValue < ~calibrated_Top, { ["new value", currentValue].postln });
+		if(currentValue < ~calibrated_Top, { ["new value", currentValue.round(0.001)].postln });
 		~calibrated_Top = min(currentValue, ~calibrated_Top);
 
 	},
