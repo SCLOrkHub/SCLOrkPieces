@@ -51,7 +51,7 @@ HIDdef.usage(
 HIDdef.freeAll;
 
 // BUTTON (FOOT SWITCH)
-HIDdef.usage( \button, { |value| ~footswitch = value; }, \b1 );
+HIDdef.usage( \footswitch, { |v, r, u, p, id| if(id==7, {~footswitch = v}); }, \b1 );
 
 // LEFT HAND STUFF:
 HIDdef.usage(\left_v, { arg value; ~lh_vertical = value }, \X );
@@ -65,8 +65,8 @@ HIDdef.usage( \right_s, { |value| ~rh_sideways = value }, \Y );
 HIDdef.usage( \right_fb, { |value| ~rh_frontback = value }, \Z );
 
 // GUI
-~win_width = 800;
-~win_height = 500;
+~win_width = Window.screenBounds.width;
+~win_height = Window.screenBounds.height;
 
 ~dotL_width = 50;
 ~dotL_height = 50;
@@ -130,12 +130,12 @@ r = {
 		~dotR_size = ~rh_frontback.linexp(0.0, 1.0, 3, 0.25);
 
 		{
-			if(~footswitch==1, {
-				~dotL_color = Color.red;
-				~dotR_color = Color.red;
-			}, {
+			if(~footswitch==0, {
 				~dotL_color = Color.white;
 				~dotR_color = Color.black;
+			}, {
+				~dotL_color = Color.red;
+				~dotR_color = Color.red;
 			});
 
 			~leftView.refresh;
