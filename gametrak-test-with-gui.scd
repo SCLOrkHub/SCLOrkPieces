@@ -1,9 +1,26 @@
+"bach-again-midi.scd".loadRelative;
+
+// CHOOSE YOUR PLAYER (pick one to comment out):
+~myScore = ~sopranoScore;
+// ~myScore = ~altoScore;
+// ~myScore = ~tenorScore;
+// ~myScore = ~bassScore;
 
 // Preliminary set up
+
+// Connect SC to Yoshimi (or make sure you are using PatchBay file)
+
+// Send message to Yoshimi volume down
+m.control(0, 16, 0);
+
 HID.findAvailable;
 HID.postAvailable;
 
 ~myhid = HID.open( 5303, 2434 );
+
+
+// GO CONNECT SC TO YOSHIMI
+
 
 // =========================================================
 // Calibration
@@ -47,11 +64,24 @@ HIDdef.usage(
 ~rh_sideways = 0.0;
 ~rh_frontback = 0.0;
 ~footswitch = 0;
+~playState = 0;
 
 HIDdef.freeAll;
 
 // BUTTON (FOOT SWITCH)
-HIDdef.usage( \footswitch, { |v, r, u, p, id| if(id==7, {~footswitch = v}); }, \b1 );
+HIDdef.usage( \footswitch, { |v, r, u, p, id|
+	if(id==7, { // THIS IS IMPORTANT -- only way to filter footswitch action only (LH wire also sends \b1 for some reason)
+		~footswitch = v;
+		if(~footswitch==1,
+			{
+				if(~playState==0,
+					{ ~myPlayer = ~myScore.play; ~playState=1; "been there".postln},
+					{ ~myPlayer.stop; ~playState=0; "done that".postln })
+			},
+			{ "we don't care about footswitch==0".postln }
+		);
+	});
+}, \b1 );
 
 // LEFT HAND STUFF:
 HIDdef.usage(\left_v, { arg value; ~lh_vertical = value }, \X );
@@ -71,12 +101,12 @@ HIDdef.usage( \right_fb, { |value| ~rh_frontback = value }, \Z );
 ~dotL_width = 50;
 ~dotL_height = 50;
 ~dotL_left = 0;
-~dotL_top = 0;
+~dotL_top = 50  + ~dotL_height;
 
 ~dotR_width = 50;
 ~dotR_height = 50;
 ~dotR_left = 0;
-~dotR_top = 0;
+~dotR_top = 50 + ~dotR_height;
 
 ~dotL_size = 1;
 ~dotR_size = 1;
@@ -102,7 +132,7 @@ Window.closeAll;
 	);
 	Pen.fill
 };
-~leftView.clearOnRefresh_(true);
+~leftView.clearOnRefresh_(false);
 
 // right pane
 ~rightView = UserView(~win, Rect(~win_width / 2, 0, ~win_width / 2, ~win_height)).background_(Color.white) ;
@@ -117,7 +147,7 @@ Window.closeAll;
 	);
 	Pen.fill
 };
-~rightView.clearOnRefresh_(true);
+~rightView.clearOnRefresh_(false);
 
 r = {
 
@@ -128,6 +158,25 @@ r = {
 		~dotR_left = ~rh_sideways.linlin(0.0, 1.0, 0, (~win_width / 2) - ~dotR_width);
 		~dotL_size = ~lh_frontback.linexp(0.0, 1.0, 3, 0.25);
 		~dotR_size = ~rh_frontback.linexp(0.0, 1.0, 3, 0.25);
+
+		// MIDI stuff
+		// LH vertical = main volume
+		m.control(0, 16, ~lh_vertical.linlin(~calibrated_Top, 1.0, 127, 60));
+		// LH sideways = Filter Q
+		m.control(0, 17, ~lh_sideways.linlin(0.0, 1.0, 120, 10));
+		// LH frontback = Filter Cutoff
+		m.control(0, 18, ~lh_frontback.linlin(0.0, 1.0, 10, 120));
+
+		// RH vertical = WahWah volume
+		m.control(0, 19, ~rh_vertical.linlin(~calibrated_Top, 1.0, 100, 10));
+		// RH sideways = Wahwah freq
+		m.control(0, 20, ~rh_sideways.linlin(0.0, 1.0, 0, 127));
+		// RH frontback = WahWah feedback
+		m.control(0, 21, ~rh_frontback.linlin(0.0, 1.0, 120, 1));
+
+
+
+
 
 		{
 			if(~footswitch==0, {
@@ -146,4 +195,7 @@ r = {
 		// [~dotL_top, ~dotL_left].postln;
 	}
 }.fork;
+
+~win.onClose = { r.stop; HIDdef.freeAll };
+
 )
