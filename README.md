@@ -1,5 +1,8 @@
 # sclork
-Demos and examples for the Santa Clara Laptop Orchestra (SCLOrk)
+
+This repository contains full pieces, demos, and examples for the Santa Clara Laptop Orchestra (SCLOrk).
+
+Wish list:
 
 * Simple OSC messaging between computers
 
