@@ -1,4 +1,4 @@
-# sclork
+# SCLOrk
 
 This repository contains full pieces, demos, and examples for the Santa Clara Laptop Orchestra (SCLOrk).
 
