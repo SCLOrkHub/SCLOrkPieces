@@ -16,3 +16,6 @@
 [submodule "4K-BPM"]
 	path = 4K-BPM
 	url = https://github.com/brunoruviaro/4K-BPM-SCLOrk
+[submodule "Cricket-Machine"]
+	path = Cricket-Machine
+	url = https://github.com/brunoruviaro/Cricket-Machine
