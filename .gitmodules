@@ -4,3 +4,6 @@
 [submodule "Mozart-Dice-Game"]
 	path = Mozart-Dice-Game
 	url = https://github.com/brunoruviaro/Mozart_Dice_Game
+[submodule "Bach-Gounod-Wiimotes"]
+	path = Bach-Gounod-Wiimotes
+	url = https://github.com/brunoruviaro/Bach_Gounod_Wiimotes
