@@ -1,3 +1,6 @@
 [submodule "Wherever-We-Are"]
 	path = Wherever-We-Are
 	url = https://github.com/brunoruviaro/Wherever-We-Are
+[submodule "Mozart-Dice-Game"]
+	path = Mozart-Dice-Game
+	url = https://github.com/brunoruviaro/Mozart_Dice_Game
