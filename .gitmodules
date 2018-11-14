@@ -19,3 +19,6 @@
 [submodule "Cricket-Machine"]
 	path = Cricket-Machine
 	url = https://github.com/brunoruviaro/Cricket-Machine
+[submodule "Grain-Master-Scratch"]
+	path = Grain-Master-Scratch
+	url = https://github.com/brunoruviaro/Grain-Master-Scratch
