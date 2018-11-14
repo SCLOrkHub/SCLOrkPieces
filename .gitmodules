@@ -10,3 +10,9 @@
 [submodule "Sandstrom-Wiimotes"]
 	path = Sandstrom-Wiimotes
 	url = https://github.com/brunoruviaro/Sandstrom
+[submodule "Bach-Again-And-Again"]
+	path = Bach-Again-And-Again
+	url = https://github.com/brunoruviaro/bach-again-and-again
+[submodule "4K-BPM"]
+	path = 4K-BPM
+	url = https://github.com/brunoruviaro/4K-BPM-SCLOrk
