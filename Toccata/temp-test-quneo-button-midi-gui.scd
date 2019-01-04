@@ -27,7 +27,7 @@ b = Button(w, Rect(20, 20, 340, 300))
 	~b1_action.value(button.value);
 	// update QuNeo
 	case
-	{button.value==0} { ~toQuNeo.noteOff(0, 1, 0), ~toQuNeo.noteOff(11, 36, 0) }
+	{button.value==0} { ~toQuNeo.noteOff(0, 1, 0); ~toQuNeo.noteOff(11, 36, 0) }
 	{button.value==1} { ~toQuNeo.noteOn(0, 1, 127) };
         });
 w.front;
