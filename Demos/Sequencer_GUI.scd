@@ -4,11 +4,20 @@
 "SynthDefs.scd".loadRelative;
 
 
+// =================
+// SCLOrkTimeClient
+// =================
+
 // Create a new time client
 // This needs to be done ONLY ONCE after you open SuperCollider
 // It will survive Ctrl+period
 ~timeClient = SCLOrkTimeClient.new;
 
+
+
+// ===============
+// SCLOrkClock!
+// ===============
 
 // Start the clock
 // Print the beats
@@ -18,15 +27,32 @@
 ~clock.play({ "server beats: %".format(~clock.beats).postln; ^1 });
 )
 
-// Pick your instrument (only one)
+// If you want to use a local clock, use this instead:
+
+/*(
+~clock = TempoClock.new;
+~clock.play({ "beats: %".format(~clock.beats).postln; ^1 })
+)*/
+
+
+
+// =====================
+// Pick your instrument
+// =====================
+
+// (run only one of the lines below)
+
 // ~myInstrument = \hihat;
 // ~myInstrument = \snare;
 // ~myInstrument = \kick;
 ~myInstrument = \bass;
 
 
-// SEQUENCER GUI
 
+
+// ==============
+// SEQUENCER GUI
+// ==============
 (
 // close previous windows
 Window.closeAll;
@@ -40,6 +66,8 @@ w.view.decorator = FlowLayout(w.view.bounds, 20@20, 5@5 );
 ~buttons.do({ arg b; b.states = [["0", Color.grey, Color.white], ["1", Color.white, Color.grey]] });
 // define buttons' actions
 ~buttons.do({ arg b; b.action = { ~ampArray = ~buttons.collect({ arg b; b.value }); /*~ampArray.postln*/ Pbindef(~myInstrument, \amp, Pseq(~ampArray, inf)) } });
+// initialize ampArray
+~ampArray = Array.fill(32, 0);
 
 w.onClose = { Pbindef(~myInstrument).stop };
 
