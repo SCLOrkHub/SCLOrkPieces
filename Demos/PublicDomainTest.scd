@@ -1,5 +1,11 @@
-// BOOT SERVER FIRST
+// SAVE THIS FILE AS SOMETHING ELSE OUTSIDE OF SCLOrk FOLDER
+// like PublicDomainTestBruno.scd
 
+
+
+
+// BOOT SERVER FIRST
+s.boot;
 
 // LOAD SYNTHDEF
 (
@@ -25,6 +31,17 @@ SynthDef("playBuf", {arg amp=1, rate=1, att=0.01, rel=0.1, bufnum=0, startPos=0;
 
 ~mySamples = Dictionary.new(100);
 
+// copied from wslib to avoid installing the Quark
+~asNumberIfPossible = { arg string;
+	var couldBeNumber = string.every({ |item, i|
+			((item.isDecDigit) or: (item == $.))
+			or: ((item == $-) && (i == 0))
+			});
+
+	if(string.couldBeNumber && (string != "-") )
+		{string.interpret} {string}
+};
+
 (~samplesFolder++"/*.wav").resolveRelative.pathMatch.do({ arg path;
 	var index = 0;
 	var key, value;
@@ -33,7 +50,7 @@ SynthDef("playBuf", {arg amp=1, rate=1, att=0.01, rel=0.1, bufnum=0, startPos=0;
 
 	// find first number in path (hopefully first character of file name, which begins with year)
 	while(
-		{ path[index].asString.asNumberIfPossible.isNumber.not },
+		{ ~asNumberIfPossible.value(path[index].asString).isNumber.not },
 		{ index = index + 1 }
 	);
 
@@ -45,12 +62,13 @@ SynthDef("playBuf", {arg amp=1, rate=1, att=0.01, rel=0.1, bufnum=0, startPos=0;
 });
 )
 
-
 // TEST
-~mySamples.at('1983C').play;
-~mySamples.at('1956A').play;
-~mySamples.at('1982A').play;
-
+a = ~mySamples.at('1983C').play;
+b = ~mySamples.at('1956A').play;
+c = ~mySamples.at('1982A').play;
+a.free;
+b.free;
+c.free;
 
 // =================
 // SCLOrkTimeClient
@@ -80,7 +98,7 @@ SynthDef("playBuf", {arg amp=1, rate=1, att=0.01, rel=0.1, bufnum=0, startPos=0;
 
 
 // DESIGN 8 PARTS THAT GO ALONG WELL TOGETHER
-// (eventually these would be one Pbindef per player)
+// (eventually these will be one Pbindef per player)
 
 (
 Pbindef(\p1,
@@ -92,10 +110,10 @@ Pbindef(\p1,
 	\att, 0.1,
 	\rel, 0.6,
 	\amp, Pseq([
-		1, 0, 0, 0,   0, 0, 0, 0, // beat 1
-		1, 0, 0, 0,   0, 0, 0, 1, // beat 2
-		1, 1, 0, 0,   0, 0, 0, 0, // beat 3
-		0, 0, 0, 0,   1, 0, 1, 0, // beat 4
+		0, 0, 0, 0,   0, 0, 0, 0, // beat 1
+		0, 1, 0, 0,   0, 0, 0, 0, // beat 2
+		0, 0, 0, 0,   0, 0, 0, 0, // beat 3
+		0, 0, 0, 0,   1, 0, 0, 0, // beat 4
 	], inf),
 ).play(~clock, quant: 4).quant = 4;
 
