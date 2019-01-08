@@ -1,5 +1,17 @@
 s.waitForBoot({
 
+	SynthDef("playBuf", {arg amp=1, rate=1, att=0.01, rel=0.1, bufnum=0, startPos=0;
+		var snd, env;
+		env = Env.perc(attackTime: att, releaseTime: rel, level: amp).kr(2);
+		snd = PlayBuf.ar(
+			numChannels: 1,
+			bufnum: bufnum,
+			rate: rate * BufRateScale.kr(bufnum),
+			startPos: startPos * BufSamples.kr(bufnum)
+		);
+		Out.ar(0, snd*env)
+	}).add;
+
 	SynthDef("hihat", {arg out = 0, amp = 0.5, att = 0.01, rel = 0.2, ffreq = 6000, pan = 0;
 		var env, snd;
 		env = Env.perc(att, rel, amp).kr(doneAction: 2);
