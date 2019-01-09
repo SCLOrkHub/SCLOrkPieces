@@ -1,31 +1,50 @@
-// SAVE THIS FILE AS SOMETHING ELSE OUTSIDE OF SCLOrk FOLDER
-// like PublicDomainTestBruno.scd
+// ===================
+// PREPARATORY STEPS:
+// ===================
+
+// 1) SAVE THIS FILE AS SOMETHING ELSE OUTSIDE OF SCLOrk FOLDER
+// suggestion: create your own folder under /Music and save this file as something like PublicDomainTestMYNAME.scd
+
+// 2) DOWNLOAD SAMPLES FOLDER FROM GOOGLE DRIVE
+// save it on the same folder you save your copy of this file
+
+// 3) ADJUST SAMPLES FOLDER PATH BELOW
+// find the path to the samples folder (on file browser, select folder in question, ctrl+C on it, then ctrl+V here on SuperCollider). It should go down below under variable ~samplesFolder
 
 
+// =====================
+// BRIEF EXPLANATION
+// =====================
+
+// The goal here is for you to compose one musical loop using up to 8 Pbindefs (last code block in this file).
+
+// I'm calling each of these pre-composed loops as "presets". You will compose one or more "presets" that we can use as backbone of our Public Domain piece. Feel free to create more than one preset and submit to me.
+
+// The best presets will be used to structure the final composition.
+
+// Each Pbindef plays a "part", much like an orchestral or choral part. So Pbindef(\p1) is player 1, Pbindef(\p2) is player 2, etc. Eventually these Pbindefs will be playing by real individual players in SCLOrk. As you compose, you play them all together in this file to check results. But keep in mind final goal (in a future week) will be to distribute the Pbindefs you create to separate SCLOrk players.
+
+// Change anything other parameter you want, but keep \dur always as 1/8. If you have a very specific need for a triplet, let me know and I'll help you. But a lot of great patterns can be created just with the 1/8 duration, and messing with the amp grid (the list of 0's and 1's).
+
+// You could have all your players using the same sample, or all using different samples, and you can control which portion of the sample is used, etc. Try to keep at least one of the samples in a very recognizable state -- can the audience tell what is one of the songs playing? We want that to happen at least some of the time.
+
+// Refer to the samples folder to see what samples are available. You just need to use the year plus the letter to refer to them inside the Pbindef (for example, '1990A', '1968A', etc). Note it must be inside single quotes.
+
+
+
+
+
+// ================
+// LOAD SAMPLES
+// LOAD SYNTHDEF
+// (all in a single block)
+// ================
 
 
 // BOOT SERVER FIRST
 s.boot;
 
-// LOAD SYNTHDEF
-(
-SynthDef("playBuf", {arg amp=1, rate=1, att=0.01, rel=0.1, bufnum=0, startPos=0;
-	var snd, env;
-	env = Env.perc(attackTime: att, releaseTime: rel, level: amp).kr(2);
-	snd = PlayBuf.ar(
-		numChannels: 1,
-		bufnum: bufnum,
-		rate: rate * BufRateScale.kr(bufnum),
-		startPos: startPos * BufSamples.kr(bufnum)
-	);
-	Out.ar(0, snd*env)
-}).add;
-)
-
-// ================
-// LOADING SAMPLES
-// ================
-
+// run this:
 (
 ~samplesFolder = "/home/sclork/Music/CopyrightSamples";
 
@@ -60,9 +79,28 @@ SynthDef("playBuf", {arg amp=1, rate=1, att=0.01, rel=0.1, bufnum=0, startPos=0;
 	~mySamples.put(key, value);
 
 });
-)
 
+// SynthDef
+
+SynthDef("playBuf", {arg amp=1, rate=1, att=0.01, rel=0.1, bufnum=0, startPos=0;
+	var snd, env;
+	env = Env.perc(attackTime: att, releaseTime: rel, level: amp).kr(2);
+	snd = PlayBuf.ar(
+		numChannels: 1,
+		bufnum: bufnum,
+		rate: rate * BufRateScale.kr(bufnum),
+		startPos: startPos * BufSamples.kr(bufnum)
+	);
+	Out.ar(0, snd*env)
+}).add;
+
+) // end of loading samples and synthdef block
+
+
+// ================================
 // TEST
+// check if your samples loaded OK
+// ================================
 a = ~mySamples.at('1983C').play;
 b = ~mySamples.at('1956A').play;
 c = ~mySamples.at('1982A').play;
@@ -70,15 +108,14 @@ a.free;
 b.free;
 c.free;
 
+
 // =================
 // SCLOrkTimeClient
 // =================
 // Create a new time client
 // This needs to be done ONLY ONCE after you open SuperCollider
 // It will survive Ctrl+period
-~timeClient = SCLOrkTimeClient.new;
-
-
+// ~timeClient = SCLOrkTimeClient.new;
 
 // ===============
 // SCLOrkClock!
@@ -91,14 +128,30 @@ c.free;
 ~clock.play({ "server beats: %".format(~clock.beats).postln; ^1 });
 )
 
-
-
 // if you need a local clock
 // ~clock = TempoClock(60/60);
 
 
-// DESIGN 8 PARTS THAT GO ALONG WELL TOGETHER
-// (eventually these will be one Pbindef per player)
+
+// ===============
+// COMPOSE!
+// Here are 8 Pbindefs.
+// Modify them as you want to create an awesome sequence
+// The best sequences will be used as "presets" in the final piece
+// PS. If you are done creating one polyphonic sequence and wants to move on and create another one, simply SAVE AS this file with a new name, and go ahead modifying the Pbindefs again.
+// ===============
+
+
+// IF for whatever reason your Pbindefs break or stop working as expected, run this:
+
+Pbindef.all.clear;
+
+
+// DESIGN up to 8 PARTS THAT GO ALONG WELL TOGETHER
+// You can change any values, and simply run ctrl+enter right away (no ctrl+period necessary). Wait 4 beats and they will update.
+
+// TIP: to work on separate Pbindefs, enclose one or more in separate code blocks as need, as you work your way up to 8 voices.
+
 
 (
 Pbindef(\p1,
