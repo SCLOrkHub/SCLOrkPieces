@@ -12,8 +12,10 @@
 // PRESET David-1
 // ================
 
+
 (
 ~gamp=4;
+
 Pbindef(\p1,
 	\instrument, "playBuf",
 	\bufnum, ~mySamples.at('1983B'),
@@ -137,8 +139,8 @@ Pbindef(\p7,
 
 
 // TOOLS
-
-/* // uncomment the whole thing by deleting the /* in the beginning of this line
+/*
+ // uncomment the whole thing by deleting the /* in the beginning of this line
 // Pause all Pbindefs:
 Pbindef.all.do{|i| i.pause };
 
