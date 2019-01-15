@@ -46,9 +46,9 @@ s.waitForBoot({
 
 // SynthDef
 
-SynthDef("playBuf", {arg amp=1, rate=1, att=0.01, rel=0.1, bufnum=0, startPos=0;
+SynthDef("playBuf", {arg amp=1, rate=1, att=0.01, rel=0.1, bufnum=0, startPos=0, crv = -4;
 	var snd, env;
-	env = Env.perc(attackTime: att, releaseTime: rel, level: amp).kr(2);
+	env = Env.perc(attackTime: att, releaseTime: rel, level: amp, curve: crv).kr(2);
 	snd = PlayBuf.ar(
 		numChannels: 1,
 		bufnum: bufnum,
