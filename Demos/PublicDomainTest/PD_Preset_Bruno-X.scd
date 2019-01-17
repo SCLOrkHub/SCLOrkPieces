@@ -28,7 +28,7 @@ Pbindef(\p1,
 	\rel, 0.3,
 	\amp, Pseq([1, 0, 0, 0, 0, 0, 0, 0], inf),
 	\legato, 1
-).play(~clock, quant: 4).quant = ~hancockLoopDur;
+).play(~clock, quant: ~hancockLoopDur).quant = ~hancockLoopDur;
 
 Pbindef(\p2,
 	\instrument, "playBufASR",
@@ -40,7 +40,7 @@ Pbindef(\p2,
 	\rel, 0.03,
 	\amp, Pseq([0, 1, 0, 0, 0, 0, 0, 0], inf),
 	\legato, 1
-).play(~clock, quant: 4).quant = ~hancockLoopDur;
+).play(~clock, quant: ~hancockLoopDur).quant = ~hancockLoopDur;
 
 Pbindef(\p3,
 	\instrument, "playBufASR",
@@ -52,7 +52,7 @@ Pbindef(\p3,
 	\rel, 0.3,
 	\amp, Pseq([0, 0, 1, 0, 0, 0, 0, 0], inf),
 	\legato, 1
-).play(~clock, quant: 4).quant = ~hancockLoopDur;
+).play(~clock, quant: ~hancockLoopDur).quant = ~hancockLoopDur;
 
 Pbindef(\p4,
 	\instrument, "playBufASR",
@@ -64,7 +64,7 @@ Pbindef(\p4,
 	\rel, 0.1,
 	\amp, Pseq([0, 0, 0, 1, 0, 0, 0, 0], inf),
 	\legato, 1
-).play(~clock, quant: 4).quant = ~hancockLoopDur;
+).play(~clock, quant: ~hancockLoopDur).quant = ~hancockLoopDur;
 
 Pbindef(\p5,
 	\instrument, "playBufASR",
@@ -76,7 +76,7 @@ Pbindef(\p5,
 	\rel, 0.1,
 	\amp, Pseq([0, 0, 0, 0, 1, 0, 0, 0], inf),
 	\legato, 1
-).play(~clock, quant: 4).quant = ~hancockLoopDur;
+).play(~clock, quant: ~hancockLoopDur).quant = ~hancockLoopDur;
 
 Pbindef(\p6,
 	\instrument, "playBufASR",
@@ -88,7 +88,7 @@ Pbindef(\p6,
 	\rel, 0.1,
 	\amp, Pseq([0, 0, 0, 0, 0, 1, 0, 0], inf),
 	\legato, 1
-).play(~clock, quant: 4).quant = ~hancockLoopDur;
+).play(~clock, quant: ~hancockLoopDur).quant = ~hancockLoopDur;
 
 
 Pbindef(\p7,
@@ -101,7 +101,7 @@ Pbindef(\p7,
 	\rel, 0.1,
 	\amp, Pseq([0, 0, 0, 0, 0, 0, 1, 0], inf),
 	\legato, 1
-).play(~clock, quant: 4).quant = ~hancockLoopDur;
+).play(~clock, quant: ~hancockLoopDur).quant = ~hancockLoopDur;
 
 
 Pbindef(\p8,
@@ -114,7 +114,7 @@ Pbindef(\p8,
 	\rel, 0.1,
 	\amp, Pseq([0, 0, 0, 0, 0, 0, 0, 1], inf),
 	\legato, 1
-).play(~clock, quant: 4).quant = ~hancockLoopDur;
+).play(~clock, quant: ~hancockLoopDurt).quant = ~hancockLoopDur;
 
 )
 
