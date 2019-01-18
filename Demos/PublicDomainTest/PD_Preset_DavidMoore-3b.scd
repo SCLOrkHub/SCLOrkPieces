@@ -1,8 +1,10 @@
-// ===========================
-// David Moore preset 3b
-// (variation of 3 made by Bruno)
-// ===========================
-(
+// ==================================
+// Preset: DavidMoore-3
+// Number of voices: 5
+// Most recent year sampled: 2016
+// Comments: variation by Bruno
+// ==================================
+
 Pbindef(\p1,
 	\instrument, "playBuf",
 	\bufnum, ~mySamples.at('1996A'),
@@ -84,6 +86,6 @@ Pbindef(\p5,
 		0, 0, 0, 0,   0, 0, 0, 0,// beat 4
 	], inf) * 0.8,
 ).play(~clock, quant: 4).quant = 4;
-)
+
 
 

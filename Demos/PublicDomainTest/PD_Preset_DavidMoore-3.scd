@@ -1,9 +1,10 @@
-// ================
-// PRESET David-3
-// ================
+// ==================================
+// Preset: DavidMoore-3
+// Number of voices: 5
+// Most recent year sampled: 2016
+// Comments:
+// ==================================
 
-
-(
 Pbindef(\p1,
 	\instrument, "playBuf",
 	\bufnum, ~mySamples.at('1996A'),
@@ -68,6 +69,6 @@ Pbindef(\p5,
 	], inf),
 ).play(~clock, quant: 4).quant = 4;
 
-)
+
 
 

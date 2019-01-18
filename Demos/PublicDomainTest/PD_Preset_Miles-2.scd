@@ -1,5 +1,10 @@
-// Miles-2
-(
+// ==================================
+// Preset: Miles-2
+// Number of voices: 3
+// Most recent year sampled: 1998
+// Comments:
+// ==================================
+
 Pbindef(\p1,
 	\instrument, "playBuf",
 	\bufnum, ~mySamples.at('1998A'),
@@ -50,7 +55,7 @@ Pbindef(\p3,
 		1, 0, 1, 0,   1, 0, 1, 0, // beat 4
 	], inf) * 0.7,
 ).play(~clock, quant: 4).quant = 4;
-)
+
 
 /*
 An incomplete idea for a mid-range sample.
@@ -77,34 +82,3 @@ Pbindef(\p4,
 ).play(~clock, quant: 4).quant = 4;
 )
 */
-
-
-
-// Pause all Pbindefs:
-Pbindef.all.do{|i| i.pause };
-
-// Resume all:
-Pbindef.all.do{|i| i.resume };
-
-// If everything is broken:
-Pbindef.all.do({ |i| i.clear });
-
-
-// Pause / resume individual Pbindefs:
-Pbindef(\p1).pause;
-Pbindef(\p2).pause;
-Pbindef(\p3).pause;
-Pbindef(\p4).pause;
-Pbindef(\p5).pause;
-Pbindef(\p6).pause;
-Pbindef(\p7).pause;
-Pbindef(\p8).pause;
-
-Pbindef(\p1).resume;
-Pbindef(\p2).resume;
-Pbindef(\p3).resume;
-Pbindef(\p4).resume;
-Pbindef(\p5).resume;
-Pbindef(\p6).resume;
-Pbindef(\p7).resume;
-Pbindef(\p8).resume;

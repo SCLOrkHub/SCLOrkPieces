@@ -1,48 +1,10 @@
-// ===============
-// COMPOSE!
-// Here are a bunch of Pbindefs.
-// Modify them as you want to create an awesome sequence
-// The best sequences will be used as "presets" in the final piece
-// PS. If you are done creating one polyphonic sequence and wants to move on and create another one, simply SAVE AS this file with a new name, and go ahead modifying the Pbindefs again.
-// ===============
+// ==================================
+// Preset: Kevin-1
+// Number of voices: 8
+// Most recent year sampled: 2001
+// Comments:
+// ==================================
 
-// Pause all Pbindefs:
-Pbindef.all.do{|i| i.pause };
-
-// Resume all:
-Pbindef.all.do{|i| i.resume };
-
-// If everything is broken:
-Pbindef.all.do({ |i| i.clear });
-
-// ================
-
-Pbindef(\p1).pause;            //Newman - Less than Zero
-Pbindef(\p1).resume;
-
-Pbindef(\p2).pause;           //Newman - Less than Zero
-Pbindef(\p2).resume;
-
-Pbindef(\p3).pause;            //Autechre - Bronchus...
-Pbindef(\p3).resume;
-
-Pbindef(\p4).pause;           //Autechre - Bronchus...
-Pbindef(\p4).resume;
-
-Pbindef(\p5).pause;           //Gustavo Lamas - Manana
-Pbindef(\p5).resume;
-
-Pbindef(\p6).pause;            //Gustavo Lamas - Manana
-Pbindef(\p6).resume;
-
-Pbindef(\p7).pause;             //Police - Every Breath You Take
-Pbindef(\p7).resume;
-
-Pbindef(\p8).pause;             //Police - Every Breath You Take
-Pbindef(\p8).resume;
-
-
-(
 Pbindef(\p1,                              //Newman - Less than Zero
 	\instrument, "playBuf",
 	\bufnum, ~mySamples.at('1987B'),
@@ -176,38 +138,3 @@ Pbindef(\p8,                                          //Police - Every Breath Yo
 		0, 0, 0, 0,   0.5, 0, 0, 0, // beat 4
 	], inf),
 ).play(~clock, quant: 4).quant = 4;
-
-)
-
-
-
-// TOOLS
-
- // uncomment the whole thing by deleting the /* in the beginning of this line
-// Pause all Pbindefs:
-Pbindef.all.do{|i| i.pause };
-
-// Resume all:
-Pbindef.all.do{|i| i.resume };
-
-// If everything is broken:
-Pbindef.all.do({ |i| i.clear });
-
-// Pause / resume individual Pbindefs:
-Pbindef(\p1).pause;
-Pbindef(\p2).pause;
-Pbindef(\p3).pause;
-Pbindef(\p4).pause;
-Pbindef(\p5).pause;
-Pbindef(\p6).pause;
-Pbindef(\p7).pause;
-Pbindef(\p8).pause;
-
-Pbindef(\p1).resume;
-Pbindef(\p2).resume;
-Pbindef(\p3).resume;
-Pbindef(\p4).resume;
-Pbindef(\p5).resume;
-Pbindef(\p6).resume;
-Pbindef(\p7).resume;
-Pbindef(\p8).resume;

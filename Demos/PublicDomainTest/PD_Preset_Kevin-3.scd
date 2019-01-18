@@ -1,9 +1,10 @@
-// ========
-// PBINDEFS
-// ========
-// Scroll all the way down for additional TOOLS for quick start, stop, clear the Pbindefs
+// ==================================
+// Preset: Kevin-3
+// Number of voices: 5
+// Most recent year sampled: 2001
+// Comments:
+// ==================================
 
-(
 Pbindef(\p1,
 	\instrument, "playBuf",
 	\bufnum, ~mySamples.at('2001B'),
@@ -60,38 +61,3 @@ Pbindef(\p5,
 	\rel, Pseq([15, 15, 25, 25], inf),
 	\amp, Pwhite(0.5, 0.8)
 ).play(~clock, quant: 4).quant = 4;
-
-)
-
-
-
-// TOOLS
-
- // uncomment the whole thing by deleting the /* in the beginning of this line
-// Pause all Pbindefs:
-Pbindef.all.do{|i| i.pause };
-
-// Resume all:
-Pbindef.all.do{|i| i.resume };
-
-// If everything is broken:
-Pbindef.all.do({ |i| i.clear });
-
-// Pause / resume individual Pbindefs:
-Pbindef(\p1).pause;
-Pbindef(\p2).pause;
-Pbindef(\p3).pause;
-Pbindef(\p4).pause;
-Pbindef(\p5).pause;
-Pbindef(\p6).pause;
-Pbindef(\p7).pause;
-Pbindef(\p8).pause;
-
-Pbindef(\p1).resume;
-Pbindef(\p2).resume;
-Pbindef(\p3).resume;
-Pbindef(\p4).resume;
-Pbindef(\p5).resume;
-Pbindef(\p6).resume;
-Pbindef(\p7).resume;
-Pbindef(\p8).resume;
