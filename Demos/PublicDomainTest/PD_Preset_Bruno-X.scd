@@ -107,7 +107,7 @@ Pbindef(\p8,
 	\rel, 0.1,
 	\amp, Pseq([0, 0, 0, 0, 0, 0, 0, 1], inf),
 	\legato, 1
-).play(~clock, quant: ~hancockLoopDurt).quant = ~hancockLoopDur;
+).play(~clock, quant: ~hancockLoopDur).quant = ~hancockLoopDur;
 
 
 /*
