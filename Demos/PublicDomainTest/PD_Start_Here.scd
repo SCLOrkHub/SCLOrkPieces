@@ -38,7 +38,7 @@ c.free;
 // PRINT THE BEATS IF YOU WANT TO SEE THEM
 // ========================================
 // If you hit Ctrl+period, you have to run this again to see the beats
-~clock.play({ "server beats: %".format(~clock.beats).postln; ^1 });
+~clock.play({ "server beats: %".format(~clock.beats.mod(4)+1).postln; ^1 });
 
 // IF WORKING AT HOME, use a local clock instead of the above clock:
 // ~clock = TempoClock(60/60).permanent_(true);
