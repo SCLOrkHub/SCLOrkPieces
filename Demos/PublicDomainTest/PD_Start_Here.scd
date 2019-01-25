@@ -1,8 +1,66 @@
+// START HERE
+// QUICK START VERSION
+// RUN THE CODE BLOCK BELOW ONCE (place your cursor anywhere within)
+// It should all the basic one-time setup you need at once...
+
+
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+(
+~samplesFolder = "/home/sclork/Music/CopyrightSamples";
+"PD_Load_Synth_and_Samples.scd".loadRelative;
+~timeClient = SCLOrkTimeClient.new;
+~clock = SCLOrkClock.new(~timeClient); // THIS NOW SURVIVES CTRL+PERIOD
+)
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+
+// test if samples loaded OK
+a = ~mySamples.at('1983C').play;
+a.free;
+
+// SCLOrkPD performance GUI
+// Put your player number here, then run it -- just a number, no slashes
+// Your player number is your laptop number
+SCLOrkPD.new(/*number*/);
+
+// Check if SCLOrkClock is alive (note: printing beats will stop at control+period, but CLOCK WILL SURVIVE)
+~clock.play({ "server beats: %".format(~clock.beats.mod(4)+1).postln; ^1 });
+
+// Is your SCLOrkChat up and running?
+// SCLOrkChat.new(\name);
+
+
+// DONE!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // =====================
-// SAVE AS
-// Save this file with your own name appended
-// ex. PD_Start_Here_Bruno.scd
-// (same folder)
+// OLD VERSION (with explanations, etc)
 // =====================
 
 // =========================================
