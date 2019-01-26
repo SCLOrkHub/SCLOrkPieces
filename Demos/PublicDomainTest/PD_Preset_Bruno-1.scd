@@ -1,8 +1,8 @@
 // ==================================
 // Preset: Bruno-1
 // Number of voices: 8
-// Most recent year sampled: 1994
-// Comments:
+// Most recent year sampled: 1983
+// Comments: Olivia Newton John "Physical"
 // ==================================
 
 Pbindef(\p1,
@@ -85,22 +85,13 @@ Pbindef(\p5,
 
 Pbindef(\p6,
 	\instrument, "playBuf",
-	\bufnum, ~mySamples.at('1994A'),
-	\dur, 1/8,
-	\rate, 0.95,
-	\startPos, 0.8, //Pseq([0.2, 0.199], inf),
-	\att, 0.1,
-	\rel, 0.1,
-	\amp, Pseq([
-		0, 0, 0, 0,   0, 0, 0, 0, // beat 1
-		0, 0, 0, 0,   0, 0, 0, 0, // beat 2
-		1, 1, 0, 0,   0, 0, 0, 0, // beat 3
-		0, 0, 0, 0,   0, 0, 1, 0, // beat 4
-		0, 0, 0, 0,   0, 0, 0, 0, // beat 1
-		0, 0, 0, 0,   0, 0, 0, 0, // beat 2
-		1, 0, 0, 0,   0, 0, 0, 0, // beat 3
-		0, 0, 0, 0,   1, 0, 1, 0, // beat 4
-	], inf),
+	\bufnum, ~mySamples.at('1982A'),
+	\dur, 4, // ATTN: You are doubling main drum loop with \p1. Keep this pattern...
+	\rate, 120/124, // .... mostly intact for a while (no changes), then...
+	\startPos, 0.0,  // ... after several loops, change startPos to 0.44 to bring out the vocals
+	\att, 0.01,
+	\rel, 13,
+	\amp, 1
 ).play(~clock, quant: 4).quant = 4;
 
 Pbindef(\p7,

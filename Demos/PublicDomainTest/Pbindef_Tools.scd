@@ -4,7 +4,7 @@
 Pbindef.all.do{|i| i.pause };
 
 // Resume all:
-Pbindef.all.do{|i| i.resume };
+Pbindef.all.do{|i| i.resume(~clock, 4) };
 
 // If everything is broken:
 Pbindef.all.do({ |i| i.clear });
