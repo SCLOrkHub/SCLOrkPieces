@@ -42,7 +42,7 @@ Pbindef(\p3,
 ).play(~clock, quant: 4).quant = 4;
 
 
-Pbindef(\p4,
+Pbindef(\p4, // this voice starts with a long silence -- don't panic
 	\instrument, "playBuf",
 	\bufnum, ~mySamples.at('1946A'),
 	\dur, 8,
@@ -50,7 +50,7 @@ Pbindef(\p4,
 	\startPos, 0.7,
 	\att, 0.1,
 	\rel, 15,
-	\amp, Pseq([Pn(0, 12), Pseq([1, 0.9, 0.5, 0], inf)])
+	\amp, Pseq([0, Pseq([1, 0.9, 0.5, 0], inf)])
 ).play(~clock, quant: 4).quant = 4;
 
 

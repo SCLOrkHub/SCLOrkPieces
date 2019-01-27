@@ -10,7 +10,7 @@
 // ==================================
 
 
-Pbindef(\p1,
+Pbindef(\p1, // high-pitch ornamental crickets
 	\instrument, "playBufASR",
 	\bufnum, ~mySamples.at('1985A'),
 	\dur, 1/8,
@@ -26,7 +26,7 @@ Pbindef(\p1,
 	], inf),
 ).play(~clock, quant: 8).quant = 4;
 
-Pbindef(\p2,
+Pbindef(\p2, // lush orchestral + voice texture
 	\instrument, "playBuf",
 	\bufnum, ~mySamples.at('1983C'),
 	\dur, 1/8,
@@ -46,7 +46,7 @@ Pbindef(\p2,
 	], inf),
 ).play(~clock, quant: 8).quant = 4;
 
-Pbindef(\p3,
+Pbindef(\p3, // harmonic orchestral texture
 	\instrument, "playBuf",
 	\bufnum, ~mySamples.at('1983C'),
 	\dur, 1/8,
@@ -66,7 +66,7 @@ Pbindef(\p3,
 	], inf),
 ).play(~clock, quant: 8).quant = 4;
 
-Pbindef(\p4,
+Pbindef(\p4, // wind-like background element
 	\instrument, "playBuf",
 	\bufnum, ~mySamples.at('1964A'),
 	\dur, 1/8,

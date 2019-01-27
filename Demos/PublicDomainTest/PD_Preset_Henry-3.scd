@@ -6,7 +6,7 @@
 // ==================================
 
 
-Pbindef(\p1,
+Pbindef(\p1, // everybody starts unison then drift apart by live coding
 	\instrument, "playBuf",
 	\bufnum, ~mySamples.at('1951A'),
 	\dur, 1/8,
