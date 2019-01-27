@@ -21,13 +21,19 @@ a.free;
 // SCLOrkPD performance GUI
 // Put your player number here, then run it -- just a number, no slashes
 // Your player number is your laptop number
-SCLOrkPD.new(/*number*/);
-
+(
+SCLOrkPD.new(
+	playerNumber: /*number*/   , // put your player number here
+	presetSearchDir: "/home/sclork/Music/SCLOrk/Demos/PublicDomainTest/Jan30Presets",
+	orderByYear: false // false=alphabetical order of presets; true=display reference years
+)
+)
 // Check if SCLOrkClock is alive (note: printing beats will stop at control+period, but CLOCK WILL SURVIVE)
 ~clock.play({ "server beats: %".format(~clock.beats.mod(4)+1).postln; ^1 });
 
 // Is your SCLOrkChat up and running?
 // SCLOrkChat.new(\name);
+
 
 
 // DONE!

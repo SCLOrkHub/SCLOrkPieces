@@ -1,14 +1,13 @@
 // ==================================
-// Preset: Kevin-4
+// Preset: Kaitlin-2
 // Number of voices: 4
-// Most recent year sampled: 1994
-// Comments:
+// Most recent year sampled: 1921
+// Comments: old marching band looping detuning overtime
 // ==================================
-
 
 Pbindef(\p1,
 	\instrument, "playBuf",
-	\bufnum, ~mySamples.at('1994B'),
+	\bufnum, ~mySamples.at('1921A'),
 	\dur, 4,
 	\rate, 120/124,
 	\startPos, 0,
@@ -20,7 +19,7 @@ Pbindef(\p1,
 
 Pbindef(\p2,
 	\instrument, "playBuf",
-	\bufnum, ~mySamples.at('1994B'),
+	\bufnum, ~mySamples.at('1921A'),
 	\dur, 4,
 	\rate, 120/124 * Pseries(1, 0.005, inf),
 	\startPos, 0,
@@ -32,7 +31,7 @@ Pbindef(\p2,
 
 Pbindef(\p3,
 	\instrument, "playBuf",
-	\bufnum, ~mySamples.at('1994B'),
+	\bufnum, ~mySamples.at('1921A'),
 	\dur, 4,
 	\rate, 120/124 * Pn(Pseries(1, -0.005, 70)),
 	\startPos, 0,
@@ -43,7 +42,7 @@ Pbindef(\p3,
 
 Pbindef(\p4,
 	\instrument, "playBuf",
-	\bufnum, ~mySamples.at('1994B'),
+	\bufnum, ~mySamples.at('1921A'),
 	\dur, 8,
 	\rate, 120/124 * Pn(Pseries(1, -0.005, 70)),
 	\startPos, 0.5,

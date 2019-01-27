@@ -5,8 +5,8 @@
 // Comments:
 // ==================================
 
-// "you remind me" \p1
-Pbindef(\p1,
+
+Pbindef(\p1, // "you remind me" \p1
 	\instrument, "playBuf",
 	\bufnum, ~mySamples.at('2002A'),
 	\dur, 1/8,
@@ -23,8 +23,8 @@ Pbindef(\p1,
 ).play(~clock, quant: 4).quant = 4;
 
 
-// synth drum vibes \p2
-Pbindef(\p2,
+
+Pbindef(\p2, // synth drum vibes \p2
 	\instrument, "playBuf",
 	\bufnum, ~mySamples.at('2002A'),
 	\dur, 1/4,
@@ -40,8 +40,8 @@ Pbindef(\p2,
 	], inf) * 0.7,
 ).play(~clock, quant: 4).quant = 4;
 
-// soft scratch (\p3):
-Pbindef(\p3,
+
+Pbindef(\p3, // soft scratch (\p3):
 	\instrument, "playBuf",
 	\bufnum, ~mySamples.at('2002A'),
 	\dur, 1/8,
@@ -58,8 +58,8 @@ Pbindef(\p3,
 ).play(~clock, quant: 4).quant = 4;
 
 
-// "sense of feeling" (\p4)
-Pbindef(\p4,
+
+Pbindef(\p4, // "sense of feeling" (\p4)
 	\instrument, "playBuf",
 	\bufnum, ~mySamples.at('2002A'),
 	\dur, 2,
@@ -75,8 +75,8 @@ Pbindef(\p4,
 ).play(~clock, quant: 4).quant = 4;
 
 
-// melty global dance festival (\p5)
-Pbindef(\p5,
+
+Pbindef(\p5, // melty global dance festival (\p5)
 	\instrument, "playBuf",
 	\bufnum, ~mySamples.at('2002A'),
 	\dur, 1/8,
