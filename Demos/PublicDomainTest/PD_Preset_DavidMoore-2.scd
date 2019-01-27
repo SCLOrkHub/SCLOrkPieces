@@ -81,19 +81,20 @@ Pbindef(\p5,
 	\instrument, "playBuf",
 	\bufnum, ~mySamples.at('1939A'),
 	\dur, 1/2,
-	\rate, 1, //Pseq([1, 1.5, 2, 2.5], inf),
-	\startPos, Pseq([
-		0, 0, 0, 0,   0, 0.27, 0, 0, // beat 1
-		0, 0, 0, 0,   0, 0, 0, 0, // beat 2
-		0, 0, 0, 0,   0, 0.39, 0, 0, // beat 3
-		0, 0, 0, 0,   0, 0, 0, 0, // beat 4
-	], inf),
-	\att, 0.02,
+	\rate, 1,
 	\rel, 4,
-	\amp, Pseq([
+	\amp, Pseq([ // YOU HAVE THE VOICE -- ADD MORE OF IT HERE
 		0, 0, 0, 0,   0, 1, 0, 0, // beat 1
 		0, 0, 0, 0,   0, 0, 0, 0, // beat 2
 		0, 0, 0, 0,   0, 1, 0, 0, // beat 3
 		0, 0, 0, 0,   0, 0, 0, 0, // beat 4
-	], inf) * 1.1,
+	], inf) * 2,
+	\startPos, Pseq([
+		0.27, 0.25, 0.25, 0.5,   0.2, 0.27, 0.4, 0.4, // beat 1
+		0.1, 0.2, 0.3, 0.4,   0.5, 0.6, 0.7, 0.5, // beat 2
+		0.39, 0.39, 0, 0.39,   0, 0.39, 0, 0.39, // beat 3
+		0.3, 0.5, 0.7, 0.2,   0.1, 0.2, 0.32, 0.4, // beat 4
+	], inf),
+	\att, 0.02,
+	\crv, 3
 ).play(~clock, quant: 4).quant = 4;
