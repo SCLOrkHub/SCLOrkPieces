@@ -1,4 +1,8 @@
-#N canvas 0 51 1366 694 10;
+#N struct NC-stick float x float y;
+#N struct IR-blobs float x float y symbol s;
+#N struct CL-L-stick float x float y;
+#N struct CL-R-stick float x float y;
+#N canvas 1 51 1366 717 10;
 #X obj 118 158 wiimote-guts;
 #X symbolatom 116 119 18 0 0 0 mac-address - -, f 18;
 #X obj 216 81 bng 15 250 50 0 empty empty discover 17 7 0 10 -260353
@@ -201,6 +205,7 @@ to scan), f 115;
 #X connect 76 0 68 0;
 #X connect 77 0 68 0;
 #X connect 80 0 69 0;
+#X connect 82 0 68 0;
 #X connect 83 0 68 0;
 #X connect 84 0 68 0;
 #X connect 85 0 68 0;
