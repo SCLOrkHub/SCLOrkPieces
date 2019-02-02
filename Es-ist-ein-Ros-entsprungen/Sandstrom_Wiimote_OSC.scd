@@ -80,6 +80,9 @@ OSCdef.new(
 )
 
 
+
+/*
+
 // //////////////////////
 // // FIFTH STEP
 // // Only if you are a bell
@@ -102,9 +105,7 @@ OSCdef.new(
 	}, '/1'
 );
 )
-
-
-
+*/
 
 
 
@@ -120,3 +121,4 @@ OSCdef.new(
 {SinOsc.ar(freq: 1000 + Lag.kr((In.kr(~wiiXbus) * 500), 1), mul: Lag.kr(In.kr(~wiiYbus), 1))}.play;
 
 
+*/

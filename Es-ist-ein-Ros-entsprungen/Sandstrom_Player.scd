@@ -28,9 +28,11 @@
 // ================================
 // 4. PAIR WIIMOTE WITH PURR-DATA
 // ================================
-// Define SATB choice for this particular player. Options are:
-// ~sopranoScore, ~altoScore, ~tenorScore, ~bassScore
-~originalScore = ~sopranoScore;
+// Define SATB choice for this particular player. Pick one and run just that one line:
+~originalScore = ~sopranorScore;
+~originalScore = ~altoScore;
+~originalScore = ~tenorScore;
+~originalScore = ~bassScore;
 
 // ================================
 // 5. LOAD SYNTHS
@@ -41,8 +43,9 @@
 // 6. LOAD PLAYER FUNCTIONS
 // ================================
 // If you are a SINGER, load these functions:
-
 "Sandstrom_Functions.scd".loadRelative;
+
+
 
 // If you are a BELL, load these functions:
 "Sandstrom_Functions_for_Bell_Players.scd".loadRelative;

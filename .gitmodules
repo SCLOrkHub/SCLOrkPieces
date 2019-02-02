@@ -7,9 +7,6 @@
 [submodule "Bach-Gounod-Wiimotes"]
 	path = Bach-Gounod-Wiimotes
 	url = https://github.com/brunoruviaro/Bach_Gounod_Wiimotes
-[submodule "Sandstrom-Wiimotes"]
-	path = Sandstrom-Wiimotes
-	url = https://github.com/brunoruviaro/Sandstrom
 [submodule "Bach-Again-And-Again"]
 	path = Bach-Again-And-Again
 	url = https://github.com/brunoruviaro/bach-again-and-again

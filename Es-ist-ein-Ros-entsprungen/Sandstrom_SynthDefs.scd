@@ -2,6 +2,7 @@
 // Sandstrom SynthDefs
 //////////////////////////////
 
+s.waitForBoot({
 
 SynthDef("risset", { arg freq = 400, amp = 0.5, ringTime = 9, pan = 0, att = 1;
 	var amps = #[1, 0.67, 1, 1.8, 2.67, 1.67, 1.46, 1.33, 1.33, 1, 1.33];
@@ -161,3 +162,5 @@ SynthDef("masterOut", {
 
 "SynthDefs loaded".postln;
 " ".postln;
+
+}); // end of waitForBoot
