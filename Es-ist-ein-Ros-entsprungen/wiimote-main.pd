@@ -1,0 +1,186 @@
+#N struct NC-stick float x float y;
+#N struct IR-blobs float x float y symbol s;
+#N struct CL-L-stick float x float y;
+#N struct CL-R-stick float x float y;
+#N canvas 40 62 1280 650 10;
+#X obj 118 158 wiimote-guts;
+#X symbolatom 116 119 18 0 0 0 mac-address - -, f 18;
+#X obj 216 81 bng 15 250 50 0 empty empty discover 17 7 0 10 -260353
+-1 -1;
+#X obj 302 81 bng 15 250 50 0 empty empty Disconnect 17 7 0 10 -254016
+-1 -1;
+#X obj 116 81 bng 15 250 50 0 empty empty Perfect-pair 17 7 0 10 -98241
+-1 -1;
+#X obj 64 270 nbx 2 16 -1e+37 1e+37 0 0 empty empty empty -100 10 0
+12 -225280 -1 -1 0 256 0;
+#X obj 99 270 nbx 2 16 -1e+37 1e+37 0 0 empty empty empty 0 10 0 12
+-225280 -1 -1 0 256 0;
+#X floatatom 429 283 7 0 0 1 _X - -, f 7;
+#X floatatom 489 283 7 0 0 1 _Y - -, f 7;
+#X floatatom 549 283 7 0 0 1 _Z - -, f 7;
+#X floatatom 600 335 7 0 0 1 _PITCH - -, f 7;
+#X floatatom 600 352 7 0 0 1 _ROLL - -, f 7;
+#X floatatom 904 175 7 0 0 1 Acceleration-y - -, f 7;
+#X floatatom 902 196 7 0 0 1 Acceleration-z - -, f 7;
+#X floatatom 903 155 7 0 0 1 Acceleration-X - -, f 7;
+#X obj 1074 224 nbx 3 16 -1e+37 1e+37 0 0 empty empty Nunchuck-buttons
+-99 8 0 10 -261681 -1 -1 0 256 0;
+#X floatatom 774 407 5 0 0 0 X - -, f 5;
+#X floatatom 819 407 5 0 0 0 Y - -, f 5;
+#X floatatom 864 407 5 0 0 0 Z - -, f 5;
+#X text 431 243 Wiimote Acceleration;
+#X text 585 293 Wiimote Pitch/roll;
+#X text 899 125 Nunchuck Acceleration;
+#X text 761 360 Wii Motion Plus Wiimote;
+#X floatatom 906 287 5 0 0 0 X - -, f 5;
+#X floatatom 948 286 5 0 0 0 Y - -, f 5;
+#X text 896 259 Nunchuck AnalogStick;
+#X obj 400 81 hradio 15 0 0 4 empty empty Wiimote-lights 0 -8 0 10
+-118207 -1 -1 0;
+#X text 49 245 Wiimote Buttons;
+#X obj 18 359 tgl 15 0 empty empty Left 17 7 0 10 -262144 -1 -1 0 1
+;
+#X obj 60 357 tgl 15 0 empty empty Up 17 7 0 10 -262144 -1 -1 0 1;
+#X obj 60 313 & 8;
+#X obj 97 356 tgl 15 0 empty empty Right 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 97 312 & 2;
+#X obj 18 315 & 1;
+#X obj 18 337 > 0;
+#X obj 60 335 > 0;
+#X obj 97 334 > 0;
+#X obj 12 439 tgl 15 0 empty empty Down 17 7 0 10 -262144 -1 -1 0 1
+;
+#X obj 12 417 > 0;
+#X obj 12 395 & 4;
+#X obj 67 441 tgl 15 0 empty empty Plus 17 7 0 10 -262144 -1 -1 0 1
+;
+#X obj 67 419 > 0;
+#X obj 67 397 & 16;
+#X obj 193 357 tgl 15 0 empty empty A 17 7 0 10 -262144 -1 -1 0 1;
+#X obj 193 335 > 0;
+#X obj 193 313 & 8;
+#X obj 231 359 tgl 15 0 empty empty B 17 7 0 10 -262144 -1 -1 0 1;
+#X obj 231 337 > 0;
+#X obj 231 315 & 4;
+#X obj 270 361 tgl 15 0 empty empty Minus 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 270 339 > 0;
+#X obj 270 317 & 16;
+#X obj 185 456 tgl 15 0 empty empty Home 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 185 434 > 0;
+#X obj 185 412 & 128;
+#X obj 242 459 tgl 15 0 empty empty 1 17 7 0 10 -262144 -1 -1 0 1;
+#X obj 242 437 > 0;
+#X obj 242 415 & 2;
+#X obj 289 460 tgl 15 0 empty empty 2 17 7 0 10 -262144 -1 -1 0 1;
+#X obj 289 438 > 0;
+#X obj 289 416 & 1;
+#X obj 1073 315 tgl 15 0 empty empty Z 17 7 0 10 -262144 -1 -1 0 1
+;
+#X obj 1073 293 > 0;
+#X obj 1073 271 & 1;
+#X obj 1113 314 tgl 15 0 empty empty C 17 7 0 10 -262144 -1 -1 0 1
+;
+#X obj 1113 292 > 0;
+#X obj 1113 270 & 2;
+#X obj 503 82 tgl 15 0 empty empty Rumble_on/off 17 7 0 10 -262144
+-1 -1 0 1;
+#X obj 407 547 sendOSC;
+#X msg 474 509 connect localhost 57120;
+#X text 471 485 Sending values to a local SuperCollider on port 57120
+;
+#X msg 677 91 send /1/fader1 \$1;
+#X obj 678 128 print 1 message;
+#X msg 673 38 2345;
+#X text 29 18 This patch captures wiimote data \, converts to OSC messages
+\, and sends the data to SuperCollider.;
+#X msg 342 417 send /wii/button/minus \$1;
+#X msg 353 369 send /wii/button/a \$1;
+#X msg 364 441 send /wii/button/home \$1;
+#X msg 329 393 send /wii/button/plus \$1;
+#X msg 503 392 send /wii/axis/x \$1;
+#X msg 536 421 send /wii/axis/y \$1;
+#X obj 175 274 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X obj 14 271 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+-1;
+#X connect 0 0 5 0;
+#X connect 0 1 6 0;
+#X connect 0 2 7 0;
+#X connect 0 3 8 0;
+#X connect 0 4 9 0;
+#X connect 0 5 10 0;
+#X connect 0 6 11 0;
+#X connect 0 7 14 0;
+#X connect 0 8 12 0;
+#X connect 0 9 13 0;
+#X connect 0 10 15 0;
+#X connect 0 11 23 0;
+#X connect 0 12 24 0;
+#X connect 0 13 16 0;
+#X connect 0 14 17 0;
+#X connect 0 15 18 0;
+#X connect 1 0 0 0;
+#X connect 2 0 0 1;
+#X connect 3 0 0 2;
+#X connect 4 0 1 0;
+#X connect 5 0 30 0;
+#X connect 5 0 32 0;
+#X connect 5 0 33 0;
+#X connect 5 0 39 0;
+#X connect 5 0 42 0;
+#X connect 5 0 82 0;
+#X connect 6 0 45 0;
+#X connect 6 0 48 0;
+#X connect 6 0 51 0;
+#X connect 6 0 54 0;
+#X connect 6 0 57 0;
+#X connect 6 0 60 0;
+#X connect 6 0 81 0;
+#X connect 7 0 79 0;
+#X connect 8 0 80 0;
+#X connect 15 0 63 0;
+#X connect 15 0 66 0;
+#X connect 26 0 0 3;
+#X connect 30 0 35 0;
+#X connect 32 0 36 0;
+#X connect 33 0 34 0;
+#X connect 34 0 28 0;
+#X connect 35 0 29 0;
+#X connect 36 0 31 0;
+#X connect 38 0 37 0;
+#X connect 39 0 38 0;
+#X connect 40 0 78 0;
+#X connect 41 0 40 0;
+#X connect 42 0 41 0;
+#X connect 43 0 76 0;
+#X connect 44 0 43 0;
+#X connect 45 0 44 0;
+#X connect 47 0 46 0;
+#X connect 48 0 47 0;
+#X connect 49 0 75 0;
+#X connect 50 0 49 0;
+#X connect 51 0 50 0;
+#X connect 52 0 77 0;
+#X connect 53 0 52 0;
+#X connect 54 0 53 0;
+#X connect 56 0 55 0;
+#X connect 57 0 56 0;
+#X connect 59 0 58 0;
+#X connect 60 0 59 0;
+#X connect 62 0 61 0;
+#X connect 63 0 62 0;
+#X connect 65 0 64 0;
+#X connect 66 0 65 0;
+#X connect 67 0 0 4;
+#X connect 69 0 68 0;
+#X connect 71 0 72 0;
+#X connect 73 0 71 0;
+#X connect 75 0 68 0;
+#X connect 76 0 68 0;
+#X connect 77 0 68 0;
+#X connect 78 0 68 0;
+#X connect 79 0 68 0;
+#X connect 80 0 68 0;
