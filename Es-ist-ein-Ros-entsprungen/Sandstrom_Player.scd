@@ -29,7 +29,7 @@
 // 4. PAIR WIIMOTE WITH PURR-DATA
 // ================================
 // Define SATB choice for this particular player. Pick one and run just that one line:
-~originalScore = ~sopranorScore;
+~originalScore = ~sopranoScore;
 ~originalScore = ~altoScore;
 ~originalScore = ~tenorScore;
 ~originalScore = ~bassScore;
