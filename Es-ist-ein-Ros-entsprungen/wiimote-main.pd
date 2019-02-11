@@ -2,7 +2,7 @@
 #N struct IR-blobs float x float y symbol s;
 #N struct CL-L-stick float x float y;
 #N struct CL-R-stick float x float y;
-#N canvas 41 88 1280 650 10;
+#N canvas 19 76 1280 650 10;
 #X obj 118 158 wiimote-guts;
 #X symbolatom 116 119 18 0 0 0 mac-address - -, f 18;
 #X obj 216 81 bng 15 250 50 0 empty empty discover 17 7 0 10 -260353
@@ -91,8 +91,6 @@
 #X msg 474 509 connect localhost 57120;
 #X text 629 508 Sending values to a local SuperCollider on port 57120
 ;
-#X text 29 18 This patch captures wiimote data \, converts to OSC messages
-\, and sends the data to SuperCollider.;
 #X msg 342 417 send /wii/button/minus \$1;
 #X msg 353 369 send /wii/button/a \$1;
 #X msg 364 441 send /wii/button/home \$1;
@@ -104,6 +102,11 @@
 #X obj 14 271 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
 -1;
 #X obj 539 455 loadbang;
+#X msg 30 52 set CC:9E:00:C5:A0:3D;
+#X text 29 18 This patch captures wiimote data \, converts to OSC messages
+\, and sends the data to SuperCollider. If you know the unique MAC
+address of your wiimote \, type it in the message box below (after
+'set'). Use Control+E to get in and out of Edit mode., f 126;
 #X connect 0 0 5 0;
 #X connect 0 1 6 0;
 #X connect 0 2 7 0;
@@ -129,16 +132,16 @@
 #X connect 5 0 33 0;
 #X connect 5 0 39 0;
 #X connect 5 0 42 0;
-#X connect 5 0 79 0;
+#X connect 5 0 78 0;
 #X connect 6 0 45 0;
 #X connect 6 0 48 0;
 #X connect 6 0 51 0;
 #X connect 6 0 54 0;
 #X connect 6 0 57 0;
 #X connect 6 0 60 0;
-#X connect 6 0 78 0;
-#X connect 7 0 76 0;
-#X connect 8 0 77 0;
+#X connect 6 0 77 0;
+#X connect 7 0 75 0;
+#X connect 8 0 76 0;
 #X connect 15 0 63 0;
 #X connect 15 0 66 0;
 #X connect 26 0 0 3;
@@ -150,18 +153,18 @@
 #X connect 36 0 31 0;
 #X connect 38 0 37 0;
 #X connect 39 0 38 0;
-#X connect 40 0 75 0;
+#X connect 40 0 74 0;
 #X connect 41 0 40 0;
 #X connect 42 0 41 0;
-#X connect 43 0 73 0;
+#X connect 43 0 72 0;
 #X connect 44 0 43 0;
 #X connect 45 0 44 0;
 #X connect 47 0 46 0;
 #X connect 48 0 47 0;
-#X connect 49 0 72 0;
+#X connect 49 0 71 0;
 #X connect 50 0 49 0;
 #X connect 51 0 50 0;
-#X connect 52 0 74 0;
+#X connect 52 0 73 0;
 #X connect 53 0 52 0;
 #X connect 54 0 53 0;
 #X connect 56 0 55 0;
@@ -174,10 +177,11 @@
 #X connect 66 0 65 0;
 #X connect 67 0 0 4;
 #X connect 69 0 68 0;
+#X connect 71 0 68 0;
 #X connect 72 0 68 0;
 #X connect 73 0 68 0;
 #X connect 74 0 68 0;
 #X connect 75 0 68 0;
 #X connect 76 0 68 0;
-#X connect 77 0 68 0;
-#X connect 80 0 69 0;
+#X connect 79 0 69 0;
+#X connect 80 0 1 0;
