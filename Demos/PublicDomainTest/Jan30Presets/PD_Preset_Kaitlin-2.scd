@@ -48,5 +48,5 @@ Pbindef(\p4,
 	\startPos, 0.5,
 	\att, 0.01,
 	\rel, Pseq([15, 15, 25, 25], inf),
-	\amp, Pseq([Pn(0, 12), Pseq([1, 0.9, 0.5, 0], inf)])
+	\amp, Pseq([1, 0.9, 0.5, 0], inf)
 ).play(~clock, quant: 4).quant = 4;
