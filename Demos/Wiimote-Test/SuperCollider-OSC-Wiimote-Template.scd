@@ -1,6 +1,5 @@
-// Basic Wiimote test
+// Basic Wiimote test - print values from wiimote
 // You need to have wiimote-main.pd open in Purr Data
-// This should get a message from main.pd
 
 
 
