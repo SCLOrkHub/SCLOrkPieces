@@ -2,9 +2,9 @@
 #N struct IR-blobs float x float y symbol s;
 #N struct CL-L-stick float x float y;
 #N struct CL-R-stick float x float y;
-#N canvas 1 51 1366 717 10;
+#N canvas 0 51 1366 694 10;
 #X obj 118 158 wiimote-guts;
-#X symbolatom 116 119 18 0 0 0 mac-address - -, f 18;
+#X symbolatom 116 119 21 0 0 0 mac-address - -, f 21;
 #X obj 216 81 bng 15 250 50 0 empty empty discover 17 7 0 10 -260353
 -1 -1;
 #X obj 302 81 bng 15 250 50 0 empty empty Disconnect 17 7 0 10 -254016
@@ -104,7 +104,7 @@
 #X obj 14 271 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
 -1;
 #X obj 459 550 loadbang;
-#X text 231 120 <-- if you know your wiimote unique MAC address \,
+#X text 259 120 <-- if you know your wiimote unique MAC address \,
 use it here (you can find it from terminal command hcitool scan \;
 make sure bluetooth is on \, and press wiimote buttons 1 and 2 simultaneously
 to scan), f 115;
