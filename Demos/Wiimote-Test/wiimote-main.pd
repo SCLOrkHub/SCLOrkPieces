@@ -104,7 +104,7 @@
 #X obj 14 271 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
 -1;
 #X obj 459 550 loadbang;
-#X text 259 120 <-- if you know your wiimote unique MAC address \,
+#X text 249 118 <-- if you know your wiimote unique MAC address \,
 use it here (you can find it from terminal command hcitool scan \;
 make sure bluetooth is on \, and press wiimote buttons 1 and 2 simultaneously
 to scan), f 115;
@@ -169,6 +169,8 @@ to scan), f 115;
 #X connect 30 0 32 0;
 #X connect 31 0 32 0;
 #X restore 31 54 pd SCLOrk-wiimotes;
+#X text 148 52 <-- if you have a SCLOrk wiimote \, click here to pick
+your unique number, f 73;
 #X connect 0 0 5 0;
 #X connect 0 1 6 0;
 #X connect 0 2 7 0;
