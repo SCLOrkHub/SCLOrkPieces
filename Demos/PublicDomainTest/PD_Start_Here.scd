@@ -23,7 +23,7 @@ a.free;
 // Your player number is your laptop number
 (
 SCLOrkPD.new(
-	playerNumber: /*number*/   , // put your player number here
+	playerNumber: 1   , // put your player number here
 	presetSearchDir: "/home/sclork/Music/SCLOrk/Demos/PublicDomainTest/Jan30Presets",
 	orderByYear: false // false=alphabetical order of presets; true=display reference years
 )
