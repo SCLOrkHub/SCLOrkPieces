@@ -3,6 +3,7 @@
 // (to take advantage of .range in a live coding situation)
 
 // You need to have wiimote-main.pd open in Purr Data
+s.waitForBoot({
 
 var bHome = 0;
 var b1 = 0, b2 = 0;
@@ -109,3 +110,5 @@ OSCdef.new(\bMinus, {arg msg;
 	{ (bMinus==0) && (msg[1]==1) }{ bMinus = 1; ~wiiMinus.value = 1; msg.postln; }
 	{ (bMinus==1) && (msg[1]==0) }{ bMinus = 0; ~wiiMinus.value = 0; msg.postln; };
 }, '/wii/button/minus').permanent_(true);
+
+}); // end of waitForBoot
