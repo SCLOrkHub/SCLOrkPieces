@@ -1,8 +1,9 @@
 (
+// press A to make a sound
 Ndef(\a).fadeTime = 3;
 Ndef(\a, {
 	var env = Env.asr(
-		attackTime: ~wiiX.kr.range(0.01, 5), // attack
+		attackTime: 0.1, // attack
 		releaseTime: ~wiiB.kr.linlin(0, 1, 0, 10).poll, // release
 		curve: -1 // concave or convex shape
 	).kr(gate: ~wiiA.kr);
@@ -15,7 +16,7 @@ Ndef(\a, {
 		freq: Demand.kr(trigger, 0, midinotes) * [1, 1.001, 2] * 0.95,
 		mul: 0.1,
 	);
-	snd = LPF.ar(snd, SinOsc.ar(MouseX.kr(1, 12)).range(20, 4000));
+	snd = LPF.ar(snd, SinOsc.ar(~wiiX.kr.range(1, 12)).range(20, 4000));
 	snd = snd * env * ~wiiY.kr.range(0, 3);
 	snd = FreeVerb.ar(snd, 0.5, 0.9, 0.4);
 	snd = Mix.ar(snd);
