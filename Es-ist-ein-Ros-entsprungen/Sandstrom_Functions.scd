@@ -7,6 +7,7 @@
 
 ~startAtMeasure = 1;
 ~synth = "sine5";
+~synth = "temp";
 
 
 // This takes care of all score stuff;

@@ -8,8 +8,8 @@
 Ndef(\a).fadeTime = 3;
 Ndef(\a, {
 	var snd = SinOsc.ar(
-		freq: 43 * ~wiiX.kr.range(2, 9).round(1.0), // choose your range
-		mul: ~wiiA.kr * ~wiiY.kr.range(0, 1) // volume
+		freq: 43 * ~wiiX.kr.range(8, 9).round(1.0), // choose your range
+		mul: ~wiiA.kr * ~wiiY.kr.range(0, 0.7).lag(0.3) // volume
 	);
 	snd = Mix.ar(snd);
 	snd = Select.ar(
@@ -22,3 +22,4 @@ Ndef(\a, {
 	snd = Limiter.ar(snd);
 }).play;
 )
+

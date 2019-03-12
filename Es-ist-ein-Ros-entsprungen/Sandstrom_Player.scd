@@ -56,7 +56,7 @@
 // "+" and "-" buttons: choose measure to start from (for rehearsals)
 
 
-
+~playBell.value;
 
 
 
