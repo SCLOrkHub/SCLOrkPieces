@@ -1,3 +1,60 @@
+// We are back to the good old days of Ndef
+// Start with a blank screen, LISTEN A LOT, send receive code through chat, enjoy!
+// you don't have to use any of the preset Ndefs, unless you really want to.
+// After performing, remember to save any code you like into a separate personal file.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
+
 // ===================================
 // 1. If using wiimote, make sure to
 // open Purr-Data first and pair your
@@ -23,3 +80,5 @@ Document.current.dir.postln;
 
 // After playing: if you want to close all files at once:
 Document.closeAll;
+
+*/
