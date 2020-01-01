@@ -62,7 +62,7 @@ SynthDef("Reverb", {arg in, out;
 */
 
 // ====================================
-// Object1 = Pitch Shift With Env
+// Object1 = Pitch Shift With Env [Pitch Variation]
 // ====================================
 
 SynthDef("Object1", { arg in, out, gate = 1;
@@ -86,7 +86,7 @@ SynthDef("Object1", { arg in, out, gate = 1;
 
 
 // ====================================
-// Object2 = Pitch Shift With Env & Buffer
+// Object2 = Pitch Shift With Env & Buffer [Looping Pitch Variation]
 // ====================================
 
 SynthDef("Object2", {arg in, out, buffer, gate = 1, recstop = 1;
@@ -122,7 +122,7 @@ SynthDef("Object2", {arg in, out, buffer, gate = 1, recstop = 1;
 }).add;
 
 // ====================================
-// Object3: like the above, but with a Rand inside PitchShift
+// Object3: like the above, but with a Rand inside PitchShift [Looping Pitch Variation 2]
 // ====================================
 
 SynthDef("Object3", {arg in, out, buffer, gate = 1, recstop = 1;
@@ -158,7 +158,7 @@ SynthDef("Object3", {arg in, out, buffer, gate = 1, recstop = 1;
 }).add;
 
 // ====================================
-// Object4 = Large Grain Env
+// Object4 = Large Grain Env [Grainy sound]
 // ====================================
 
 SynthDef("Object4", {arg in, out, gate = 1;
@@ -194,7 +194,7 @@ SynthDef("Object4", {arg in, out, gate = 1;
 }).add;
 
 // ====================================
-// Object5 = Delay Evolving PitchShift
+// Object5 = Delay Evolving PitchShift [Mechanical Popcorn]
 // ====================================
 
 SynthDef("Object5", { arg in, out, buffer, gate = 1, recstop = 1;
@@ -268,7 +268,7 @@ SynthDef("Object5", { arg in, out, buffer, gate = 1, recstop = 1;
 }).add;
 
 // ====================================
-// Object 6 = Delay Evolving Pshift II
+// Object 6 = Delay Evolving Pshift II [Mechanical Phraser]
 // ====================================
 
 SynthDef("Object6", { arg in, out, buffer, gate = 1, recstop = 1;
@@ -324,7 +324,7 @@ SynthDef("Object6", { arg in, out, buffer, gate = 1, recstop = 1;
 }).add;
 
 // ====================================
-// Object7 = amp controlled noise (??)
+// Object7 = amp controlled noise [Drastic Pitch Mod]
 // ====================================
 
 SynthDef("Object7", {arg in, out, gate = 1;
@@ -346,7 +346,7 @@ SynthDef("Object7", {arg in, out, gate = 1;
 
 
 // ====================================
-// Object8 = Low Thump (sort of)
+// Object8 = Low Thump [For Long Tone]
 // ====================================
 
 SynthDef("Object8", {arg in, out, gate = 1;
@@ -375,7 +375,7 @@ SynthDef("Object8", {arg in, out, gate = 1;
 }).add;
 
 // ====================================
-// Object9 = Reverse (Good for speech)
+// Object9 = Reverse (Good for speech) [Looping Reverse]
 // ====================================
 
 SynthDef("Object9",{arg in, out, buffer, gate = 1, recstop = 1;
@@ -462,7 +462,7 @@ SynthDef("Object10", {arg in, out, buffer, gate = 1, recstop = 1;
 
 
 // ====================================
-// Object11 = Grainy Sound High
+// Object11 = Grainy Sound High [Grainy Sound High]
 // plus reverse reverb
 // ====================================
 
@@ -509,7 +509,7 @@ SynthDef("Object11", {arg in, out, gate = 1;
 }).add;
 
 // ====================================
-// Object12 = Large Grain With Env
+// Object12 = Large Grain With Env [Grainy Sound Low]
 // ====================================
 
 SynthDef("Object12",{arg  in, out, gate = 1;
@@ -527,7 +527,7 @@ SynthDef("Object12",{arg  in, out, gate = 1;
 }).add;
 
 // ====================================
-// Object13 = Pitch Shift With Env and FreqShift
+// Object13 = Pitch Shift With Env and FreqShift [Pitch Modulation]
 // ====================================
 SynthDef("Object13",{arg in, out, gate = 1;
 	var pshift, panstereo, env, envelop,lfo;
