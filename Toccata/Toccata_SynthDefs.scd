@@ -67,7 +67,11 @@ SynthDef("Reverb", {arg in, out;
 
 SynthDef("Object1", { arg in, out, gate = 1;
 	var snd, env, env2;
-	env = Env.asr(attackTime: 0.1, sustainLevel: 0.8, releaseTime: 1.3).kr(gate: gate, doneAction: 2);
+	env = Env.asr(
+		attackTime: 0.1,
+		sustainLevel: 0.8,
+		releaseTime: 2 // originally 1.3, but overriden by node.release(2)
+	).kr(gate: gate, doneAction: 2);
 	env2 = Env.new(
 		levels: [0.0001, 0.05, 0.95],
 		times: [0.2, 0.6],
@@ -81,6 +85,10 @@ SynthDef("Object1", { arg in, out, gate = 1;
 		timeDispersion: 1.7
 	);
 	snd = snd * env;
+	// Even though in SCLOrk we only play mono (Left signal), I am tempted to keep this Pan2 line here as it will generate some unintended and potentially interesting amp env effect on the left channel (we have played like this for years; making it mono now would change the way the patch has worked for us. Maybe do some A/B testing to see if it's actually worth it).
+	snd = Pan2.ar(snd, SinOsc.ar(SinOsc.kr(0.4).range(-1, 2)));
+	// throw away right channel as we don't use it in SCLOrk
+	snd = snd[0];
 	Out.ar(out, snd);
 }).add;
 
@@ -118,6 +126,9 @@ SynthDef("Object2", {arg in, out, buffer, gate = 1, recstop = 1;
 		pitchDispersion: 0.3 + env2,
 		timeDispersion: 0.5
 	);
+	// pan from original, but we'll throw away right channel in SCLOrk
+	snd = Pan2.ar(snd, SinOsc.ar(SinOsc.kr(0.4).range(-1, 2)));
+	snd = snd[0];
 	Out.ar(out, snd * env);
 }).add;
 
@@ -154,6 +165,8 @@ SynthDef("Object3", {arg in, out, buffer, gate = 1, recstop = 1;
 		pitchDispersion: 0.3 + env2 + Rand(0.0, 2.0),
 		timeDispersion: 0.5
 	);
+	snd = Pan2.ar(snd, SinOsc.ar(0.3));
+	snd = snd[0]; // SCLOrk mono
 	Out.ar(out, snd * env);
 }).add;
 
@@ -162,7 +175,7 @@ SynthDef("Object3", {arg in, out, buffer, gate = 1, recstop = 1;
 // ====================================
 
 SynthDef("Object4", {arg in, out, gate = 1;
-	var snd, env, env2;
+	var snd, snd2 env, env2;
 	env = Env.asr(
 		attackTime: 0.1,
 		sustainLevel: 0.8,
@@ -180,16 +193,17 @@ SynthDef("Object4", {arg in, out, gate = 1;
 		pitchDispersion: 0.3,
 		timeDispersion: 0.1 + env2
 	);
-	snd = PitchShift.ar(
+	snd2 = PitchShift.ar(
 		in: snd,
 		windowSize: 0.1,
 		pitchRatio: 2.0,
 		pitchDispersion: 0.4,
 		timeDispersion: 0.005
 	);
-	// a bit of AM instead of panning, just for effect
-	snd = snd * LFPulse.ar([16, 14.5]).range(0.5, 1.0);
-	snd = Mix.ar(snd);
+	snd = Pan2.ar(snd, SinOsc.ar(16));
+	snd2 = Pan2.ar(snd2, SinOsc.ar(14.5));
+	snd = snd + snd2;
+	snd = snd[0]; // throw away R channel (SCLOrk mono)
 	Out.ar(out, snd * env);
 }).add;
 
