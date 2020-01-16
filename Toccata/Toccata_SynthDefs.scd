@@ -3,6 +3,13 @@
 // what needs to happen in this file:
 // 1. load all synthdefs
 
+/*
+needed? not sure
+s.quit;
+s.options.memSize = 57344*2;
+s.options.maxNodes = 1024*2;
+
+*/
 
 // ====================================
 // Mic input synth
