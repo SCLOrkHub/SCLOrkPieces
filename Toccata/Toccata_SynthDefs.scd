@@ -15,7 +15,7 @@ s.options.maxNodes = 1024*2;
 // Mic input synth
 // ====================================
 
-SynthDef("MicBuffer", {arg out;
+SynthDef("MicInput", {arg out;
 	var mic;
 	mic = HPF.ar(in: SoundIn.ar([0, 1]), freq: 100);
 	mic = Mix.ar(mic);
@@ -104,12 +104,12 @@ SynthDef("Object1", { arg in, out, gate = 1;
 // Object2 = Pitch Shift With Env & Buffer [Looping Pitch Variation]
 // ====================================
 
-SynthDef("Object2", {arg in, out, buffer, gate = 1, recstop = 1;
+SynthDef("Object2", {arg in, out, buffer, gate = 1, rec = 1;
 	var snd, env, env2;
 	RecordBuf.ar(
 		inputArray: In.ar(in),
 		bufnum: buffer,
-		run: recstop
+		run: rec
 	);
 	env = Env.asr(
 		attackTime: 0.1,
@@ -143,12 +143,12 @@ SynthDef("Object2", {arg in, out, buffer, gate = 1, recstop = 1;
 // Object3: like the above, but with a Rand inside PitchShift [Looping Pitch Variation 2]
 // ====================================
 
-SynthDef("Object3", {arg in, out, buffer, gate = 1, recstop = 1;
+SynthDef("Object3", {arg in, out, buffer, gate = 1, rec = 1;
 	var snd, env, env2;
 	RecordBuf.ar(
 		inputArray: In.ar(in),
 		bufnum: buffer,
-		run: recstop
+		run: rec
 	);
 	env = Env.asr(
 		attackTime: 0.1,
@@ -182,7 +182,7 @@ SynthDef("Object3", {arg in, out, buffer, gate = 1, recstop = 1;
 // ====================================
 
 SynthDef("Object4", {arg in, out, gate = 1;
-	var snd, snd2 env, env2;
+	var snd, snd2, env, env2;
 	env = Env.asr(
 		attackTime: 0.1,
 		sustainLevel: 0.8,
@@ -218,7 +218,7 @@ SynthDef("Object4", {arg in, out, gate = 1;
 // Object5 = Delay Evolving PitchShift [Mechanical Popcorn]
 // ====================================
 
-SynthDef("Object5", { arg in, out, buffer, gate = 1, recstop = 1;
+SynthDef("Object5", { arg in, out, buffer, gate = 1, rec = 1;
 	var snd1, snd2, env, playbuf,
 	dtime1, dtime2, dtime3,
 	mix, decay,
@@ -226,7 +226,7 @@ SynthDef("Object5", { arg in, out, buffer, gate = 1, recstop = 1;
 	RecordBuf.ar(
 		inputArray: In.ar(in),
 		bufnum: buffer,
-		run: recstop
+		run: rec
 	);
 	env = Env.asr(
 		attackTime: 0.1,
@@ -292,12 +292,12 @@ SynthDef("Object5", { arg in, out, buffer, gate = 1, recstop = 1;
 // Object 6 = Delay Evolving Pshift II [Mechanical Phraser]
 // ====================================
 
-SynthDef("Object6", { arg in, out, buffer, gate = 1, recstop = 1;
+SynthDef("Object6", { arg in, out, buffer, gate = 1, rec = 1;
 	var env, playbuf, delay1, dtime1, mix, pshift, pshift2, pvar, toscil;
 	RecordBuf.ar(
 		inputArray: In.ar(in),
 		bufnum: buffer,
-		run: recstop
+		run: rec
 	);
 	playbuf = PlayBuf.ar(1, buffer, loop: 1);
 	env = Env.asr(
@@ -399,12 +399,12 @@ SynthDef("Object8", {arg in, out, gate = 1;
 // Object9 = Reverse (Good for speech) [Looping Reverse]
 // ====================================
 
-SynthDef("Object9",{arg in, out, buffer, gate = 1, recstop = 1;
+SynthDef("Object9",{arg in, out, buffer, gate = 1, rec = 1;
 	var snd, env, env2, playbuf;
 	RecordBuf.ar(
 		inputArray: In.ar(in),
 		bufnum: buffer,
-		run: recstop
+		run: rec
 	);
 	playbuf = PlayBuf.ar(
 		numChannels: 1,
@@ -448,13 +448,13 @@ SynthDef("Object9",{arg in, out, buffer, gate = 1, recstop = 1;
 // previously named Object2b in original patch
 // ====================================
 
-SynthDef("Object10", {arg in, out, buffer, gate = 1, recstop = 1;
+SynthDef("Object10", {arg in, out, buffer, gate = 1, rec = 1;
 	var snd, env, env2;
 
 	RecordBuf.ar(
 		inputArray: In.ar(in),
 		bufnum: buffer,
-		run: recstop
+		run: rec
 	);
 	env = Env.asr(
 		attackTime: 0.1,
@@ -578,7 +578,7 @@ SynthDef("Object13",{arg in, out, gate = 1;
 
 ~micBus = Bus.audio(s, 1);
 ~buf1 = Buffer.alloc(s, s.sampleRate * 1.0, 1);
-~micSynth = Synth("MicBuffer", [\out, ~micBus]);
+~micSynth = Synth("MicInput", [\out, ~micBus]);
 
 
 // Reverb example

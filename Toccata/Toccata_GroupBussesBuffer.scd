@@ -14,13 +14,13 @@
 
 ~micBus = Bus.audio(s, 1);
 ~fxBus = Bus.audio(s, 1);
-~recBuffer = Buffer.alloc(s, s.sampleRate * 1.0, 1);
+~recBuffer = Array.fill(15, Buffer.alloc(s, s.sampleRate * 1.0, 1)); /// not all will be used. Individual buffers are needed because some rec buffers stop at different moments and loop different material.
 
 
 // ===============
 // RUN MIC SYNTH
 // ===============
-~micSynth = Synth("MicBuffer", [\out, ~micBus], target: ~source);
+~micSynth = Synth("MicInput", [\out, ~micBus], target: ~source);
 
 // ================
 // RUN MIXER SYNTH
