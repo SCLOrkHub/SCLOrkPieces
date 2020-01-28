@@ -6,106 +6,340 @@
 // this file should load AFTER SynthDef file
 
 // ===============
-// BUTTON ACTIONS
+// OPEN GUI
 // ===============
+q = SCLOrkQuNeo.new.preset(\toggle);
 
-
-
-// eventually this will look like
-
-/*
-
-q = SCLOrkQuNeo.new;
-
-q.onButtonChange = { | velocity, midinote |
-
-switch(midinote,
-36, {},
-37, {}
-...
-etc
-);
-
-
-*/
-
-// Button1
-// 36. Pitch Variation
-
-
-// if each button instantiates only one Node, then we can use an array to keep a reference to them
-~synthArray = Array.newClear(127);
-
-q = SCLOrkQuNeo.new;
+// ===============
+// BUTTON ACTIONS & LABELS
+// ===============
 (
 q.onButtonChange = { | velocity, midinote |
 	var synth;
 
 	switch(midinote,
+
+		// =========
+		// OBJECT 1 - PITCH VAR
+		// =========
 		36, {
 			if(velocity>0, {
-				~synthArray[midinote] = Synth("Object1",
+				Synth("Object1",
 					[
 						\in, ~micBus,
 						\out, ~fxBus
 					],
-					target: ~effects);
+					target: ~objects[midinote]);
 			}, {
-				~synthArray[midinote].release;
+				~objects[midinote].release(2);
 			});
 		},
-
+		// =========
+		// OBJECT 2 - LOOPING PITCH VAR
+		// =========
 		37, {
 			if(velocity>0, {
-				~synthArray[midinote] = Synth("Object2",
+				{
+					Synth("Object2",
+						[
+							\in, ~micBus,
+							\out, ~fxBus,
+							\buffer, ~recBuffer[2]
+						],
+						target: ~objects[midinote]);
+					// in the original toccata, user would push button a second time to stop recording and start looping 1-sec buffer.
+					// here I chose to allow a fixed amount of time until recording stops and looping begins.
+					// [note for future: might consider using velocity to define how long to wait until loop begins]
+					"recording into buffer #2...".postln;
+					3.wait;
+					"now looping fx 37 buffer".postln;
+					~objects[midinote].set(\rec, 0);
+				}.fork;
+			}, {
+				~objects[midinote].release(4);
+			});
+			},
+		// =========
+		// OBJECT 3 - SPAWNING PITCH VAR
+		// =========
+		38, {
+			if(velocity>0, {
+				{
+					var repeats = velocity.linlin(0, 127, 1, 5);
+					("spawning fx #38 " ++ repeats ++ " times...").postln;
+					repeats.do({
+						Synth("Object3",
+							[
+								\in, ~micBus,
+								\out, ~fxBus,
+								\buffer, ~recBuffer[3],
+								\pitchDispersion, rrand(0.0, 2.0)
+							],
+							target: ~objects[midinote]);
+						rrand(1, 4).wait;
+					});
+					"now looping fx 38 buffer".postln;
+					~objects[midinote].set(\rec, 0);
+				}.fork;
+			}, {
+				~objects[midinote].release(7);
+			});
+			},
+		// =========
+		// OBJECT 4 - GRAINY SOUND
+		// =========
+		39, {
+			if(velocity>0, {
+				Synth("Object4",
 					[
 						\in, ~micBus,
-						\out, ~fxBus,
-						\buffer, ~recBuffer[2]
+						\out, ~fxBus
 					],
-					target: ~effects);
+					target: ~objects[midinote]);
 			}, {
-				~synthArray[midinote].release;
+				~objects[midinote].release(2);
 			});
-			// original code used button states to set up looping.
-			// user would trigger button once (start recording)
-			// then push button a second time to stop recording
-			// so that buffer would now loop old contents.
-			// since buffer is always same length, it is not about defining loop durations. Its'just, at what point do you want to stop recording new material so that buffer overlaps?
-			// maybe use the stop button to serve as 'cutoff' recording? (but then button 37 has to be last thing clicked)?
 		},
-		38, {"Object3"},
-		39, {"Object4"},
-		40, {"Object5"},
-		41, {"Object6"},
-		42, {"Object7"},
-		43, {"Object8"},
-		44, {"Object9"},
-		45, {"Object10"},
-		46, {"Object11"},
-		47, {"Object12"},
-		48, {"Object13"},
-		49, {"Object14"},
-		50, {"Object15"},
-		51, {"Object16"}
+		// =========
+		// OBJECT 5 - MECHANICAL POPCORN
+		// =========
+		40, {
+			if(velocity>0, {
+				{
+					Synth("Object5",
+						[
+							\in, ~micBus,
+							\out, ~fxBus,
+							\buffer, ~recBuffer[5]
+						],
+						target: ~objects[midinote]);
+					"recording into fx 40 buffer...".postln;
+					3.wait;
+					"now looping fx 40 buffer".postln;
+					~objects[midinote].set(\rec, 0);
+				}.fork;
+			}, {
+				~objects[midinote].release(15);
+			});
+			},
+		// =========
+		// OBJECT 6 - MECHANICAL PHRASER
+		// =========
+		41, {
+			if(velocity>0, {
+				{
+					Synth("Object6",
+						[
+							\in, ~micBus,
+							\out, ~fxBus,
+							\buffer, ~recBuffer[6]
+						],
+						target: ~objects[midinote]);
+					"recording into fx 41 buffer...".postln;
+					3.wait;
+					"now looping fx 41 buffer".postln;
+					~objects[midinote].set(\rec, 0);
+				}.fork;
+			}, {
+				~objects[midinote].release(18);
+			});
+			},
+		// =========
+		// OBJECT 7 - DRASTIC PITCH MOD
+		// =========
+		42, {
+			if(velocity>0, {
+				Synth("Object7",
+					[
+						\in, ~micBus,
+						\out, ~fxBus
+					],
+					target: ~objects[midinote]);
+			}, {
+				~objects[midinote].release(6);
+			});
+		},
+		// =========
+		// OBJECT 8 - FOR LONG TONE
+		// =========
+		43, {
+			if(velocity>0, {
+				Synth("Object8",
+					[
+						\in, ~micBus,
+						\out, ~fxBus
+					],
+					target: ~objects[midinote]);
+			}, {
+				~objects[midinote].release(5);
+			});
+		},
+		// =========
+		// OBJECT 9 - LOOPING REVERSE
+		// =========
+		44, {
+			if(velocity>0, {
+				{
+					Synth("Object9",
+						[
+							\in, ~micBus,
+							\out, ~fxBus,
+							\buffer, ~recBuffer[9]
+						],
+						target: ~objects[midinote]);
+					"recording into fx 44 buffer...".postln;
+					3.wait;
+					"now looping fx 44 buffer".postln;
+					~objects[midinote].set(\rec, 0);
+				}.fork;
+			}, {
+				~objects[midinote].release(8);
+			});
+			},
+		// =========
+		// OBJECT 10 - LOOPING PITCH VAR 2
+		// =========
+		45, {
+			if(velocity>0, {
+				{
+					Synth("Object10",
+						[
+							\in, ~micBus,
+							\out, ~fxBus,
+							\buffer, ~recBuffer[10]
+						],
+						target: ~objects[midinote]);
+					"recording into fx 45 buffer...".postln;
+					3.wait;
+					"now looping fx 45 buffer".postln;
+					~objects[midinote].set(\rec, 0);
+				}.fork;
+			}, {
+				~objects[midinote].release(4);
+			});
+			},
+		// =========
+		// OBJECT 11 - GRAINY SOUND HIGH
+		// =========
+		46, {
+			if(velocity>0, {
+				Synth("Object11",
+					[
+						\in, ~micBus,
+						\out, ~fxBus
+					],
+					target: ~objects[midinote]);
+			}, {
+				~objects[midinote].release(7);
+			});
+		},
+		// =========
+		// OBJECT 12 - GRAINY SOUND LOW
+		// =========
+		47, {
+			if(velocity>0, {
+				Synth("Object12",
+					[
+						\in, ~micBus,
+						\out, ~fxBus
+					],
+					target: ~objects[midinote]);
+			}, {
+				~objects[midinote].release(5);
+			});
+		},
+		// =========
+		// OBJECT 13 - PITCH MODULATION
+		// =========
+		48, {
+			if(velocity>0, {
+				Synth("Object13",
+					[
+						\in, ~micBus,
+						\out, ~fxBus
+					],
+					target: ~objects[midinote]);
+			}, {
+				~objects[midinote].release(2);
+			});
+		},
+		// =========
+		// OBJECT 14 -
+		// =========
+		49, {
+			if(velocity>0, {
+				/*
+				Synth("Object13",
+					[
+						\in, ~micBus,
+						\out, ~fxBus
+					],
+					target: ~objects[midinote]);
+				*/
+			}, {
+				// ~objects[midinote].release(2);
+			});
+		},
+		// =========
+		// OBJECT 15 -
+		// =========
+		50, {
+			if(velocity>0, {
+				/*
+				Synth("Object13",
+					[
+						\in, ~micBus,
+						\out, ~fxBus
+					],
+					target: ~objects[midinote]);
+				*/
+			}, {
+				// ~objects[midinote].release(2);
+			});
+		},
+		// =========
+		// OBJECT 16 -
+		// =========
+		51, {
+			if(velocity>0, {
+				/*
+				Synth("Object13",
+					[
+						\in, ~micBus,
+						\out, ~fxBus
+					],
+					target: ~objects[midinote]);
+				*/
+			}, {
+				// ~objects[midinote].release(2);
+			});
+		}
 	);
 
 };
-)
+
+q.changeButtonLabel(36, "\nPITCH\nVARIATION");
+q.changeButtonLabel(37, "\nLOOPING \nPITCH VAR");
+q.changeButtonLabel(38, "\nSPAWNING \nPITCH VAR");
+q.changeButtonLabel(39, "\nGRAINY\nSOUND");
+q.changeButtonLabel(40, "\nMECHANICAL\nPOPCORN");
+q.changeButtonLabel(41, "\nMECHANICAL\nPHRASER");
+q.changeButtonLabel(42, "\nDRASTIC\nPICTH MOD");
+q.changeButtonLabel(43, "\nFOR LONG TONES");
+q.changeButtonLabel(44, "\nLOOPING\nREVERSE");
+q.changeButtonLabel(45, "\nLOOPING\nPITCH VAR 2");
+q.changeButtonLabel(46, "\nGRAINY\nHIGH");
+q.changeButtonLabel(47, "\nGRAINY\nLOW");
+q.changeButtonLabel(48, "\nPITCH\nMODULATION");
+// q.changeButtonLabel(49, "empty");
+// q.changeButtonLabel(50, "empty");
+// q.changeButtonLabel(51, "empty");
+);
 
 
-	// will all SynthDefs work with this standard call? Probably not
-	// I may have to do a longer switch where entirely diff Synth calls are inside each function
-	if(velocity>0, {
-		synthArray[midinote] = Synth(
-			defName: synth,
-			args: [\in, ~micBus, \out, ~fxBus],
-			target: ~effects
-		)
-	}, {
-		synthArray[midinote].release
-	});
 
+
+// next define fader actions
 
 
 
