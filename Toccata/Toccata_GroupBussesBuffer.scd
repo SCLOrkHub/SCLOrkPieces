@@ -46,7 +46,7 @@
 		\directMicLevel, 1.0,
 		\fxBus, ~fxBus,
 		\fxLevel, 1.0,
-		\reverbAmount, 1.0,
+		\reverbAmount, 0.0,
 		\masterVolume, 1.0
 	],
 	target: ~master

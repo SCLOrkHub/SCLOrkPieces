@@ -8,7 +8,7 @@
 // ===============
 // OPEN GUI
 // ===============
-q = SCLOrkQuNeo.new.preset(\toggle);
+q = SCLOrkQuNeo.new; //.preset(\toggle);
 
 // ===============
 // BUTTON ACTIONS & LABELS
