@@ -1,14 +1,35 @@
-// TO-DO:
-// maybe increase loop start to 5 seconds after button push
-// consider a button or slider to define that delay until looping starts
-// and/or a button to stop all loops
-// all this because I don't want to go into the question of assigning multiple states to a button (to decide whether each effect should loop or not)
-// or maybe loops should onlyu start if a loop button happens for the last clicked effect button
+// TOCCATA V3
+// A SCLOrk version of Toccata by Joo Won Park
+// Original score here: http://www.joowonpark.net/Toccata.pdf
+//
+// SCLOrk version 3 with SCLOrkQuNeo - January 2020.
+//
 // Run one line at a time. Watch Post window for messages
+// When SCLOrkQuNeo opens, be sure to switch it to TOGGLE mode
 
 "Toccata_SynthDefs.scd".loadRelative;
 
 "Toccata_GroupBussesBuffer.scd".loadRelative;
 
 "Toccata_ButtonActions.scd".loadRelative;
+
+
+// VERTICAL SLIDERS
+/*
+|   |   |   |   |
+|   |   |   |   |
+|   |   |   |   |
+|DRY|WET|FX |VOL|
+|   |   |   |   |
+|   |   |   |   |
+|   |   |   |   |
+
+DRY: direct mic sent to output
+WET: reverb amount
+FX: global volume for all effects
+VOL: master volume (dry+wet+fx)
+
+*/
+
+
 

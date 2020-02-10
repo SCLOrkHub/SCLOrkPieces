@@ -51,7 +51,7 @@ q.onButtonChange = { | velocity, midinote |
 					// here I chose to allow a fixed amount of time until recording stops and looping begins.
 					// [note for future: might consider using velocity to define how long to wait until loop begins]
 					"recording into buffer #2...".postln;
-					3.wait;
+					5.wait;
 					"now looping fx 37 buffer".postln;
 					~objects[midinote].set(\rec, 0);
 				}.fork;
@@ -114,7 +114,7 @@ q.onButtonChange = { | velocity, midinote |
 						],
 						target: ~objects[midinote]);
 					"recording into fx 40 buffer...".postln;
-					3.wait;
+					5.wait;
 					"now looping fx 40 buffer".postln;
 					~objects[midinote].set(\rec, 0);
 				}.fork;
@@ -136,7 +136,7 @@ q.onButtonChange = { | velocity, midinote |
 						],
 						target: ~objects[midinote]);
 					"recording into fx 41 buffer...".postln;
-					3.wait;
+					5.wait;
 					"now looping fx 41 buffer".postln;
 					~objects[midinote].set(\rec, 0);
 				}.fork;
@@ -188,7 +188,7 @@ q.onButtonChange = { | velocity, midinote |
 						],
 						target: ~objects[midinote]);
 					"recording into fx 44 buffer...".postln;
-					3.wait;
+					5.wait;
 					"now looping fx 44 buffer".postln;
 					~objects[midinote].set(\rec, 0);
 				}.fork;
@@ -210,7 +210,7 @@ q.onButtonChange = { | velocity, midinote |
 						],
 						target: ~objects[midinote]);
 					"recording into fx 45 buffer...".postln;
-					3.wait;
+					5.wait;
 					"now looping fx 45 buffer".postln;
 					~objects[midinote].set(\rec, 0);
 				}.fork;
@@ -334,12 +334,26 @@ q.changeButtonLabel(48, "\nPITCH\nMODULATION");
 // q.changeButtonLabel(49, "empty");
 // q.changeButtonLabel(50, "empty");
 // q.changeButtonLabel(51, "empty");
+
+q.onSliderChange = { |value, sliderNum|
+	switch(sliderNum,
+		6, {~mixerSynth.set(\directMicLevel, value)},
+		7, {~mixerSynth.set(\reverbAmount, value)},
+		8, {~mixerSynth.set(\fxLevel, value)},
+		9, {~mixerSynth.set(\masterVolume, value)},
+		10, {"test"}
+	);
+};
+
+q.changeSliderLabel(6, "dry", false);
+q.changeSliderLabel(7, "wet", false);
+q.changeSliderLabel(8, "fx", false);
+q.changeSliderLabel(9, "vol", false);
+
+8
+
 );
 
-
-
-
-// next define fader actions
 
 
 
