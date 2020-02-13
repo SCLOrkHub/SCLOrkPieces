@@ -26,45 +26,31 @@ s.waitForBoot({
 
 	SynthDef("Mixer", { arg directMicBus, directMicLevel = 1.0, fxBus, fxLevel = 1.0, out = 0, reverbAmount = 1.0, masterVolume = 1.0;
 
-		var dry, wet, snd;
+		var dryMicOut, wetOut, fxOut, snd;
 
-		dry = Mix.ar([
-			In.ar(directMicBus) * directMicLevel,
-			In.ar(fxBus) * fxLevel
-		]);
+		dryMicOut = In.ar(directMicBus) * directMicLevel;
+		fxOut = In.ar(fxBus) * fxLevel;
 
-		wet = dry;
+		// wetOut takes full input from mic, disregarding directMicLevel control
+		// but it does take fxLevel into account
+		wetOut = In.ar(directMicBus) + fxOut;
 		7.do({
-			wet = AllpassN.ar(
-				in: wet,
+			wetOut = AllpassN.ar(
+				in: wetOut,
 				maxdelaytime: 0.043,
 				delaytime: [0.038.rand, 0.036.rand],
 				decaytime: 3.5
 			)
 		});
+		wetOut = Mix.ar(wetOut) * reverbAmount * 0.4;
 
-		wet = Mix.ar(wet) * 0.5;
-		snd = Mix.new([wet * reverbAmount, dry * (1.0 - reverbAmount)]);
+		snd = Mix.ar([dryMicOut, wetOut, fxOut]) * masterVolume;
 		snd = HPF.ar(snd, 150);
-		Out.ar(out, snd * masterVolume)
+		snd = LeakDC.ar(snd);
+		snd = Limiter.ar(snd);
+		Out.ar(out, snd)
 	}).add;
 
-
-	// ====================================
-	// Reverb synth
-	// ====================================
-
-	/*
-	SynthDef("Reverb", {arg in, out;
-	var snd = FreeVerb.ar(
-	in: In.ar(in),
-	mix: 0.33,
-	room: 0.7,
-	damp: 0.5
-	);
-	Out.ar(out, snd);
-	}).add;
-	*/
 
 	// ====================================
 	// Object1 = Pitch Shift With Env [Pitch Variation]
@@ -521,10 +507,11 @@ s.waitForBoot({
 			loop: 1
 		);
 
-		snd = snd + snd2;
+		snd = snd + snd2 * env;
 		snd = Mix.ar(snd);
 		snd = HPF.ar(snd, 500);
-		Out.ar(out, snd * env);
+		snd = LeakDC.ar(Limiter.ar(snd));
+		Out.ar(out, snd);
 	}).add;
 
 	// ====================================

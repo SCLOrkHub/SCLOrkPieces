@@ -8,7 +8,7 @@
 // ===============
 // OPEN GUI
 // ===============
-q = SCLOrkQuNeo.new; //.preset(\toggle);
+q = SCLOrkQuNeo.new.preset(\toggle);
 
 // ===============
 // BUTTON ACTIONS & LABELS
@@ -345,10 +345,10 @@ q.onSliderChange = { |value, sliderNum|
 	);
 };
 
-q.changeSliderLabel(6, "dry", false);
-q.changeSliderLabel(7, "wet", false);
-q.changeSliderLabel(8, "fx", false);
-q.changeSliderLabel(9, "vol", false);
+q.changeSliderLabel(6, "dry\nout", false);
+q.changeSliderLabel(7, "wet\nout", false);
+q.changeSliderLabel(8, "fx\nout", false);
+q.changeSliderLabel(9, "master\nvol", false);
 
 8
 

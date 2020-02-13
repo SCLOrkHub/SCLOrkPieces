@@ -43,11 +43,11 @@
 	defName: "Mixer",
 	args: [
 		\directMicBus, ~micBus,
-		\directMicLevel, 1.0,
+		\directMicLevel, 0.0,
 		\fxBus, ~fxBus,
-		\fxLevel, 1.0,
+		\fxLevel, 0.0,
 		\reverbAmount, 0.0,
-		\masterVolume, 1.0
+		\masterVolume, 0.0
 	],
 	target: ~master
 );
