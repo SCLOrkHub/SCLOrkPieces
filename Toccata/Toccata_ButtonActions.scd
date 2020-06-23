@@ -219,14 +219,17 @@ q.onButtonChange = { | velocity, midinote |
 			});
 			},
 		// =========
-		// OBJECT 11 - GRAINY SOUND HIGH
+		// OBJECT 11b - instead of GRAINY HIGH (CombC simple delay here)
 		// =========
 		46, {
 			if(velocity>0, {
-				Synth("Object11",
+				Synth("Object11b",
 					[
 						\in, ~micBus,
-						\out, ~fxBus
+						\out, ~fxBus,
+						\delay, velocity.linexp(0, 127, 1, 0.1),
+						\decay, rrand(3, 10)
+
 					],
 					target: ~objects[midinote]);
 			}, {
@@ -264,20 +267,20 @@ q.onButtonChange = { | velocity, midinote |
 			});
 		},
 		// =========
-		// OBJECT 14 -
+		// OBJECT 14 - SOUR DELAY
 		// =========
 		49, {
 			if(velocity>0, {
-				/*
-				Synth("Object13",
+				Synth("Object14",
 					[
 						\in, ~micBus,
-						\out, ~fxBus
+						\out, ~fxBus,
+						\delay, velocity.linexp(0, 127, 0.6, 0.01),
+						\decay, rrand(2, 10)
 					],
 					target: ~objects[midinote]);
-				*/
 			}, {
-				// ~objects[midinote].release(2);
+				~objects[midinote].release(5);
 			});
 		},
 		// =========
@@ -328,10 +331,10 @@ q.changeButtonLabel(42, "\nDRASTIC\nPICTH MOD");
 q.changeButtonLabel(43, "\nFOR LONG TONES");
 q.changeButtonLabel(44, "\nLOOPING\nREVERSE");
 q.changeButtonLabel(45, "\nLOOPING\nPITCH VAR 2");
-q.changeButtonLabel(46, "\nGRAINY\nHIGH");
+q.changeButtonLabel(46, "\nREVREV\nDELAY");
 q.changeButtonLabel(47, "\nGRAINY\nLOW");
 q.changeButtonLabel(48, "\nPITCH\nMODULATION");
-// q.changeButtonLabel(49, "empty");
+q.changeButtonLabel(49, "\nSOUR\nDELAY");
 // q.changeButtonLabel(50, "empty");
 // q.changeButtonLabel(51, "empty");
 
@@ -349,8 +352,6 @@ q.changeSliderLabel(6, "dry\nout", false);
 q.changeSliderLabel(7, "wet\nout", false);
 q.changeSliderLabel(8, "fx\nout", false);
 q.changeSliderLabel(9, "master\nvol", false);
-
-8
 
 );
 

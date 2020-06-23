@@ -7,6 +7,7 @@
 // Run one line at a time. Watch Post window for messages
 // When SCLOrkQuNeo opens, be sure to switch it to TOGGLE mode
 
+// Note: Temporary changes in SynthDefs file makes it 2 channels (duplicate mono) for July 2020 performance.
 
 "Toccata_SynthDefs.scd".loadRelative;
 // Before running next line, wait until you see message "SynthDefs added" in Post window

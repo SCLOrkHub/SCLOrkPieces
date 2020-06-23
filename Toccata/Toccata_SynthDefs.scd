@@ -42,13 +42,13 @@ s.waitForBoot({
 				decaytime: 3.5
 			)
 		});
-		wetOut = Mix.ar(wetOut) * reverbAmount * 0.4;
+		wetOut = Mix.ar(wetOut) * Lag.kr(reverbAmount, 0.5) * 0.4;
 
-		snd = Mix.ar([dryMicOut, wetOut, fxOut]) * masterVolume;
+		snd = Mix.ar([dryMicOut, wetOut, fxOut]) * Lag.kr(masterVolume, 0.5);
 		snd = HPF.ar(snd, 150);
 		snd = LeakDC.ar(snd);
 		snd = Limiter.ar(snd);
-		Out.ar(out, snd)
+		Out.ar(out, snd!2); // temporarily making it two channels for July 2020
 	}).add;
 
 
@@ -563,6 +563,82 @@ s.waitForBoot({
 		pshift = pshift + FreqShift.ar(pshift, 10);
 		panstereo = Pan2.ar(pshift, SinOsc.kr(freq: 2.3, mul: 0.3));
 		Out.ar(out, panstereo * env);
+	}).add;
+
+	// ====================================
+	// Object11b = REVREV DELAY instead [REVREV DELAY]
+	// ====================================
+
+	SynthDef("Object11b", {arg in, out, gate = 1, delay = 0.5, decay = 2;
+		var snd, snd2, env, env2, buf;
+		env = Env.asr(
+			attackTime: 0.1,
+			sustainLevel: 0.8,
+			releaseTime: 3
+		).kr(gate: gate, doneAction: 2);
+		snd = CombC.ar(
+			in: In.ar(in, 2),
+			maxdelaytime: 1.0,
+			delaytime: delay,
+			decaytime: decay
+		);
+		snd = Mix.ar(snd);
+		buf = LocalBuf(SampleRate.ir);
+		RecordBuf.ar(
+			inputArray: FreeVerb.ar(snd, 0.8, 0.8),
+			bufnum: buf,
+			recLevel: 0.8,
+			preLevel: 0.4
+		);
+		snd2 = PlayBuf.ar(
+			numChannels: 1,
+			bufnum: buf,
+			rate: -1,
+			loop: 1
+		);
+		snd = snd + snd2 * env;
+		snd = Mix.ar(snd);
+		snd = HPF.ar(snd, 500);
+		snd = LeakDC.ar(Limiter.ar(snd));
+		Out.ar(out, snd);
+	}).add;
+
+	// ====================================
+	// Object14 = Sour Delay
+	// ====================================
+
+	SynthDef("Object14", {arg in, out, gate = 1, delay = 0.5, decay = 2;
+		var snd, snd2, env, env2, buf;
+		env = Env.asr(
+			attackTime: 0.1,
+			sustainLevel: 0.8,
+			releaseTime: 3
+		).kr(gate: gate, doneAction: 2);
+		snd = CombC.ar(
+			in: In.ar(in),
+			maxdelaytime: 1.0,
+			delaytime: delay * [1, 1.25],
+			decaytime: decay * Rand(1, 2)
+		);
+		snd = Mix.ar(snd);
+		buf = LocalBuf(SampleRate.ir * 4);
+		RecordBuf.ar(
+			inputArray: FreeVerb.ar(snd, 0.8, 0.5),
+			bufnum: buf,
+			recLevel: 0.8,
+			preLevel: 0.4
+		);
+		snd2 = PlayBuf.ar(
+			numChannels: 1,
+			bufnum: buf,
+			rate: SinOsc.ar(1/5).range(-1, -0.95),
+			loop: 1
+		);
+		snd = snd + snd2 * env;
+		snd = Mix.ar(snd);
+		snd = HPF.ar(snd, 500);
+		snd = LeakDC.ar(Limiter.ar(snd));
+		Out.ar(out, snd);
 	}).add;
 
 	s.sync;
