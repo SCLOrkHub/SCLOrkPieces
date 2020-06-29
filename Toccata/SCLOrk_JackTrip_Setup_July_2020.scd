@@ -1,4 +1,3 @@
-(
 s.waitForBoot({
 
 	SCLOrkJack.listPorts;
@@ -10,6 +9,8 @@ s.waitForBoot({
 
 	// Korg contact mic to SuperCollider
 	SCLOrkJack.connect("system:capture_1", "SuperCollider:in_1");
+	// In case you have a second mic:
+	SCLOrkJack.connect("system:capture_2", "SuperCollider:in_2");
 
 	// SuperCollider 1-2 to K6 sytem playback 1-2
 	SCLOrkJack.connect("SuperCollider:out_1", "system:playback_1");
@@ -23,5 +24,6 @@ s.waitForBoot({
 	SCLOrkJack.connect("cmn17.stanford.edu:receive_1", "system:playback_3");
 	SCLOrkJack.connect("cmn17.stanford.edu:receive_2", "system:playback_4");
 
+	SCLOrkJack.preset(\quneo);
+
 }); // end of waitForBoot
-)a
