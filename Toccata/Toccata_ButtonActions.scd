@@ -219,7 +219,7 @@ q.onButtonChange = { | velocity, midinote |
 			});
 			},
 		// =========
-		// OBJECT 11b - instead of GRAINY HIGH (CombC simple delay here)
+		// OBJECT 11b - revrev delay instead of GRAINY HIGH (CombC simple delay)
 		// =========
 		46, {
 			if(velocity>0, {
@@ -228,7 +228,8 @@ q.onButtonChange = { | velocity, midinote |
 						\in, ~micBus,
 						\out, ~fxBus,
 						\delay, velocity.linexp(0, 127, 1, 0.1),
-						\decay, rrand(3, 10)
+						\decay, rrand(3, 10),
+						\buffer, ~recBuffer[11]
 
 					],
 					target: ~objects[midinote]);
@@ -344,14 +345,15 @@ q.onSliderChange = { |value, sliderNum|
 		7, {~mixerSynth.set(\reverbAmount, value)},
 		8, {~mixerSynth.set(\fxLevel, value)},
 		9, {~mixerSynth.set(\masterVolume, value)},
-		10, {"test"}
+		10, {~mixerSynth.set(\pan, value.linlin(0, 1, -1.0, 1.0))}
 	);
 };
 
 q.changeSliderLabel(6, "dry\nout", false);
 q.changeSliderLabel(7, "wet\nout", false);
 q.changeSliderLabel(8, "fx\nout", false);
-q.changeSliderLabel(9, "master\nvol", false);
+q.changeSliderLabel(9, "main\nvol", false);
+q.changeSliderLabel(10, "pan\n", false);
 
 );
 

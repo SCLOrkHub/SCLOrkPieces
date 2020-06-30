@@ -1,8 +1,5 @@
 // SynthDefs only
 
-// what needs to happen in this file:
-// 1. load all synthdefs
-
 
 s.quit;
 s.options.memSize = 57344*2;
@@ -24,7 +21,7 @@ s.waitForBoot({
 	// final Mixer
 	// ============
 
-	SynthDef("Mixer", { arg directMicBus, directMicLevel = 1.0, fxBus, fxLevel = 1.0, out = 0, reverbAmount = 1.0, masterVolume = 1.0;
+	SynthDef("Mixer", { arg directMicBus, directMicLevel = 1.0, fxBus, fxLevel = 1.0, out = 0, reverbAmount = 1.0, masterVolume = 1.0, pan = -1;
 
 		var dryMicOut, wetOut, fxOut, snd;
 
@@ -42,13 +39,14 @@ s.waitForBoot({
 				decaytime: 3.5
 			)
 		});
-		wetOut = Mix.ar(wetOut) * Lag.kr(reverbAmount, 0.5) * 0.4;
+		wetOut = Mix.ar(wetOut) * Lag.kr(reverbAmount, 1) * 0.5;
 
-		snd = Mix.ar([dryMicOut, wetOut, fxOut]) * Lag.kr(masterVolume, 0.5);
-		snd = HPF.ar(snd, 150);
+		snd = Mix.ar([dryMicOut, wetOut, fxOut]) * Lag.kr(masterVolume, 1);
+		// snd = HPF.ar(snd, 50);
 		snd = LeakDC.ar(snd);
 		snd = Limiter.ar(snd);
-		Out.ar(out, snd!2); // temporarily making it two channels for July 2020
+		snd = Pan2.ar(snd, Lag.kr(pan, 2)); // temporarily making it two channels for July 2020
+		Out.ar(out, snd);
 	}).add;
 
 
@@ -569,7 +567,7 @@ s.waitForBoot({
 	// Object11b = REVREV DELAY instead [REVREV DELAY]
 	// ====================================
 
-	SynthDef("Object11b", {arg in, out, gate = 1, delay = 0.5, decay = 2;
+	SynthDef("Object11b", {arg in, out, gate = 1, delay = 0.5, decay = 2, buffer;
 		var snd, snd2, env, env2, buf;
 		env = Env.asr(
 			attackTime: 0.1,
@@ -583,22 +581,21 @@ s.waitForBoot({
 			decaytime: decay
 		);
 		snd = Mix.ar(snd);
-		buf = LocalBuf(SampleRate.ir);
 		RecordBuf.ar(
-			inputArray: FreeVerb.ar(snd, 0.8, 0.8),
-			bufnum: buf,
+			inputArray: FreeVerb.ar(snd, 0.8, 0.8) * LFTri.ar(1/5),
+			bufnum: buffer,
 			recLevel: 0.8,
 			preLevel: 0.4
 		);
 		snd2 = PlayBuf.ar(
 			numChannels: 1,
-			bufnum: buf,
-			rate: -1,
+			bufnum: buffer,
+			rate: -0.5,
 			loop: 1
 		);
-		snd = snd + snd2 * env;
+		snd = snd + snd2 * env * LFNoise2.ar(5).range(0.1, 1);
 		snd = Mix.ar(snd);
-		snd = HPF.ar(snd, 500);
+		snd = HPF.ar(snd, 100);
 		snd = LeakDC.ar(Limiter.ar(snd));
 		Out.ar(out, snd);
 	}).add;
@@ -621,7 +618,7 @@ s.waitForBoot({
 			decaytime: decay * Rand(1, 2)
 		);
 		snd = Mix.ar(snd);
-		buf = LocalBuf(SampleRate.ir * 4);
+	/*	buf = LocalBuf(SampleRate.ir * 4);
 		RecordBuf.ar(
 			inputArray: FreeVerb.ar(snd, 0.8, 0.5),
 			bufnum: buf,
@@ -633,10 +630,10 @@ s.waitForBoot({
 			bufnum: buf,
 			rate: SinOsc.ar(1/5).range(-1, -0.95),
 			loop: 1
-		);
-		snd = snd + snd2 * env;
+		);*/
+		snd = snd * env;
 		snd = Mix.ar(snd);
-		snd = HPF.ar(snd, 500);
+		snd = HPF.ar(snd, 100);
 		snd = LeakDC.ar(Limiter.ar(snd));
 		Out.ar(out, snd);
 	}).add;

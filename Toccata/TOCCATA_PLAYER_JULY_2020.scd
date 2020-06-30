@@ -12,7 +12,7 @@
 
 // 1) IF NOT ALREADY RUNNING, START JACKTRIP
 // (will open a small terminal window, just leave it alone)
-"jacktrip -C cmn17.stanford.edu".runInTerminal;
+"jacktrip -C cmn17.stanford.edu --nojackportsconnect".runInTerminal;
 
 // 2) RUN THIS (it will boot server automatically)
 "Toccata_SynthDefs.scd".loadRelative;
@@ -22,15 +22,13 @@
 // 3) RUN THIS:
 "Toccata_GroupBussesBuffer.scd".loadRelative;
 
-// 4) ...AND NOW THIS (it will launch GUI):
+// 4) ...AND NOW THIS (it will launch GUI - TURN ON MIDI ON QUNEO GUI):
 "Toccata_ButtonActions.scd".loadRelative;
 
 // 5) REDO ALL JACK CONNECTIONS:
 "SCLOrk_JackTrip_Setup_July_2020.scd".loadRelative;
 
 // 6) OPEN SCLOrkChat as usual
-
-// 7) TURN ON MIDI ON QUNEO GUI
 
 // VERTICAL SLIDERS
 /*
