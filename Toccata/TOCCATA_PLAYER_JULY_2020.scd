@@ -1,3 +1,8 @@
+// ***************** //
+// July 7th VERSION  //
+// ***************** //
+// [added quick hack to ensure we connect to no matter what cmnXX machine we are using for jacktrip]
+
 // TOCCATA V3
 // A SCLOrk version of Toccata by Joo Won Park
 // Original score here: http://www.joowonpark.net/Toccata.pdf
@@ -22,13 +27,20 @@
 // 3) RUN THIS:
 "Toccata_GroupBussesBuffer.scd".loadRelative;
 
-// 4) ...AND NOW THIS (it will launch GUI - TURN ON MIDI ON QUNEO GUI):
+// 4) ...AND NOW THIS (it will launch GUI)
 "Toccata_ButtonActions.scd".loadRelative;
+// - TURN ON MIDI ON QUNEO GUI
+// - BRING UP VERTICAL FADERS 1, 3, 4
 
 // 5) REDO ALL JACK CONNECTIONS:
 "SCLOrk_JackTrip_Setup_July_2020.scd".loadRelative;
 
 // 6) OPEN SCLOrkChat as usual
+
+
+
+// LONG HORIZONTAL SLIDER IS PANNING (left/right)
+// it starts hard panned left (move it to the middle to start the piece there)
 
 // VERTICAL SLIDERS
 /*
