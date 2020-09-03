@@ -78,3 +78,137 @@ Pbindef(\co1,
 ).play(quant: 1);
 Pbindef(\xtra).quant = 1;
 )
+
+
+
+(
+~dursFrom = {|array, dur=1|
+    var size = array.size;
+    var subdiv = dur / size;
+    var result = array.collect({ |item|
+        if(item.isArray, {
+            ~dursFrom.value(item, subdiv)
+        }, {
+            subdiv
+        });
+    });
+    result.flat;
+};
+)
+
+(
+~degrees = [0, 1, 5, 4];
+~degrees = [0, 1, [5, 5], 4];
+~degrees = [0, 2, 4, 8];
+// ~degrees = [0, 2, 7];
+~degrees = [0, 1, 5, 4, 1, 2, 6, 5];
+// ~degrees = [0, 1, 5, 4, 1, \r, 6, 5];
+// ~degrees = [[0, 1, 5, 4], [1, 2, 6]];
+// ~degrees = [[5, 6], [4, 8, 4]];
+// ~degrees = [[0, 0], [4, 5, 3, 2, 1]];
+// ~degrees = [[0, \r, -2], [4, 5, 3, 2, 1]];
+
+Pbindef(\a,
+	\degree, Pseq(~degrees.flat, inf),
+	\dur, Pseq(~dursFrom.(~degrees), inf),
+	\amp, 0.1, //Pseq([0.2, 0.1, 0.05, 0.05], inf),
+).play(quant: 1).quant_(1);
+)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(
+e = (
+	wow: 5,
+	bleh: 10,
+	r1: nil,
+	r2: nil,
+	play: { (~wow + ~bleh).postln; ~r1 = ~wow * 100 }
+);
+)
+
+e.play;
+e.wow
+e.r2
+
+e = (someVariable: 5, printMe: { |self, string| string.postln });
+
+e.mul2 = { |z| z.someVariable * 2 };
+e.mul2;
+
+
+
+(
+~func = {|array, dur=1|
+    var size = array.size;
+    var subdiv = dur / size;
+    var result = array.collect({ |item|
+        if(item.isArray, {
+            ~func.value(item, subdiv)
+        }, {
+            subdiv
+        });
+    });
+    result.flat;
+};
+)
+(
+~cycle = (
+	func: {|e|
+		(e.myDur + 88).postln;
+		e.myArray.postln;
+/*    var size = array.size;
+    var subdiv = dur / size;
+    var result = array.collect({ |item|
+        if(item.isArray, {
+            ~func.value(e, item, subdiv)
+        }, {
+            subdiv
+        });
+    });
+    result.flat;*/
+},
+	myArray: [60, 60, 60, 60],
+	myDur: 1,
+	subdivision: { |e| e.myDur / (e.myArray.size) },
+	// durs: {|e| ~func.value(e.myArray, e.myDur) }
+	// play: { .size.postln }
+);
+)
+
+
+
+
+~cycle.func(~cycle, [5, 5]);
+
+
+
+
+
+
+
+// specifying a pattern of instruments
+i = [\bd, \hh, [\cp, \cp], [\hh, \hh, \hh] ];
+~cycle.( );
+
+// specifying a pattern of amplitudes
+a = [1, 0, [1, 1], [1, 1, 0.5]];
+~cycle.(a);
+
+// specifying a pattern of midinotes
+m = [60, 60, 59, [40, 43, 43], 35];
+~cycle.(m);
