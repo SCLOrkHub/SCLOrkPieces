@@ -46,16 +46,18 @@ d.add(\r -> \rest);
 (
 var samples;
 samples = [\bd0, \techno0, \bd0, \techno1, \cp0, \drum2, \techno1, \drum2];
-samples = [\house6!2, \house3!rrand(1, 3), \house2!2, \cp0];
+// samples = [\house6!2, \house3!rrand(1, 3), \house2!2, \cp0];
 samples = [\house5!2, \house2, \cp0, \db3];
-samples = [\house5!2, \house2, \r, \cp1, \r, \cp0]; // \r is a rest
+// samples = [\house5!2, \house2, Prand([\cp0, \sn1, \drum0]), \db3];
+// samples = [\house5!2, \house2, \r, \cp1, \r, \cp0]; // \r is a rest
 // samples = [\amencutup0, [\drum2, \drum2], \drum0, \drum1, \hh3, \techno1, \amencutup13, \techno1];
 // samples = \bd9.dup(16);
 // samples = \sn0.dup(8); // long version for \sn0!8
 
 Pbindef(\wow,
 	\instrument, \pb,
-	\buf, Pseq(samples.flat.collect{|s| d.at(s)}, inf),
+	\sampleName, Pseq(samples.flat, inf).trace,
+	\buf, Pfunc({ |e| d.at(e[\sampleName]) }),
 	\dur, Pseq(~dursFrom.(samples), inf) * 1,
 	\amp, Pseq([0.4, 0.29, 0.4, 0.3], inf) * 0.15,
 	\rate, Pwhite(1, 1.01) * 1,
@@ -69,7 +71,7 @@ Pbindef(\wow,
 
 
 
-
+Pbindef(\wow).clear
 
 
 
