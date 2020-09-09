@@ -46,6 +46,7 @@ d.add(\r -> \rest);
 Event.addEventType(\dirt, {
 	~instrument = if(d.at(~sampleName).numChannels == 1, { \pb1 }, { \pb2 });
 	~buf = d.at(~sampleName);
+	~testFunc = { |number| number * 2 };
 	~type = \note;
 	currentEnvironment.play;
 });
@@ -78,33 +79,68 @@ Pbindef(\test,
 	\sampleName, Pseq(samples.flat, inf),
 	\dur, Pseq(~dursFrom.(samples), inf),
 	\stretch, 1,
-	\amp, 0.5, //Pseq([0.4, 0.29, 0.4, 0.3], inf) * 0.15,
+	\amp, 0.09, //Pseq([0.4, 0.29, 0.4, 0.3], inf) * 0.15,
 	\rate, Pwhite(1, 1.001) * 1,
 	\out, 55
 ).play(quant: 4).quant = 4;
 )
 
-
 (
 Ndef(\reverb, {
 	var input = In.ar(55);
 	var snd;
-	snd = FreeVerb
-	.ar(
-		in: input,
-		roomsize: 80,
-		revtime: 1,
-		damping: 0.1,
-		drylevel: 1
+	snd = input * LFPulse.ar(4, width: 0.5);
+	snd = FreeVerb.ar(
+		in: snd,
+		mix: 0.4,
+		room: 0.7,
+		damp: 0.7,
+		mul: 1
 	);
 }).play;
 )
 
 
-LADSPA
 
-Ndef(\reverb).clear
 
+
+// tempoclock
+
+t = TempoClock.new(150/60).permanent_(true);
+
+// 150 BPM
+// 2.5 beats per second
+// 10 ticks per second
+// 2 seconds = 20 ticks = 5 beats
+// 5/4 time signature @ 150 BPM
+
+(
+var samples;
+// samples = [\bd0, \techno0, \bd0, \techno1, \cp0, \drum2, \techno1, \drum2];
+// samples = [\house6!2, \house3!rrand(1, 3), \house2!2, \cp0];
+samples = [\blip1, \blip0, \a808oh3, \blip1];
+// samples = [\house5!2, \house2, Prand([\bass112, \sn1, \sn2]), \db3];
+// samples = [\bass10, \e7!5, \east2!3, \dork22]; // \r is a rest
+// samples = [\bass10, \gab7, \east2!3, \dork22]; // \r is a rest
+// samples = [\glitch23!3, \e7!5, \east2!3, \ifdrums0!3]; // \r is a rest
+// samples = [\glitch23!3, \e7!5, \juno3!2, \ifdrums0!3]; // \r is a rest
+// samples = [\glitch20, \e7!5, \juno3, \latibro6];
+// samples = [\sid1!2, \sid7, \sid9!2, \sf1!2];
+samples = [\a808oh0, \a808oh0, \a808oh0, \a808oh0];
+// samples = [\amencutup0, [\drum2, \drum2], \drum0, \drum1, \hh3, \techno1, \amencutup13, \techno1];
+// samples = \bd9.dup(16);
+// samples = \sn0.dup(8); // long version for \sn0!8
+
+Pbindef(\test,
+	\type, \dirt,
+	\sampleName, Pseq(samples.flat, inf),
+	\dur, Pseq(~dursFrom.(samples), inf),
+	\stretch, 1,
+	\amp, Pseq([0.5, 0.45, 0.4, 0.3], inf) * 0.1 * Pwhite(0.0, 1),
+	\rate, Pstutter(4, Pseq([1, 1.1, 1.02, 0.998, 1.05], inf)),
+	\out, 0
+).play(t, quant: 4).quant = 4;
+)
 
 
 
