@@ -21,7 +21,9 @@ s.waitForBoot({
 
 	d = IdentityDictionary.new(n: 2500, know: true); // know: true makes the dictionary interpret method calls as look ups.
 
-	d.put(\rest, \rest);
+	// add a symbol \r for rests
+
+	d.put(\r, \rest);
 
 	Routine.run({
 

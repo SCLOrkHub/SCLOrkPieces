@@ -7,56 +7,40 @@
 */
 
 // Load all 2000 samples (will reboot server automatically)
-// Takes several seconds to load them all
+// Takes several seconds to load them all, watch Post window
 "SCLOrkDirtSamplesLoad.scd".loadRelative;
-
-// Browse samples with a GUI
-"SCLOrkDirtSamplesBrowse.scd".loadRelative;
 
 // Load a simple SynthDef called \pb for playback
 "SCLOrkDirtSamplesSynthDef.scd".loadRelative;
 
+// Load couple custom functions to allow "cycles" live coding style
+"SCLOrkDirtSamplesFunctions.scd".loadRelative;
 
-// event type could check buffer numchannels and pick synthdef accordingly
-// event type could take care of 'cycle' conversion business
+// Browse samples with a GUI (useful to familiarize yourself with what's available)
+// the sample name in the GUI is what you will use in the live coding as a Symbol
+// for example, sample named ab8 will be used as \ab8 in your code
+"SCLOrkDirtSamplesBrowse.scd".loadRelative;
 
+
+
+// ====================
 // Some examples
+// ====================
 
 
-(
-// Custom function - takes in a list and optional cycle duration in beats.
-// Returns a list of durations based on the composition of the array
-~dursFrom = {|array, dur=1|
-    var size = array.size;
-    var subdiv = dur / size;
-    var result = array.collect({ |item|
-        if(item.isArray, {
-            ~dursFrom.value(item, subdiv)
-        }, {
-            subdiv
-        });
-    });
-    result.flat;
-};
+// The idea is to primarily play with the variable 'samples'
+// The array is a sequence of samples to be played
+// The number of elements in the array is interpreted as the number of equal subdivisions of a cycle (which could be one beat, one measure, or whatever cycle size you choose)
+// Sub-arrays are interpreted the same way recursively.
+// For for example [\sn1, \sn1, \sn1, \sn1] means four hits of a snare within a cycle, and [\sn1, \sn1, \sn1, [\sn1, \sn1]] means the fourth subdivision will be further subdivided into two equal parts etc.
 
-// quick trick to include option for a rest in dictionary
-d.add(\r -> \rest);
+// to change cycle duration, use the \stretch parameter in the Pbind
 
-(
-Event.addEventType(\dirt, {
-	~instrument = if(d.at(~sampleName).numChannels == 1, { \pb1 }, { \pb2 });
-	~buf = d.at(~sampleName);
-	~testFunc = { |number| number * 2 };
-	~type = \note;
-	currentEnvironment.play;
-});
-)
-)
+// other parameters can be altered as usual (amp and rate in particular)
 
+// tip: comment in and out the 'samples' line you want to try. If more than one is uncommented, the later one will prevail
 
-
-
-
+// feel free to copy paste more samples lines to customize / live code
 
 (
 var samples;
@@ -81,15 +65,17 @@ Pbindef(\test,
 	\stretch, 1,
 	\amp, 0.09, //Pseq([0.4, 0.29, 0.4, 0.3], inf) * 0.15,
 	\rate, Pwhite(1, 1.001) * 1,
-	\out, 55
+	\out, 55 // if you put 55 here and run the Ndef below, whole thing goes through reverb
 ).play(quant: 4).quant = 4;
 )
 
+
+// Optional: if you send the above Pbindef to \out, 55 (ie route it to bus 55 instsead of directly out to speakers), the Pbind will go through the reverb below
 (
-Ndef(\reverb, {
-	var input = In.ar(55);
+Ndef(\fx, {
+	var input = In.ar([55, 56]);
 	var snd;
-	snd = input * LFPulse.ar(4, width: 0.5);
+	snd = input;
 	snd = FreeVerb.ar(
 		in: snd,
 		mix: 0.4,
@@ -104,7 +90,7 @@ Ndef(\reverb, {
 
 
 
-// tempoclock
+// using a tempoclock
 
 t = TempoClock.new(150/60).permanent_(true);
 
@@ -131,7 +117,7 @@ samples = [\a808oh0, \a808oh0, \a808oh0, \a808oh0];
 // samples = \bd9.dup(16);
 // samples = \sn0.dup(8); // long version for \sn0!8
 
-Pbindef(\test,
+Pbindef(\usingTempoClock,
 	\type, \dirt,
 	\sampleName, Pseq(samples.flat, inf),
 	\dur, Pseq(~dursFrom.(samples), inf),
@@ -193,7 +179,7 @@ Pbindef(\tpt).stop;
 // A non-cycle way of playing (typical Pbind stuff)
 (
 Pbindef(\xtra,
-	\instrument, \pb,
+	\instrument, \pb2,
 	\buf, Pseq([d.electro18, d.electro10, d.electro15], inf),
 	\dur, Prand([Pn(0.125, 4), Pn(0.25, 4)], inf),
 	\amp, Pseq([0.4, 0.29, 0.4, 0.3], inf) * 1,
