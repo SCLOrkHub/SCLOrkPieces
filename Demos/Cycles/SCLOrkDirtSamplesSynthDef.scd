@@ -39,7 +39,21 @@ SynthDescLib.global.at(\pb2).postln;
 
 
 
+SynthDef("gr", {arg out = 0, buffer, rate = 1, startPos = 0, gate = 1, att = 0.01, rel = 0.1, amp = 1, pan = 0;
+	var env, snd;
+	env = Env.asr(att, amp, rel).kr(gate: gate);
+	snd = PlayBuf.ar(
+		numChannels:  1,
+		bufnum:  buffer,
+		rate: rate,
+		startPos: startPos * BufSamples.kr(buffer)
+	);
+	snd = snd * env;
+	Out.ar(out, Pan2.ar(snd, pan));
+	DetectSilence.ar(snd, doneAction: 2);
+}).add;
 
+SynthDescLib.global.at(\gr).postln;
 
 
 

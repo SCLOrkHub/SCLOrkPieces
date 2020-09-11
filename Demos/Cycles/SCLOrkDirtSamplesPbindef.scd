@@ -111,8 +111,8 @@ samples = [\blip1, \blip0, \a808oh3, \blip1];
 // samples = [\glitch23!3, \e7!5, \east2!3, \ifdrums0!3]; // \r is a rest
 // samples = [\glitch23!3, \e7!5, \juno3!2, \ifdrums0!3]; // \r is a rest
 // samples = [\glitch20, \e7!5, \juno3, \latibro6];
-// samples = [\sid1!2, \sid7, \sid9!2, \sf1!2];
-samples = [\a808oh0, \a808oh0, \a808oh0, \a808oh0];
+samples = [\sid1!2, \sid7, \sid9!2, \sf1!2];
+// samples = [\a808oh0, \a808oh0, \a808oh0, \a808oh0];
 // samples = [\amencutup0, [\drum2, \drum2], \drum0, \drum1, \hh3, \techno1, \amencutup13, \techno1];
 // samples = \bd9.dup(16);
 // samples = \sn0.dup(8); // long version for \sn0!8
@@ -122,7 +122,7 @@ Pbindef(\usingTempoClock,
 	\sampleName, Pseq(samples.flat, inf),
 	\dur, Pseq(~dursFrom.(samples), inf),
 	\stretch, 1,
-	\amp, Pseq([0.5, 0.45, 0.4, 0.3], inf) * 0.1 * Pwhite(0.0, 1),
+	\amp, Pseq([0.5, 0.45, 0.4, 0.3], inf) * 0.9 * Pwhite(0.90, 1),
 	\rate, Pstutter(4, Pseq([1, 1.1, 1.02, 0.998, 1.05], inf)),
 	\out, 0
 ).play(t, quant: 4).quant = 4;
