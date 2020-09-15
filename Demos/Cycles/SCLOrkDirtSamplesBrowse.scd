@@ -7,7 +7,7 @@ this file creates a GUI to browse all samples by name
 
 */
 
-Window.closeAll;
+// Window.closeAll;
 
 t = d.keys.asArray.sort; //copyRange(0, 250);
 w = Window.new("dirt-samples [scroll down for more]", Rect(10, 10, 1265, 700), resizable: false, scroll: true);
