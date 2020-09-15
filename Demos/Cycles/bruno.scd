@@ -1,54 +1,9 @@
 /*
 
--- loads necessary scd files
 
--- provides some Pbindef examples
+
 
 */
-
-// Choose startup_hyperSCLOrk
-StartupFile.choose;
-
-// Reboot interpreter (red buttons will appear)
-thisProcess.recompile;
-
-// Load all 2000 samples (will reboot server automatically)
-// Takes several seconds to load them all, watch Post window
-"SCLOrkDirtSamplesLoad.scd".loadRelative;
-
-// Load a simple SynthDef called \pb for playback
-"SCLOrkDirtSamplesSynthDef.scd".loadRelative;
-
-// Load couple custom functions to allow "cycles" live coding style
-"SCLOrkDirtSamplesFunctions.scd".loadRelative;
-
-// Load some Ndef stuff
-"Fall-2020-raw-sample.scd".loadRelative;
-
-// Browse samples with a GUI (useful to familiarize yourself with what's available)
-// the sample name in the GUI is what you will use in the live coding as a Symbol
-// for example, sample named ab8 can be used as \ab8 in your code
-"SCLOrkDirtSamplesBrowse.scd".loadRelative;
-
-// Open SCLOrkChat (no need to change this line; variable ~myName already should contain your name)
-SCLOrkChat.new(~myName.asString);
-
-
-// ******************************************
-// ... now go PUBLIC (click the red button "PUBLIC")
-// ******************************************
-
-// ... and now open your own live coding file (save one if you don't have it already)
-
-"aastha.scd".resolveRelative.openDocument;
-"bruno.scd".resolveRelative.openDocument;
-"ed.scd".resolveRelative.openDocument;
-"josh.scd".resolveRelative.openDocument;
-"noonan.scd".resolveRelative.openDocument;
-
-
-"template.scd".resolveRelative.openDocument;
-
 
 
 
@@ -57,10 +12,7 @@ SCLOrkChat.new(~myName.asString);
 
 
 // EXAMPLES
-// do not modify, just copy as needed into your own live coding file
-
-
-
+// (do not modify them here -- create your own file for live coding, save it in this same directory);
 
 (
 var samples;

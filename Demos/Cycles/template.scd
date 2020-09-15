@@ -1,66 +1,27 @@
 /*
 
--- loads necessary scd files
-
--- provides some Pbindef examples
+Template to create your own live coding file
 
 */
 
-// Choose startup_hyperSCLOrk
-StartupFile.choose;
+// Rename your Ndefs based on your name:
 
-// Reboot interpreter (red buttons will appear)
-thisProcess.recompile;
+Ndef(\a1) // aastha
+Ndef(\b1) // bruno
+Ndef(\e1) // ed
+Ndef(\j1) // josh
+Ndef(\n1) // noonan
 
-// Load all 2000 samples (will reboot server automatically)
-// Takes several seconds to load them all, watch Post window
-"SCLOrkDirtSamplesLoad.scd".loadRelative;
-
-// Load a simple SynthDef called \pb for playback
-"SCLOrkDirtSamplesSynthDef.scd".loadRelative;
-
-// Load couple custom functions to allow "cycles" live coding style
-"SCLOrkDirtSamplesFunctions.scd".loadRelative;
-
-// Load some Ndef stuff
-"Fall-2020-raw-sample.scd".loadRelative;
-
-// Browse samples with a GUI (useful to familiarize yourself with what's available)
-// the sample name in the GUI is what you will use in the live coding as a Symbol
-// for example, sample named ab8 can be used as \ab8 in your code
-"SCLOrkDirtSamplesBrowse.scd".loadRelative;
-
-// Open SCLOrkChat (no need to change this line; variable ~myName already should contain your name)
-SCLOrkChat.new(~myName.asString);
-
-
-// ******************************************
-// ... now go PUBLIC (click the red button "PUBLIC")
-// ******************************************
-
-// ... and now open your own live coding file (save one if you don't have it already)
-
-"aastha.scd".resolveRelative.openDocument;
-"bruno.scd".resolveRelative.openDocument;
-"ed.scd".resolveRelative.openDocument;
-"josh.scd".resolveRelative.openDocument;
-"noonan.scd".resolveRelative.openDocument;
-
-
-"template.scd".resolveRelative.openDocument;
-
-
-
-
-
-
+// for the fx Ndef...
+Ndef(\afx) // aastha
+Ndef(\bfx) // bruno
+Ndef(\efx) // ed
+Ndef(\jfx) // josh
+Ndef(\nfx) // noonan
 
 
 // EXAMPLES
-// do not modify, just copy as needed into your own live coding file
-
-
-
+// (do not modify them here -- create your own file for live coding, save it in this same directory);
 
 (
 var samples;
@@ -69,25 +30,16 @@ var samples;
 // samples = [\house5!2, \house2, \cp0, \db3];
 // samples = [\house1, \house2, \cp0, \a808ht4];
 samples = [\house5!2, \house2, Prand([\bass112, \sn1, \sn2]), \db3];
-// samples = [\bass10, \e7!5, \east2!3, \dork22]; // \r is a rest
-// samples = [\bass10, \gab7, \east2!3, \dork22]; // \r is a rest
-// samples = [\glitch23!3, \e7!5, \east2!3, \ifdrums0!3]; // \r is a rest
-// samples = [\glitch23!3, \e7!5, \juno3!2, \ifdrums0!3]; // \r is a rest
-// samples = [\glitch20, \e7!5, \juno3, \latibro6];
-// samples = [\sid1!2, \sid7, \sid9!2, \sf1!2];
-// samples = [\amencutup0, [\drum2, \drum2], \drum0, \drum1, \hh3, \techno1, \amencutup13, \techno1];
-// samples = \bd9.dup(16);
-// samples = \sn0.dup(8); // long version for \sn0!8
 
 
-// NOTICE HOW THE PBIND HERE IS INSIDE AN NDEF
+//
 Ndef(\p1,
 	Pbind(
 		\type, \dirt,
 		\sampleName, Pseq(samples.flat, inf),
 		\dur, Pseq(~dursFrom.(samples), inf),
 		\stretch, 1,
-		\amp, 0.5, //Pseq([0.4, 0.29, 0.4, 0.3], inf) * 0.15,
+		\amp, 0.5,
 		\rate, Pwhite(1, 1.01) * 1
 	)
 ).play
@@ -185,7 +137,7 @@ Ndef(\trump,
 ).play;
 )
 
-
+Ndef(\trump).stop;
 
 Ndef.clear(5);
 
