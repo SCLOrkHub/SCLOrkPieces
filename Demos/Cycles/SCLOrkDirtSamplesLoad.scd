@@ -12,9 +12,9 @@ d[\hit0]
 
 */
 
-s.quit;
-s.options.numBuffers = 3000;
-s.options.memSize = 8192 * 100; // 100 times the default
+// s.quit;
+// s.options.numBuffers = 3000;
+// s.options.memSize = 8192 * 100; // 100 times the default
 s.waitForBoot({
 
 	p = PathName.new(Quarks.folder ++ "/Dirt-Samples");

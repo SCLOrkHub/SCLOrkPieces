@@ -172,14 +172,14 @@ Ndef(\trump,
 		\instrument, \gr,
 		\buffer, ~trump,
 		// \startPos, Pwhite(0, 1.0),
-		\startPos, 0.19, //Pseq([Pn(0.1, 10), Pn(0.3, 10), Pn(0.8, 5)], inf), // 0.0=beginning of sample, 0.5=half way into sample, 1.0=end of sample
-		\dur, Pseq([Pn(0.5, 3), 0.25, 0.25], inf),
+		\startPos, 0.239, //Pseq([Pn(0.1, 10), Pn(0.3, 10), Pn(0.8, 5)], inf), // 0.0=beginning of sample, 0.5=half way into sample, 1.0=end of sample
+		\dur, Pseq([Pn(0.5, 3), 0.25, 0.25], inf) * 4,
 		\att, 0.001,
-		\rel, 1,
+		\rel, 4,
 		\legato, 0.995,
-		\rate, Pstutter(10, Prand([0.5, 1, 1], inf)), //Pwhite(1, 1.5), // 1=original speed, 0.5=half speed, 2=twice speed, etc.
+		\rate, Pstutter(10, Prand([0.5, 1, 1, 1.1], inf)), //Pwhite(1, 1.5), // 1=original speed, 0.5=half speed, 2=twice speed, etc.
 	// a negative number for \rate makes sound goes backward
-		\amp, 3,
+		\amp, 1,
 		\pan, Pwhite(-1.0, 1.0),
 	)
 ).play;

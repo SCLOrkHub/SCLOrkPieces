@@ -38,7 +38,7 @@ Ndef(\p1,
 		\type, \dirt,
 		\sampleName, Pseq(samples.flat, inf),
 		\dur, Pseq(~dursFrom.(samples), inf),
-		\stretch, 1,
+		\stretch, 4, // loop duration in beats
 		\amp, 0.5,
 		\rate, Pwhite(1, 1.01) * 1
 	)

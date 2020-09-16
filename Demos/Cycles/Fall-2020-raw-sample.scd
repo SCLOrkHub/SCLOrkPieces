@@ -16,7 +16,7 @@ Ndef(\raw, { PlayBuf.ar(1, ~trump, loop: 1) });
 
 // This creates a general purpose clock that Ndefs can use; also quants all proxies to 1 beat
 
-p = Ndef(\tempo).proxyspace.makeTempoClock(1.0).quant_(1.0);
+p = Ndef(\tempo).proxyspace.makeTempoClock(150/60).quant_(1.0);
 
 
 // Creates a convenience Ndef to act as metronome wherever an Impulse can be used
