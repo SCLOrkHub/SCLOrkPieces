@@ -1,8 +1,8 @@
 /*
 
--- loads necessary scd files
+25x25
 
--- provides some Pbindef examples
+SCLOrk Fall 2020
 
 */
 
@@ -12,14 +12,11 @@ StartupFile.choose;
 // Reboot interpreter (red buttons will appear)
 thisProcess.recompile;
 
+// Load Samples, All the Rest, Browser GUI from red buttons
+// Open SCLOrkChat from red button
+// open your scd file from red button
 
-
-
-
-// NEXT STEP:
-
-// add buttons for each player to open their own live coding file
-
+// last thing should be to turn on PUBLIC coding
 
 
 
@@ -45,24 +42,24 @@ thisProcess.recompile;
 
 // Load all 2000 samples (will reboot server automatically)
 // Takes several seconds to load them all, watch Post window
-"25x25_SCLOrkDirtSamplesLoad.scd".loadRelative;
+// "25x25_SCLOrkDirtSamplesLoad.scd".loadRelative;
 
 // Load a simple SynthDef called \pb for playback
-"25x25_SynthDefs.scd".loadRelative;
+// "25x25_SynthDefs.scd".loadRelative;
 
 // Load couple custom functions to allow "cycles" live coding style
-"25x25_Functions.scd".loadRelative;
+// "25x25_Functions.scd".loadRelative;
 
 // Load some Ndef stuff
-"25x25_NdefSetup.scd".loadRelative;
+// "25x25_NdefSetup.scd".loadRelative;
 
 // Browse samples with a GUI (useful to familiarize yourself with what's available)
 // the sample name in the GUI is what you will use in the live coding as a Symbol
 // for example, sample named ab8 can be used as \ab8 in your code
-"25x25_SCLOrkDirtSamplesBrowse.scd".loadRelative;
+// "25x25_SCLOrkDirtSamplesBrowse.scd".loadRelative;
 
 // Open SCLOrkChat (no need to change this line; variable ~myName already should contain your name)
-SCLOrkChat.new(~myName.asString);
+// SCLOrkChat.new(~myName.asString);
 
 
 // ******************************************
@@ -71,14 +68,15 @@ SCLOrkChat.new(~myName.asString);
 
 // ... and now open your own live coding file (save one if you don't have it already)
 
+/*
 "aastha.scd".resolveRelative.openDocument;
 "bruno.scd".resolveRelative.openDocument;
 "ed.scd".resolveRelative.openDocument;
 "josh.scd".resolveRelative.openDocument;
 "noonan.scd".resolveRelative.openDocument;
+*/
 
-
-"template.scd".resolveRelative.openDocument;
+// "template.scd".resolveRelative.openDocument;
 
 
 

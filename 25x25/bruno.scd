@@ -38,7 +38,7 @@ Ndef(\b1,
 		\sampleName, Pseq(samples.flat, inf),
 		\dur, Pseq(~dursFrom.(samples), inf),
 		\stretch, 4,
-		\amp, Pseq([0.4, 0.29, 0.4, 0.3], inf) * 2,
+		\amp, Pseq([0.4, 0.29, 0.4, 0.3], inf) * 0.2,
 		\rate, Pwhite(1, 1.01) * Pwrand([1, 0.5, -0.91], [9, 3, 1].normalizeSum, inf)
 	)
 ).play
@@ -207,19 +207,19 @@ Ndef(\bfx2, {
 }).play;
 )
 
-Ndef(\bfx2) <<>.in2 Ndef(\b1);
+Ndef(\bfx2) <<>.in1 Ndef(\b1);
 
 
-Ndef(\bfx2).unmap(\in2)
-Ndef(\bfx2) <<>.in2 nil;
-Ndef(\bfx2).map(\in1, Ndef(\ssaw));
+Ndef(\bfx2).unmap(\in1)
+Ndef(\bfx2) <<>.in1 nil;
+Ndef(\bfx2).map(\in2, Ndef(\ssaw));
 
 Ndef(\bfx2).stop(5);
 Ndef(\ssaw).stop(5);
 Ndef(\b1).stop(5);
 
 Ndef(\ssaw).pause;
-Ndef(\b1).stop(10)
+Ndef(\b1).pause;
 
 Ndef.clear(1)
 // =======================================

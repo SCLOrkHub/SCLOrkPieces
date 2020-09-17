@@ -9,7 +9,6 @@ if (q.myID == '???') {
 
 	// make a new OscRouterClient,
 	// and log in with name and pw,
-	// to default group "gencomp"
 	q.oscRouter = OSCRouterClient.new(
 		q.myID, q.mygroup,
 		serverAddr: q.myoscserver,
@@ -18,5 +17,8 @@ if (q.myID == '???') {
 		serverPort: 61999
 	);
 
-	q.oscRouter.join({ "*** Connected to %!\n".postf(q.myoscserver) });
+	q.oscRouter.join(
+		onSuccess: { "*** Connected to %!\n".postf(q.myoscserver) },
+		onFailure: { "*** UNABLE TO CONNECT TO %!\n".postf(q.myoscserver) }
+	);
 };

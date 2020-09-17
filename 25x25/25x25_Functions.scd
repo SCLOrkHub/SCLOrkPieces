@@ -33,6 +33,8 @@ Event.addEventType(\dirt, {
 	currentEnvironment.play;
 });
 
+"Utility Functions loaded".postln;
+
 
 
 

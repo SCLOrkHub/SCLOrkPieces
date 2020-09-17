@@ -39,9 +39,9 @@ This file:
 });
 
 
-SynthDescLib.global.at(\pb1).postln;
-SynthDescLib.global.at(\pb2).postln;
-[];
+// SynthDescLib.global.at(\pb1).postln;
+// SynthDescLib.global.at(\pb2).postln;
+// [];
 
 
 
@@ -160,7 +160,7 @@ metadata: (
 	)
 ).add;
 
-
+"SynthDefs loaded".postln;
 
 /*
 

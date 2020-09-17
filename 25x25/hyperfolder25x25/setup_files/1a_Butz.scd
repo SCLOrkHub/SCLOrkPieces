@@ -13,8 +13,77 @@ Butz.w.layout.spacing_(2);
 ///// put more complex actions in as MFdef(name) or WinBounds.showOrMake(name);
 ///// and fill those functions later.
 
-// utility buttons for osc router visuals in system browser:
+
+
+// 25x25 - piece specific buttons
+
+Butz.add(~myName.asSymbol, {
+	(
+		"My name is "
+		++
+		~myName.asString
+		++
+		[
+			" and I shall not be moved",
+			" and I approve of this message"
+		].choose;
+	).postln;
+});
+
+
+
+Butz.add('   -   ', { "this is just a space divider" });
+
+
+
+Butz.add('Load Samples', {
+	(PathName(q.hyperfolder).parentPath ++ "25x25_SCLOrkDirtSamplesLoad.scd").load;
+});
+
+Butz.add('Load All The Rest', {
+	(PathName(q.hyperfolder).parentPath ++ "25x25_SynthDefs.scd").load;
+	(PathName(q.hyperfolder).parentPath ++ "25x25_Functions.scd").load;
+	(PathName(q.hyperfolder).parentPath ++ "25x25_NdefSetup.scd").load;
+});
+
+Butz.add('Browse Samples', {
+	(PathName(q.hyperfolder).parentPath ++ "25x25_SCLOrkDirtSamplesBrowse.scd").load;
+});
+
+Butz.add('SCLOrkChat', { SCLOrkChat.new(~myName.asString, if(~myName==='bruno', {true},{false})) });
+
+
+
+Butz.add('-', { "this is just a space divider" });
+
+
+
+
+Butz.add('my scd file', {
+	try({ (
+		PathName(q.hyperfolder).parentPath
+		++
+		~myName.asString
+		++
+		".scd"
+	).openDocument;
+	},
+	{ "***oops -- are you sure your nickname matches your scd file?".postln; }
+);
+});
+
+Butz.add(' - ', { "this is just a space divider" });
+
+Butz.add('PUBLIC', MFdef('PUBLIC'));
+Butz.add('PRIVATE', MFdef('PRIVATE'));
+
+
+Butz.add('  -  ', { "this is just a space divider" });
+
+// ====================
+// utility buttons
 Butz.add('StartupFile', { StartupFile.choose });
+
 Butz.add('hyperfolder', { q.hyperfolder.openOS });
 
 Butz.add(\postPeers, {
@@ -22,21 +91,6 @@ Butz.add(\postPeers, {
 	"*** q.oscRouter has % peers: \n%\n".postf(peers.size, peers.sort)
 });
 
-
-
-Butz.add('1. LoadSamples', {
-	(PathName(q.hyperfolder).parentPath ++ "25x25_SCLOrkDirtSamplesLoad.scd").load;
-});
-
-Butz.add('2. LoadRest', {
-	(PathName(q.hyperfolder).parentPath ++ "25x25_SynthDefs.scd").load;
-	(PathName(q.hyperfolder).parentPath ++ "25x25_Functions.scd").load;
-	(PathName(q.hyperfolder).parentPath ++ "25x25_NdefSetup.scd").load;
-});
-
-Butz.add('3. BrowseSamples', {
-	(PathName(q.hyperfolder).parentPath ++ "25x25_SCLOrkDirtSamplesBrowse.scd").load;
-});
 
 
 // Butz.add('loadSynthLib', { (q.hyperfolder +/+ "libs/_SynthLib.scd").load });
@@ -48,8 +102,6 @@ Butz.add('3. BrowseSamples', {
 Butz.add( \History, { WinBounds.showOrMake(\History) });
 Butz.add( \SyncText, MFdef(\SyncText) );
 
-Butz.add('PRIVATE', MFdef('PRIVATE'));
-Butz.add('PUBLIC', MFdef('PUBLIC'));
 
 Butz.add('ndefmix', { WinBounds.showOrMake(\ndefmix) });
 // Butz.add('Tdef.all', { WinBounds.showOrMake('Tdef.all') });
@@ -57,14 +109,14 @@ Butz.add('ndefmix', { WinBounds.showOrMake(\ndefmix) });
 
 // Butz.add(\DRAW, { WinBounds.showOrMake(\DRAW) });
 // Butz.add('MFdef_draw', { WinBounds.showOrMake('MFdef_draw') });
-Butz.add('SCLOrkChat', { SCLOrkChat.new(~myName.asString, if(~myName==='bruno', {true},{false})) });
 
-Butz.add('scope', { WinBounds.showOrMake(\scope) });
+
+// Butz.add('scope', { WinBounds.showOrMake(\scope) });
 
 Butz.add(\meter, { WinBounds.showOrMake(\meter) });
-Butz.add('recSetup', MFdef('recSetup'));
-Butz.add('record', { s.record });
-Butz.add('stopRec', { s.stopRecording });
+// Butz.add('recSetup', MFdef('recSetup'));
+// Butz.add('record', { s.record });
+// Butz.add('stopRec', { s.stopRecording });
 
 Butz.add(\MainFX, { WinBounds.showOrMake(\MasterFX) });
 WinBounds.addMake(\MasterFX, { MasterFX(s).gui.parent.name_(\MasterFX) });
@@ -83,6 +135,12 @@ WinBounds.addMake(\ndefmix, {
 	q.mixer.parent;
 });
 
+WinBounds.addMake(\meter, {
+	var w = s.meter.window;
+	w.name_(\meter);
+	w;
+});
+/*
 MFdef('recSetup').add(\makeDoc, {
 	Document("myRecSetup", [
 		"/**** ",
@@ -110,13 +168,9 @@ WinBounds.addMake(\scope, {
 	w.name_(\scope);
 });
 
-WinBounds.addMake(\meter, {
-	var w = s.meter.window;
-	w.name_(\meter);
-	w;
-});
 
-/*
+
+
 MFdef(\CodingDojo).add(\startDoc, {
 	var text;
 	var founddoc = Document.allDocuments. detect { |d| d.title == "Dojo_start" };
