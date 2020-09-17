@@ -9,11 +9,6 @@ bruno live coding file
 
 
 
-
-
-// EXAMPLES
-// (do not modify them here -- create your own file for live coding, save it in this same directory);
-
 (
 var samples;
 samples = [\bd0, \techno0, \bd0, \techno1, \cp0, \drum2, \techno1, \drum2];
@@ -38,7 +33,7 @@ Ndef(\b1,
 		\sampleName, Pseq(samples.flat, inf),
 		\dur, Pseq(~dursFrom.(samples), inf),
 		\stretch, 4,
-		\amp, Pseq([0.4, 0.29, 0.4, 0.3], inf) * 0.2,
+		\amp, Pseq([0.4, 0.29, 0.4, 0.3], inf) * 0.9,
 		\rate, Pwhite(1, 1.01) * Pwrand([1, 0.5, -0.91], [9, 3, 1].normalizeSum, inf)
 	)
 ).play
@@ -59,8 +54,8 @@ Ndef(\bfx, {
 	snd = CombC.ar(
 		in: snd,
 		maxdelaytime: 1,
-		delaytime: p.clock.tempo / 4, // make delay in sync with tempo
-		decaytime: 1.5
+		delaytime: p.clock.tempo / 2.5, // make delay in sync with tempo
+		decaytime: 3.5
 	);
 	snd.distort.tanh;
 
@@ -112,7 +107,7 @@ Ndef(\tpt,
 
 // Send \tpt into \bfx
 Ndef(\bfx).map(\in2, Ndef(\tpt));
-
+Ndef(\bfx).unmap(\in2)
 Ndef(\tpt).stop;
 
 
@@ -122,24 +117,47 @@ Ndef(\tpt).stop;
 // notice that this Pbind does NOT use the Cycles style for durations, we compose durs manually here (the 'usual' way)
 
 (
+Ndef(\trump).quant = 4;
 Ndef(\trump,
 	Pbind(
 		\instrument, \gr,
 		\buffer, ~trump,
-		// \startPos, Pwhite(0, 1.0),
-		\startPos, 0.19, //Pseq([Pn(0.1, 10), Pn(0.3, 10), Pn(0.8, 5)], inf), // 0.0=beginning of sample, 0.5=half way into sample, 1.0=end of sample
+		\startPos, Pdef(\startPos,
+			Pstutter(5, Pseq([0.19, 0.201, 0.339, 0.54], inf))
+		),
 		\dur, Pseq([Pn(0.5, 3), 0.25, 0.25], inf),
+		\stretch, Pdef(\stretch, 2),
 		\att, 0.001,
-		\rel, 1,
-		\legato, 0.995,
-		\rate, Pstutter(10, Prand([0.5, 1, 1], inf)), //Pwhite(1, 1.5), // 1=original speed, 0.5=half speed, 2=twice speed, etc.
-	// a negative number for \rate makes sound goes backward
-		\amp, 3,
+		\rel, Pdef(\rel, 0.45),
+		\legato, Pdef(\legato, 0.58),
+		\rate, Pdef(\rate,
+			Pstutter(10, Prand([0.95, 1, 1], inf))
+		),
+		\amp, 0.7,
 		\pan, Pwhite(-1.0, 1.0),
 	)
 ).play;
 )
 
+(
+Pdef(\rel, 0.3);
+Pdef(\legato, 1);
+Pdef(\stretch, 4);
+)
+
+(
+Pdef(\rate, Pstutter(10, Prand([1.5, 1, 1], inf)) )
+)
+
+(
+Pdef(\rel, Pwrand([1, 0.2], [0.1, 0.9], inf));
+Pdef(\stretch, 1);
+Pdef(\startPos,
+	Pstutter(5, Pseq([0.119, 0.2201, 0.3339, 0.554], inf))
+)
+)
+
+Ndef(\trump).stop(10);
 
 
 // =======================================
@@ -160,8 +178,8 @@ Ndef(\b1,
 		\type, \dirt,
 		\sampleName, Pseq(samples.flat, inf).trace,
 		\dur, Pseq(~dursFrom.(samples), inf),
-		\stretch, 8,
-		\amp, Pseq([0.4, Pgeom(0.25, 1.2, 5), Pn(0.4, 3), 1.9], inf),
+		\stretch, 10,
+		\amp, Pseq([0.4, Pgeom(0.25, 1.2, 5), Pseq([0.4, 0.3, 0.2]), 1.9], inf),
 		\rate, Pwhite(1, 1.01) * 1
 		* Pfunc({ |e|
 			if(e.sampleName === \dork22, { -1.09 }, { 1 })
@@ -179,6 +197,7 @@ Ndef(\ssaw,
 		\legato, 0.6,
 		\numberOscs, Pseq([10, 25, 10, 25, 25, 5, 8, 11, 12], inf),
 		\dur, Pseq([3, 3, 8, 2, 8, 3, 3, 5, 1], inf) * Prand([1, 0.5, 0.5], inf),
+		\stretch, 3,
 		\fatt, Pseq([0.5, 0.5, 2, 0.5, 1, 0.5, 0.5, 0.7, 4], inf),
 
 	);
@@ -187,8 +206,10 @@ Ndef(\ssaw,
 (
 Ndef(\bfx2).fadeTime = 2;
 Ndef(\bfx2, {
-	var snd;
-	snd = \in1.ar([0, 0]) + \in2.ar([0, 0]) + \in3.ar([0, 0]);
+	var snd, in1, in2, in3;
+	in1 = \in1.ar([0, 0]); in2 = \in2.ar([0, 0]); in3 = \in3.ar([0, 0]);
+
+	snd = (in1 * 0.25) + (in2 * 1) + (in3 * 1);
 	snd = CombC.ar(
 		in: HPF.ar(snd, 1000),
 		maxdelaytime: 1,
@@ -197,9 +218,9 @@ Ndef(\bfx2, {
 	);
 	snd.distort.tanh;
 	snd = FreeVerb.ar(
-		in: snd,
-		mix: 0.5,
-		room: 0.27,
+		in: in1 + snd,
+		mix: 0.4,
+		room: 0.57,
 		damp: 0.97,
 		mul: 1
 	);
@@ -214,14 +235,14 @@ Ndef(\bfx2).unmap(\in1)
 Ndef(\bfx2) <<>.in1 nil;
 Ndef(\bfx2).map(\in2, Ndef(\ssaw));
 
-Ndef(\bfx2).stop(5);
 Ndef(\ssaw).stop(5);
 Ndef(\b1).stop(5);
+Ndef(\bfx2).stop(5);
+
 
 Ndef(\ssaw).pause;
 Ndef(\b1).pause;
 
-Ndef.clear(1)
 // =======================================
 // =======================================
 // =======================================
@@ -233,8 +254,6 @@ Ndef.clear(1)
 
 
 
-
-Ndef.clear(5)
 
 
 
@@ -286,6 +305,7 @@ Ndef(\b1,
 	)
 ).play
 )
+
 
 
 
