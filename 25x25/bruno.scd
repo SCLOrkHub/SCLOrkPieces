@@ -6,7 +6,15 @@ bruno live coding file
 */
 
 
-
+(
+Ndef(\b1).pause(5);
+Ndef(\b2).stop(5);
+Ndef(\bfx1).stop(5);
+Ndef(\bfx2).stop(5);
+Ndef(\trump).stop(5);
+Ndef(\ssaw).pause(1);
+Ndef(\cmn20).stop(5);
+)
 
 
 (
@@ -191,15 +199,14 @@ Ndef(\b1,
 Ndef(\ssaw,
 	Pbind(
 		\instrument, "superSaw",
-		\note, Pseq([0, 2, 3, 0, 2, 3, 5, 3, 2, 4, 0, -7], inf),
+		\note, Pseq([0, 2, 3, 0, 2, 3, 5, 3, 2, 7, 0, -7], inf),
 		\ctranspose, -12,
-		\amp, 0.1,
+		\amp, 0.2,
 		\legato, 0.6,
 		\numberOscs, Pseq([10, 25, 10, 25, 25, 5, 8, 11, 12], inf),
 		\dur, Pseq([3, 3, 8, 2, 8, 3, 3, 5, 1], inf) * Prand([1, 0.5, 0.5], inf),
 		\stretch, 3,
-		\fatt, Pseq([0.5, 0.5, 2, 0.5, 1, 0.5, 0.5, 0.7, 4], inf),
-
+		\fatt, Pseq([0.5, 0.5, 1, 0.5, 1, 0.5, 0.5, 0.7, 0.4], inf),
 	);
 ).play;
 )
@@ -219,7 +226,7 @@ Ndef(\bfx2, {
 	snd.distort.tanh;
 	snd = FreeVerb.ar(
 		in: in1 + snd,
-		mix: 0.4,
+		mix: 0.64,
 		room: 0.57,
 		damp: 0.97,
 		mul: 1

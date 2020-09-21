@@ -103,7 +103,7 @@ Butz.add( \History, { WinBounds.showOrMake(\History) });
 Butz.add( \SyncText, MFdef(\SyncText) );
 
 
-Butz.add('ndefmix', { WinBounds.showOrMake(\ndefmix) });
+// Butz.add('ndefmix', { WinBounds.showOrMake(\ndefmix) });
 // Butz.add('Tdef.all', { WinBounds.showOrMake('Tdef.all') });
 // Butz.add('Pdef.all', { WinBounds.showOrMake('Pdef.all') });
 
