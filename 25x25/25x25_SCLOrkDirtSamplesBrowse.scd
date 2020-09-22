@@ -8,10 +8,11 @@ this file creates a GUI to browse all samples by name
 */
 
 // Window.closeAll;
-if( (~browseWindow.isNil) || (~browseWindow.isClosed), {
+if( (~browseWindow.isNil), {
 
 	~alphabeticalSamples = d.keys.asArray.sort; //copyRange(0, 250);
 	~browseWindow = Window.new("dirt-samples [scroll down for more]", Rect(10, 10, 1265, 700), resizable: false, scroll: true);
+	~browseWindow.onClose = ({ ~browseWindow = nil; "sample browser has been closed".postln; });
 	~browseWindow.view.decorator = FlowLayout(~browseWindow.view.bounds, 5@5, 5@5);
 	~alphabeticalSamples.do({ |key| Button(~browseWindow, 100@25)
 		.states_([
@@ -50,7 +51,6 @@ if( (~browseWindow.isNil) || (~browseWindow.isClosed), {
 		});
 	});
 	~browseWindow.front;
-	~browseWindow.onClose({ ~browseWindow = nil; "wow".postln; });
 }, {
 	~browseWindow.unminimize;
 	~browseWindow.front;

@@ -5,16 +5,39 @@ bruno live coding file
 
 */
 
+~listAll.value;
+~freeAll.value(5);
 
 (
-Ndef(\b1).pause(5);
+Ndef(\b1).stop(5);
 Ndef(\b2).stop(5);
 Ndef(\bfx1).stop(5);
 Ndef(\bfx2).stop(5);
 Ndef(\trump).stop(5);
-Ndef(\ssaw).pause(1);
+Ndef(\ssaw).pause;
 Ndef(\cmn20).stop(5);
 )
+
+
+Ndef(\li, { Line.kr([1, 1], [0.5, 2], 10) }).kr(2);
+Ndef(\li, { SinOsc.kr([1/2, 4]).range(1, 2) }).kr(2);
+(
+Ndef(\raw).send;
+Ndef(\btrump, {
+	var snd = Ndef(\raw).ar;
+	snd = PitchShift.ar(
+		in: snd,
+		windowSize: 0.2,
+		// pitchRatio: [1.1, 0.5],
+		pitchRatio: Ndef(\li).kr(2),
+		pitchDispersion: SinOsc.ar(1/10).range(0, 0.09),
+		timeDispersion: 0.01
+	);
+	snd = Splay.ar(snd);
+}).play;
+)
+
+
 
 
 (

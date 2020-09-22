@@ -36,34 +36,36 @@ Event.addEventType(\dirt, {
 
 // List all existing Ndefs, with info whether it's playing and monitoring
 ~listAll = {
-	var isPlaying, isMonitoring, string;
+	var isPlaying, isMonitoring, string, return;
+	return = List.new;
 	Ndef.dictFor(s).do({ | ndef |
 		var key = ndef.key;
 		isPlaying = if(Ndef(key).isPlaying, { 1 }, { 0 });
 		isMonitoring = if(Ndef(key).isMonitoring, { 1 }, { 0 });
-		string = "m % p % Ndef(%) \n";
+		string = "m % p % Ndef(%)";
 		if( (isPlaying==1) && (isMonitoring==1),
 			{ string = "***" ++ string };
 		);
-		string.postf(isMonitoring, isPlaying, key);
+		return.add(string.format(isMonitoring, isPlaying, ("\\" ++ key.asString)));
 	});
+	return.sort.do({ |s| s.postln });
 	"m=monitoring, p=playing";
 };
 
 // Free all Ndefs except the ones in the list provided as argument
-~freeAll = { | fadeTime = 5, leaveAlone = \t |
+~freeAll = { | fadeTime = 5, leaveAlone = [\t] |
 	var exceptions = if( leaveAlone.isArray.not, { [ leaveAlone ] }, { leaveAlone });
 
 	Ndef.dictFor(s).do({ | ndef |
 		var key = ndef.key;
-		if( exceptions.includes(key).not, {
+		if( (exceptions.includes(key).not) && (ndef.isPlaying), {
 			("Freeing Ndef(\\" ++ key.asString ++ ")...").postln;
 			Ndef(key.asSymbol).free(fadeTime);
 		}, {
-			("Ndef(\\" ++ key.asString ++ ") left untouched").postln;
+			// ("Ndef(\\" ++ key.asString ++ ") left untouched").postln;
 		})
 	});
-	"freeing all Ndefs over % seconds... \n".postf(fadeTime);
+	"freeing active Ndefs over % seconds... \n".postf(fadeTime);
 };
 
 currentEnvironment.keys.postln;
