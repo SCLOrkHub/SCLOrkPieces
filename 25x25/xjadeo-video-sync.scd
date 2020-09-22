@@ -8,7 +8,7 @@ StartupFile.choose;
 ~xjadeo.sendMsg('/jadeo/quit');
 ~xjadeo.sendMsg('/jadeo/load', "/home/ruviaro/Downloads/Sep 14.mov");
 
-~xjadeo.sendMsg('/jadeo/load', "/home/ruviaro/Downloads/Screen Test 4k COUNTDOWN 1 min - v 682 - timer 60 sec with sound effects.mp4");
+~xjadeo.sendMsg('/jadeo/load', "/home/sclork/Videos/2020-06-22_SCLOrk_Quick_Setup_Video.mp4");
 
 ~xjadeo.sendMsg('/jadeo/osd/framenumber', 1); // show frame number on screen
 
