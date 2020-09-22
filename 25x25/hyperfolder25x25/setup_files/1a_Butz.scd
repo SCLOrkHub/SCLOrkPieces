@@ -31,7 +31,6 @@ Butz.add(~myName.asSymbol, {
 });
 
 
-
 Butz.add('   -   ', { "this is just a space divider" });
 
 
@@ -76,6 +75,9 @@ Butz.add(' - ', { "this is just a space divider" });
 
 Butz.add('PUBLIC', MFdef('PUBLIC'));
 Butz.add('PRIVATE', MFdef('PRIVATE'));
+
+MFdef('PUBLIC').add(\winColor, { Butz.w.background_(Color.black) });
+MFdef('PRIVATE').add(\winColor, { Butz.w.background_(Color.red) });
 
 
 Butz.add('  -  ', { "this is just a space divider" });
