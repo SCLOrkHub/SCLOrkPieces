@@ -33,6 +33,33 @@ Event.addEventType(\dirt, {
 	currentEnvironment.play;
 });
 
+
+// List all existing Ndefs, with info whether it's playing and monitoring
+~listAll = {
+	var isPlaying, isMonitoring;
+	Ndef.dictFor(s).keys.do({ | key |
+		isPlaying = if(Ndef(key).isPlaying, { 1 }, { 0 });
+		isMonitoring = if(Ndef(key).isMonitoring, { 1 }, { 0 });
+		"m % p % Ndef(%) \n".postf(isMonitoring, isPlaying, key);
+	});
+};
+
+// Free all Ndefs except the ones in the list provided as argument
+~freeAllExcept = { | list, fadeTime = 5 |
+	var exceptions = if( list.isArray.not, { [ list ] }, { list });
+
+	Ndef.dictFor(s).keys.do({ | key |
+		if( exceptions.includes(key).not, {
+			("Freeing Ndef(\\" ++ key.asString ++ ")...").postln;
+			Ndef(key.asSymbol).free(fadeTime);
+		}, {
+			("Ndef(\\" ++ key.asString ++ ") left untouched").postln;
+		})
+	});
+};
+
+currentEnvironment.keys.postln;
+
 "Utility Functions loaded".postln;
 
 
