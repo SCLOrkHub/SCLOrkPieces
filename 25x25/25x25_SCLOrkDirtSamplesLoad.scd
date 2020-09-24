@@ -12,43 +12,51 @@ d[\hit0]
 
 */
 
+
 // s.quit;
 // s.options.numBuffers = 3000;
 // s.options.memSize = 8192 * 100; // 100 times the default
-s.waitForBoot({
 
-	p = PathName.new(Quarks.folder ++ "/Dirt-Samples");
+if( d.isNil, {
+	s.waitForBoot({
 
-	d = IdentityDictionary.new(n: 2500, know: true); // know: true makes the dictionary interpret method calls as look ups.
+		p = PathName.new(Quarks.folder ++ "/Dirt-Samples");
 
-	// add a symbol \r for rests
+		d = IdentityDictionary.new(n: 2500, know: true); // know: true makes the dictionary interpret method calls as look ups.
 
-	d.put(\r, \rest);
+		// add a symbol \r for rests
 
-	Routine.run({
+		d.put(\r, \rest);
 
-		p.folders.do({ |thisFolder|
+		Routine.run({
 
-			thisFolder.entries.do({ |thisFile, count|
-				var key, buffer, extension, allowedExtensions;
-				extension = thisFile.extension;
-				allowedExtensions = ["wav", "WAV", "aif", "AIF", "aiff", "AIFF", "aifc", "AIFC"];
-				if(allowedExtensions.includesEqual(extension), {
-					key = (thisFolder.folderName ++ count).asString;
-					key = if(key[0].asString.asInteger==0, { key }, {"a"++key});
-					key = key.asSymbol;
-					buffer = Buffer.read(
-						server: s,
-						path: thisFile.fullPath
-					);
-					// s.sync;
-					0.015.wait;
-					[buffer.bufnum, key].postln;
-					d.put(key, buffer);
-				}, {
-					[extension, "not a wav or aif file"].postln;
+			p.folders.do({ |thisFolder|
+
+				thisFolder.entries.do({ |thisFile, count|
+					var key, buffer, extension, allowedExtensions;
+					extension = thisFile.extension;
+					allowedExtensions = ["wav", "WAV", "aif", "AIF", "aiff", "AIFF", "aifc", "AIFC"];
+					if(allowedExtensions.includesEqual(extension), {
+						key = (thisFolder.folderName ++ count).asString;
+						key = if(key[0].asString.asInteger==0, { key }, {"a"++key});
+						key = key.asSymbol;
+						buffer = Buffer.read(
+							server: s,
+							path: thisFile.fullPath
+						);
+						// s.sync;
+						0.015.wait;
+						[buffer.bufnum, key].postln;
+						d.put(key, buffer);
+					}, {
+						[extension, "not a wav or aif file"].postln;
+					});
 				});
 			});
 		});
-	});
-}); // end of waitForBoot
+	}); // end of waitForBoot
+}, {
+	"Samples already loaded.".postln;
+	"Variable 'd' should contain an Identity Dictionary with % entries:\n".postf(d.size);
+	d.postln;
+}); // end of if

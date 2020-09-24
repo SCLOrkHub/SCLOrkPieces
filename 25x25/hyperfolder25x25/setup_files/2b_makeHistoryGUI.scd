@@ -90,3 +90,6 @@ WinBounds.addMake('sharedHistory', {
 	// return the parent window
 	g.parent;
 });
+
+// we don't need to see it right now
+Window.find('sharedHistory').close;

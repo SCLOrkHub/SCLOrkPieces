@@ -7,6 +7,8 @@ try { Butz.w.close };
 Butz.makeWin;
 Butz.w.layout.margins = [4, 4, 4, 4];
 Butz.w.layout.spacing_(2);
+Butz.w.moveTo(0, 0);
+
 
 ///// make all button names here first, in the desired order.
 ///// put simple actions in directly;
@@ -115,7 +117,11 @@ Butz.add( \SyncText, MFdef(\SyncText) );
 
 // Butz.add('scope', { WinBounds.showOrMake(\scope) });
 
-Butz.add(\meter, { WinBounds.showOrMake(\meter) });
+Butz.add(\meter, {
+	// s.meter.window.close;
+	WinBounds.showOrMake(\meter);
+	Window.find(\meter).moveTo(120, 0);
+});
 // Butz.add('recSetup', MFdef('recSetup'));
 // Butz.add('record', { s.record });
 // Butz.add('stopRec', { s.stopRecording });
@@ -138,8 +144,10 @@ WinBounds.addMake(\ndefmix, {
 });
 
 WinBounds.addMake(\meter, {
-	var w = s.meter.window;
+	var w;
+	w = s.meter.window;
 	w.name_(\meter);
+	w.alwaysOnTop_(true);
 	w;
 });
 /*

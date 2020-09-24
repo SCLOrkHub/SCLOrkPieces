@@ -19,22 +19,52 @@ Ndef(\cmn20).stop(5);
 )
 
 
-Ndef(\li, { Line.kr([1, 1], [0.5, 2], 10) }).kr(2);
-Ndef(\li, { SinOsc.kr([1/2, 4]).range(1, 2) }).kr(2);
+Ndef(\li, { Line.kr([1, 1], [0.5, 1.1], 10) }).kr(2);
+Ndef(\li, { LFNoise0.kr([12, 14]).range(0.25, 5) })
 (
-Ndef(\raw).send;
+// Ndef(\raw).send;
+Ndef(\btrump).fadeTime = 0;
 Ndef(\btrump, {
-	var snd = Ndef(\raw).ar;
+	var snd = PlayBuf.ar(1, ~trump, startPos: 0.275 * BufFrames.kr(~trump));
 	snd = PitchShift.ar(
 		in: snd,
 		windowSize: 0.2,
-		// pitchRatio: [1.1, 0.5],
-		pitchRatio: Ndef(\li).kr(2),
-		pitchDispersion: SinOsc.ar(1/10).range(0, 0.09),
-		timeDispersion: 0.01
+		pitchRatio: 1, //[1.0, 1.005, 0.995],
+		// pitchRatio: Ndef(\li).kr(2),
+		pitchDispersion: 0, //XLine.kr(0.5, 0.00001, 5), //SinOsc.ar(1/3).range(0, 0.19),
+		timeDispersion: 0.0,
+		mul: 1, //[1, 0.5]
+	);
+	snd = FreeVerb.ar(
+		in: snd,
+		mix: 0.2,
+		room: 0.6,
+		damp: 0
 	);
 	snd = Splay.ar(snd);
 }).play;
+)
+
+(
+Ndef(\biden).quant = 4;
+Ndef(\biden,
+	Pbind(
+		\instrument, \gr,
+		\buffer, ~biden,
+		\startPos, Pseq([
+			Pseries(0.38, 0.01, 10),
+			Pseq([0.47, 0.5], inf)
+		], inf),
+		\dur, Pseq([Pn(7, 8), Pn(1, inf)], inf),
+		\stretch, Pdef(\stretch, 1),
+		\att, 0.001,
+		\rel, Pseq([Pseq([7, 7, 6, 5, 5, 5, 2]), Pseq([3, 1], inf)], inf).trace,
+		\legato, 1,
+		\rate, 1,
+		\amp, 0.7,
+		\pan, Pwhite(-1.0, 1.0),
+	)
+).play;
 )
 
 

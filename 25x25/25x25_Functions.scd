@@ -53,7 +53,7 @@ Event.addEventType(\dirt, {
 };
 
 // Free all Ndefs except the ones in the list provided as argument
-~freeAll = { | fadeTime = 5, leaveAlone = [\t] |
+~freeAll = { | fadeTime = 5, leaveAlone = \t |
 	var exceptions = if( leaveAlone.isArray.not, { [ leaveAlone ] }, { leaveAlone });
 
 	Ndef.dictFor(s).do({ | ndef |

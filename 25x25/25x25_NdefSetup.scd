@@ -9,6 +9,7 @@ plus some Ndef stuff
 Ndef.clear;
 
 ~trump = Buffer.read(s, "trump-coronavirus-mono.wav".resolveRelative);
+~biden = Buffer.read(s, "biden-i-would-veto-mono.wav".resolveRelative);
 
 // This Ndef just plays back the trump sample continuously;
 Ndef(\raw, { PlayBuf.ar(1, ~trump, loop: 1) });
