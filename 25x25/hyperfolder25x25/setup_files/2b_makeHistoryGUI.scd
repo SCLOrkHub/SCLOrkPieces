@@ -15,8 +15,9 @@ q.oscRouter.sendMsg(\history, q.myID, code);
 
 // better History setup:
 
-// make a window for history, with special buttons
-defer ({ WinBounds.showOrMake('sharedHistory') }, 0.1);
+// make a window for history, with special
+// commented out so the window does not open by default
+// defer ({ WinBounds.showOrMake('sharedHistory') }, 0.1);
 
 Butz.add('PRIVATE', MFdef('PRIVATE'));
 
@@ -91,5 +92,4 @@ WinBounds.addMake('sharedHistory', {
 	g.parent;
 });
 
-// we don't need to see it right now
-Window.find('sharedHistory').close;
+
