@@ -8,8 +8,6 @@ plus some Ndef stuff
 
 Ndef.clear;
 
-d.covid3
-
 d.put(\trump, Buffer.read(s, "trump-coronavirus-mono.wav".resolveRelative));
 d.put(\biden, Buffer.read(s, "biden-i-would-veto-mono.wav".resolveRelative));
 d.put(\covid1, Buffer.read(s, "covid1.wav".resolveRelative));
