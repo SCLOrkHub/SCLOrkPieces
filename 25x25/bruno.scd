@@ -5,8 +5,25 @@ bruno live coding file
 
 */
 
+
+
+
+~openVideo.value(1);
+
+
+~startVideoAndSCLOrkWatch.value(1);
+
+(
+~rewindVideo.value(1);
+~closeSCLOrkWatch.value;
+)
+
+
+
+
 ~listAll.value;
 ~freeAll.value(5);
+~freeAll.value(5, [\btrump]);
 
 (
 Ndef(\b1).stop(5);
@@ -17,7 +34,21 @@ Ndef(\trump).stop(5);
 Ndef(\ssaw).pause;
 Ndef(\cmn20).stop(5);
 )
+Ndef(\btrump).stop(4);
 
+(
+Ndef(\cov, {
+	var snd;
+	var sample;
+	sample = d.covid1;
+	snd = PlayBuf.ar(
+		numChannels: 1,
+		bufnum: sample,
+		rate: 1 * BufRateScale.kr(sample),
+		startPos: 0 * BufFrames.kr(sample)
+	);
+}).play;
+)
 
 Ndef(\li, { Line.kr([1, 1], [0.5, 1.1], 10) }).kr(2);
 Ndef(\li, { LFNoise0.kr([12, 14]).range(0.25, 5) })
@@ -25,13 +56,14 @@ Ndef(\li, { LFNoise0.kr([12, 14]).range(0.25, 5) })
 // Ndef(\raw).send;
 Ndef(\btrump).fadeTime = 0;
 Ndef(\btrump, {
-	var snd = PlayBuf.ar(1, ~trump, startPos: 0.275 * BufFrames.kr(~trump));
+	var sample = d.trump;
+	var snd = PlayBuf.ar(1, d.trump, startPos: 0.275 * BufFrames.kr(d.trump));
 	snd = PitchShift.ar(
 		in: snd,
 		windowSize: 0.2,
 		pitchRatio: 1, //[1.0, 1.005, 0.995],
 		// pitchRatio: Ndef(\li).kr(2),
-		pitchDispersion: 0, //XLine.kr(0.5, 0.00001, 5), //SinOsc.ar(1/3).range(0, 0.19),
+		pitchDispersion: XLine.kr(0.5, 0.00001, 5), //SinOsc.ar(1/3).range(0, 0.19),
 		timeDispersion: 0.0,
 		mul: 1, //[1, 0.5]
 	);

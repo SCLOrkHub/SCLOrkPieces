@@ -8,11 +8,16 @@ plus some Ndef stuff
 
 Ndef.clear;
 
-~trump = Buffer.read(s, "trump-coronavirus-mono.wav".resolveRelative);
-~biden = Buffer.read(s, "biden-i-would-veto-mono.wav".resolveRelative);
+d.covid3
+
+d.put(\trump, Buffer.read(s, "trump-coronavirus-mono.wav".resolveRelative));
+d.put(\biden, Buffer.read(s, "biden-i-would-veto-mono.wav".resolveRelative));
+d.put(\covid1, Buffer.read(s, "covid1.wav".resolveRelative));
+d.put(\covid2, Buffer.read(s, "covid2.wav".resolveRelative));
+d.put(\covid3, Buffer.read(s, "covid3.wav".resolveRelative));
 
 // This Ndef just plays back the trump sample continuously;
-Ndef(\raw, { PlayBuf.ar(1, ~trump, loop: 1) });
+Ndef(\raw, { PlayBuf.ar(1, d.trump, loop: 1) });
 
 
 // This creates a general purpose clock that Ndefs can use; also quants all proxies to 1 beat

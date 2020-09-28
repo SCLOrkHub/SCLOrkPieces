@@ -8,7 +8,7 @@ StartupFile.choose;
 ~xjadeo.sendMsg('/jadeo/quit');
 ~xjadeo.sendMsg('/jadeo/load', "/home/ruviaro/Downloads/Sep 14.mov");
 
-~xjadeo.sendMsg('/jadeo/load', "/home/sclork/Videos/2020-06-22_SCLOrk_Quick_Setup_Video.mp4");
+~xjadeo.sendMsg('/jadeo/load', "/home/ruviaro/Downloads/25x25.mp4");
 
 ~xjadeo.sendMsg('/jadeo/osd/framenumber', 1); // show frame number on screen
 
@@ -20,6 +20,43 @@ StartupFile.choose;
 "echo play | jack_transport".unixCmd;
 "echo stop | jack_transport".unixCmd;
 
+(
+~rewindVideo = {
+	"echo locate 0 | jack_transport".unixCmd;
+	"echo stop | jack_transport".unixCmd;
+};
+
+~startVideoAndSCLOrkWatch = {
+
+	var sww = Window.find("SCLOrkWatch");
+
+	if( sww.notNil, { sww.close } );
+
+	"echo locate 0 | jack_transport".unixCmd;
+	"echo play | jack_transport".unixCmd;
+
+	w = SCLOrkWatch.new([
+		"0:20", { "blackout".postln },
+		"0:25", { "fade in busy dots".postln },
+		"0:38", { "busy dots IN".postln },
+		"0:56", { "25x25".postln },
+		"2:37", { "1st degree of separation".postln },
+		"3:09", { "2nd degree of separation".postln },
+		"3:54", { "3rd degree of separation".postln },
+		"4:39", { "4th degree of separation (4 corners only)".postln },
+		"5:44", { "negative image inversion".postln },
+		"5:53", { "4 bouncing squares".postln },
+		"6:32", { "BLM".postln },
+		"7:01", { "back to 4 bouncing squares".postln },
+		"8:18", { "No Justice No Peace".postln },
+		"8:37", { "Blackout".postln },
+		"8:44", { "breathing dots".postln },
+		"9:01", { "third ans last, towards white screen".postln },
+		"9:13", { "white screen".postln },
+		"9:15", { "end".postln }
+	]);
+};
+)
 
 ~xjadeo.sendMsg('/jadeo/jack/disconnect'); // disconnect from jack so we can manually seek
 
@@ -28,8 +65,15 @@ StartupFile.choose;
 // ql video is 60 FPS
 // but first frame in demo video lasts 118 frames
 
+~xjadeo.sendMsg('/jadeo/seek', 1680);
 
-~xjadeo.sendMsg('/jadeo/seek', 30*2);
+~xjadeo.sendMsg('/jadeo/seek', ((7 * 60) + 1).postln * 30 );
+w.win.close;
+
+
+
+
+
 
 
 t = TempoClock.new(60/60).permanent_(true);
@@ -66,7 +110,7 @@ p = Pbind(
 	}),
 	\dur, 1/30
 ).collect({ |event|
-    ~lastFrameEvent = event;
+	~lastFrameEvent = event;
 }).play(t, quant: Quant(quant: 1, timingOffset: 1/60));
 
 o = Pbind(
@@ -76,7 +120,7 @@ o = Pbind(
 	\test, Pfunc({
 		var f = ~lastFrameEvent[\frame];
 		["wow", f].postln;
-})
+	})
 ).play(t, quant: 1)
 )
 
