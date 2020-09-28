@@ -5,7 +5,7 @@ bruno live coding file
 
 */
 
-
+"test".postln;
 
 
 ~openVideo.value(1);
@@ -37,16 +37,22 @@ Ndef(\cmn20).stop(5);
 Ndef(\btrump).stop(4);
 
 (
-Ndef(\cov, {
+Ndef(\cove, {
 	var snd;
 	var sample;
-	sample = d.covid1;
+	var rate;
+	sample = [d.covid1, d.covid2, d.covid3].choose;
+	rate = 1;
+	rate = [1, -1.1, 0.99, 1.01];
 	snd = PlayBuf.ar(
 		numChannels: 1,
 		bufnum: sample,
-		rate: 1 * BufRateScale.kr(sample),
-		startPos: 0 * BufFrames.kr(sample)
+		rate: rate * BufRateScale.kr(sample),
+		startPos: rrand(0, 0.9) * BufFrames.kr(sample),
+		loop: 1
 	);
+	snd = Splay.ar(snd);
+	// snd = snd * LFPulse.kr(5, 0, LFNoise2.kr(1/4).range(0.1, 0.9));
 }).play;
 )
 
