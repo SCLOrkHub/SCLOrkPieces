@@ -13,6 +13,7 @@ d.put(\biden, Buffer.read(s, "biden-i-would-veto-mono.wav".resolveRelative));
 d.put(\covid1, Buffer.read(s, "covid1.wav".resolveRelative));
 d.put(\covid2, Buffer.read(s, "covid2.wav".resolveRelative));
 d.put(\covid3, Buffer.read(s, "covid3.wav".resolveRelative));
+d.put(\progress, Buffer.read(s, "progress.wav".resolveRelative));
 
 // This Ndef just plays back the trump sample continuously;
 Ndef(\raw, { PlayBuf.ar(1, d.trump, loop: 1) });

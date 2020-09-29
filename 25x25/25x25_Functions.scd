@@ -69,6 +69,18 @@ Event.addEventType(\dirt, {
 };
 
 
+~sendScoreMsg = { | string |
+	try { ~myClient.sendMessage(
+		SCLOrkChatMessage.new(
+			senderId: 0,
+			recipientIds: [0],
+			type: \plain,
+			contents: string,
+		)
+	);
+	}
+};
+
 ~openVideo = { arg all = 0; // if 0, only obs player actually runs
 	if( (~myName == "obs") || (all == 1), {
 		{
@@ -99,7 +111,6 @@ Event.addEventType(\dirt, {
 
 ~startVideoAndSCLOrkWatch = { arg all = 0;
 
-
 	// just in case
 	~closeSCLOrkWatch.value;
 
@@ -111,23 +122,83 @@ Event.addEventType(\dirt, {
 
 	// start SCLOrkWatch
 	SCLOrkWatch.new([
-		// "0:20", { "blackout".postln },
-		"0:25", { "fade in busy dots".postln },
-		"0:38", { "busy dots IN".postln },
-		"0:56", { "25x25".postln },
-		"2:37", { "1st degree of separation".postln },
-		"3:09", { "2nd degree of separation".postln },
-		"3:54", { "3rd degree of separation".postln },
-		"4:39", { "4th degree of separation (4 corners only)".postln },
-		"5:44", { "negative image inversion".postln },
-		"5:53", { "4 bouncing squares".postln },
-		"6:32", { "BLM".postln },
-		"7:01", { "back to 4 bouncing squares".postln },
-		"8:18", { "No Justice No Peace".postln },
-		"8:37", { "Blackout".postln },
-		"8:44", { "breathing dots".postln },
-		"9:01", { "third ans last, towards white screen".postln },
-		"9:13", { "white screen".postln },
+		"0:20", {
+			var msg = "chaos getting started...";
+			~sendScoreMsg.value(msg);
+			msg.postln;
+		},
+		// "0:25", { "fade in busy dots".postln },
+		"0:38", {
+			var msg = "busy dots are in. 25x25 grid coming soon at 0:56, prepare voices";
+			~sendScoreMsg.(msg);
+			msg.postln;
+		},
+		"0:56", {
+			var msg = "25x25 grid now; sudden shift coming at 1:26";
+			~sendScoreMsg.(msg);
+			msg.postln;
+		},
+		"1:26", {
+			var msg = "suddenly busy, agitated, hectic";
+			~sendScoreMsg.(msg);
+			msg.postln;
+		},
+		"2:37", {
+			var msg = "1st separation [dizzy, unsettling] ... next at 3:09";
+			~sendScoreMsg.(msg);
+			msg.postln;
+		},
+		"3:09", {
+			var msg = "2nd separation [slower, orderly]... next at 3:54";
+			~sendScoreMsg.(msg);
+			msg.postln;
+		},
+		"3:54", { var msg = "3rd separation [HECTIC]... next at 4:39";
+			~sendScoreMsg.(msg);
+			msg.postln; },
+		"4:39", {
+			var msg = "4th last separation (4 corners). Bouncing squares coming at 5:53";
+			~sendScoreMsg.(msg);
+			msg.postln;
+		},
+		// "5:44", { "negative image inversion".postln },
+		"5:53", {
+			var msg = "Bouncing squares now. BLM coming at 6:32";
+			~sendScoreMsg.(msg);
+			msg.postln;
+		},
+		"6:32", {
+			var msg = "BLM now. Bouncing squares again at 7:01";
+			~sendScoreMsg.(msg);
+			msg.postln;
+		},
+		"7:01", {
+			var msg = "Bouncing squares, second round. No Justice No Peace coming at 8:18";
+			~sendScoreMsg.(msg);
+			msg.postln;
+		},
+		"8:18", {
+			var msg = "No Justice No Peace word dance - less than 20 seconds to blackout";
+			~sendScoreMsg.(msg);
+			msg.postln;
+		},
+		"8:37", {
+			var msg = "Blackout coda, breathing dots coming soon to end";
+			~sendScoreMsg.(msg);
+			msg.postln;
+		},
+		// "8:44", { "breathing dots".postln },
+		"9:01", {
+			var msg = "don't run any more code; bruno to clearAll & fadeOut soon";
+			~sendScoreMsg.(msg);
+			msg.postln;
+		},
+		"9:13", {
+			var msg = "end of piece; pausing video on white screen";
+			~sendScoreMsg.(msg);
+			msg.postln;
+			"echo stop | jack_transport".unixCmd;
+		},
 		"9:15", { "end".postln }
 	]);
 };

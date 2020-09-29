@@ -51,7 +51,23 @@ Butz.add('Browse Samples', {
 	(PathName(q.hyperfolder).parentPath ++ "25x25_SCLOrkDirtSamplesBrowse.scd").load;
 });
 
-Butz.add('SCLOrkChat', { SCLOrkChat.new(~myName.asString, if(~myName==='bruno', {true},{false})) });
+
+Butz.add('SCLOrkChat', {
+	if( ~myName == "bruno", {
+
+		~myClient = SCLOrkChatClient.new(
+			serverAddress: "cmn17.stanford.edu",
+			serverPort: 61010
+		);
+
+		SCLOrkChat.new(~myName.asString, true, ~myClient);
+
+		"LOGGED IN AS CONDUCTOR".postln;
+
+	}, {
+		SCLOrkChat.new(~myName.asString)
+	});
+});
 
 
 

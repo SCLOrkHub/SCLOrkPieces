@@ -5,11 +5,11 @@ bruno live coding file
 
 */
 
+1:26 bring in high pitched voices
+
 "test".postln;
 
-
-~openVideo.value(1);
-
+~openVideo.(1);
 
 ~startVideoAndSCLOrkWatch.value(1);
 
@@ -37,15 +37,17 @@ Ndef(\cmn20).stop(5);
 )
 Ndef(\btrump).stop(4);
 
+Ndef(\cov).stop(10);
+
 (
-Ndef(\cove).fadeTime = 4;
-Ndef(\cove, {
+Ndef(\cov).fadeTime = 6;
+Ndef(\cov, {
 	var snd;
 	var sample;
 	var rate;
 	sample = [d.covid1, d.covid2, d.covid3].choose;
 	rate = 1;
-	rate = [1, -1.2, 0.99, 1.01] * [0.98, 7, 4];
+	rate = [1, -1.2, 0.99, 1.01] * [1, SinOsc.kr(1/[3.2, 2]).range(1, 5), 1];
 	snd = PlayBuf.ar(
 		numChannels: 1,
 		bufnum: sample,
@@ -53,12 +55,13 @@ Ndef(\cove, {
 		startPos: 0.1, //rrand(0, 0.9) * BufFrames.kr(sample),
 		loop: 1
 	);
-	snd = Splay.ar(snd) * 1/4;
+	snd = snd * [0.7, 0.3, 0.3, 0.7];
+	snd = Splay.ar(snd);
 	// snd = snd * LFPulse.kr(5, 0, LFNoise2.kr(1/4).range(0.1, 0.9));
 }).play;
 )
-
-Ndef(\cove).free(2)
+Ndef(\cov).send
+Ndef(\cov).free(2)
 
 Ndef(\li, { Line.kr([1, 1], [0.5, 1.8], 30) }).kr(2);
 Ndef(\li, { LFNoise0.kr([12, 14]).range(0.25, 5) })
