@@ -2,10 +2,24 @@
 cm20 file
 */
 
-// after OBS is  or SC restarted
+// after OBS is  or SC restarted BEFORE PUBLIC
 (
 SCLOrkJack.connect("SuperCollider:out_1", "JACK Input Client:in_1");
 SCLOrkJack.connect("SuperCollider:out_2", "JACK Input Client:in_2");
+)
+
+
+// after PUBLIC
+
+
+~openVideo.value(1); // open to all
+
+
+~startVideoAndSCLOrkWatch.value(1);
+
+(
+~rewindVideo.value(1);
+~closeSCLOrkWatch.value;
 )
 
 

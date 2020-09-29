@@ -18,11 +18,12 @@ bruno live coding file
 ~closeSCLOrkWatch.value;
 )
 
+Ndef(\a1).free(1)
 
-
+Ndef.clear(1);
 
 ~listAll.value;
-~freeAll.value(5);
+~freeAll.value(15);
 ~freeAll.value(5, [\btrump]);
 
 (
@@ -37,26 +38,29 @@ Ndef(\cmn20).stop(5);
 Ndef(\btrump).stop(4);
 
 (
+Ndef(\cove).fadeTime = 4;
 Ndef(\cove, {
 	var snd;
 	var sample;
 	var rate;
 	sample = [d.covid1, d.covid2, d.covid3].choose;
 	rate = 1;
-	rate = [1, -1.1, 0.99, 1.01];
+	rate = [1, -1.2, 0.99, 1.01] * [0.98, 7, 4];
 	snd = PlayBuf.ar(
 		numChannels: 1,
 		bufnum: sample,
 		rate: rate * BufRateScale.kr(sample),
-		startPos: rrand(0, 0.9) * BufFrames.kr(sample),
+		startPos: 0.1, //rrand(0, 0.9) * BufFrames.kr(sample),
 		loop: 1
 	);
-	snd = Splay.ar(snd);
+	snd = Splay.ar(snd) * 1/4;
 	// snd = snd * LFPulse.kr(5, 0, LFNoise2.kr(1/4).range(0.1, 0.9));
 }).play;
 )
 
-Ndef(\li, { Line.kr([1, 1], [0.5, 1.1], 10) }).kr(2);
+Ndef(\cove).free(2)
+
+Ndef(\li, { Line.kr([1, 1], [0.5, 1.8], 30) }).kr(2);
 Ndef(\li, { LFNoise0.kr([12, 14]).range(0.25, 5) })
 (
 // Ndef(\raw).send;
@@ -67,17 +71,17 @@ Ndef(\btrump, {
 	snd = PitchShift.ar(
 		in: snd,
 		windowSize: 0.2,
-		pitchRatio: 1, //[1.0, 1.005, 0.995],
-		// pitchRatio: Ndef(\li).kr(2),
+		// pitchRatio: 1, //[1.0, 1.005, 0.995],
+		pitchRatio: Ndef(\li).kr(2),
 		pitchDispersion: XLine.kr(0.5, 0.00001, 5), //SinOsc.ar(1/3).range(0, 0.19),
 		timeDispersion: 0.0,
-		mul: 1, //[1, 0.5]
+		mul: 4, //[1, 0.5]
 	);
 	snd = FreeVerb.ar(
 		in: snd,
 		mix: 0.2,
 		room: 0.6,
-		damp: 0
+		damp: 0.1
 	);
 	snd = Splay.ar(snd);
 }).play;
@@ -88,7 +92,7 @@ Ndef(\biden).quant = 4;
 Ndef(\biden,
 	Pbind(
 		\instrument, \gr,
-		\buffer, ~biden,
+		\buffer, d.biden,
 		\startPos, Pseq([
 			Pseries(0.38, 0.01, 10),
 			Pseq([0.47, 0.5], inf)
@@ -104,6 +108,9 @@ Ndef(\biden,
 	)
 ).play;
 )
+
+Ndef(\biden).stop(10);
+Ndef(\btrump).stop(1)
 
 
 
@@ -132,7 +139,7 @@ Ndef(\b1,
 		\sampleName, Pseq(samples.flat, inf),
 		\dur, Pseq(~dursFrom.(samples), inf),
 		\stretch, 4,
-		\amp, Pseq([0.4, 0.29, 0.4, 0.3], inf) * 0.9,
+		\amp, Pseq([0.4, 0.29, 0.4, 0.3], inf) * 1,
 		\rate, Pwhite(1, 1.01) * Pwrand([1, 0.5, -0.91], [9, 3, 1].normalizeSum, inf)
 	)
 ).play
