@@ -19,35 +19,38 @@ bruno live coding file
 )
 
 Ndef(\a1).free(1)
+Ndef(\a1).send;
 
-Ndef.clear(1);
+// Ndef.clear(1);
 
 ~listAll.value;
-~freeAll.value(15);
+~freeAll.value(5, [\tempo, \t]);
 ~freeAll.value(5, [\btrump]);
+"echo stop | jack_transport".unixCmd;
 
-(
-Ndef(\b1).stop(5);
+
+Ndef(\b1).free(5);
 Ndef(\b2).stop(5);
-Ndef(\bfx1).stop(5);
+Ndef(\bfx1).stop(15);
 Ndef(\bfx2).stop(5);
 Ndef(\trump).stop(5);
 Ndef(\ssaw).pause;
-Ndef(\cmn20).stop(5);
-)
+Ndef(\prog1).stop(5);
+Ndef(\prog).stop(5);
+
 Ndef(\btrump).stop(4);
 
 Ndef(\cov).stop(10);
 
 (
-Ndef(\cov).fadeTime = 6;
+Ndef(\cov).fadeTime = 3;
 Ndef(\cov, {
 	var snd;
 	var sample;
 	var rate;
 	sample = [d.covid1, d.covid2, d.covid3].choose;
-	rate = 1;
-	rate = [1, -1.2, 0.99, 1.01] * [1, SinOsc.kr(1/[3.2, 2]).range(1, 5), 1];
+	rate = rrand(0.9, 1.01) * [1, 1.04, 0.95, 1.2, 0.5];
+	// rate = [1, -1.2, 0.99, 1.01] * [1, SinOsc.kr(1/[3.2, 2]).range(4, 7), 1];
 	snd = PlayBuf.ar(
 		numChannels: 1,
 		bufnum: sample,
@@ -55,15 +58,15 @@ Ndef(\cov, {
 		startPos: 0.1, //rrand(0, 0.9) * BufFrames.kr(sample),
 		loop: 1
 	);
-	snd = snd * [0.7, 0.3, 0.3, 0.7];
+	snd = snd * [0.7, 0.3, 0.3, 0.7] / 2;
 	snd = Splay.ar(snd);
 	// snd = snd * LFPulse.kr(5, 0, LFNoise2.kr(1/4).range(0.1, 0.9));
 }).play;
 )
 Ndef(\cov).send
-Ndef(\cov).free(2)
+Ndef(\cov).free(12)
 
-Ndef(\li, { Line.kr([1, 1], [0.5, 1.8], 30) }).kr(2);
+Ndef(\li, { Line.kr([1, 1], [0.95, 1.08], 80) }).kr(2);
 Ndef(\li, { LFNoise0.kr([12, 14]).range(0.25, 5) })
 (
 // Ndef(\raw).send;
@@ -113,9 +116,52 @@ Ndef(\biden,
 )
 
 Ndef(\biden).stop(10);
-Ndef(\btrump).stop(1)
+Ndef(\btrump).stop(10)
 
 
+(
+Ndef(\prog1).fadeTime = 0;
+Ndef(\prog1, {
+	var snd;
+	var sample;
+	var rate;
+	sample = d.progress;
+	rate = rrand(0.999, 1.01) * [1, 1.01, 0.975, 1.05];
+	snd = PlayBuf.ar(
+		numChannels: 1,
+		bufnum: sample,
+		rate: rate * BufRateScale.kr(sample),
+		startPos: 0.0 * BufFrames.kr(sample),
+		loop: 1
+	);
+	snd = snd * [1, 0.5, 0.5, 1] * 10;
+	snd = Splay.ar(snd);
+	// snd = snd * LFPulse.kr(5, 0, LFNoise2.kr(1/4).range(0.1, 0.9));
+}).play;
+)
+
+
+(
+Ndef(\prog).quant = 1;
+Ndef(\prog,
+	Pbind(
+		\instrument, \gr,
+		\buffer, d.progress,
+		\startPos, Pdef(\jbstart, Pseq([
+			Pseries(0.00, 0.002, 230),
+			Pwhite(0.3, 0.45, inf)
+		], inf)),
+		\dur, 1/9, //Pseq([Pn(7, 8), Pn(1, inf)], inf),
+		\stretch, 1,
+		\att, 0.001,
+		\rel, 2, //Pseq([Pseq([7, 7, 6, 5, 5, 5, 2]), Pseq([3, 1], inf)], inf).trace,
+		\legato, 1,
+		\rate, 1,
+		\amp, 1,
+		\pan, Pwhite(-1.0, 1.0),
+	)
+).play;
+)
 
 
 (
@@ -129,7 +175,7 @@ samples = [\bubble3!2, \house3!rrand(1, 3), \house2!2, \cp0];
 // samples = [\glitch23!3, \e7!5, \east2!3, \ifdrums0!3]; // \r is a rest
 // samples = [\glitch23!2, \birds4, \can6!2, \ifdrums0!2]; //BIRD
 // samples = [\glitch20, \e7!2, \bass1, \can7]; // NICE
-// samples = [\sid1!2, \sid7, \sid9!2, \sf1!2];
+samples = [\sid1!2, \sid7, \sid9!2, \sf1!2];
 samples = [\amencutup0, [\drum2, \drum2], \drum0!2, \drum1, \hh3, \techno1, \amencutup13, \techno1];
 // samples = [\house5!2, \house2, Prand([\bass112, \sn1, \sn2]), \db3];
 // samples = [\house5!2, \house2, \cp0, \db3];
@@ -142,7 +188,7 @@ Ndef(\b1,
 		\sampleName, Pseq(samples.flat, inf),
 		\dur, Pseq(~dursFrom.(samples), inf),
 		\stretch, 4,
-		\amp, Pseq([0.4, 0.29, 0.4, 0.3], inf) * 1,
+		\amp, Pseq([0.4, 0.29, 0.4, 0.3], inf) * 3,
 		\rate, Pwhite(1, 1.01) * Pwrand([1, 0.5, -0.91], [9, 3, 1].normalizeSum, inf)
 	)
 ).play
@@ -217,7 +263,7 @@ Ndef(\tpt,
 // Send \tpt into \bfx
 Ndef(\bfx).map(\in2, Ndef(\tpt));
 Ndef(\bfx).unmap(\in2)
-Ndef(\tpt).stop;
+Ndef(\tpt).stop(10);
 
 
 
@@ -230,7 +276,7 @@ Ndef(\trump).quant = 4;
 Ndef(\trump,
 	Pbind(
 		\instrument, \gr,
-		\buffer, ~trump,
+		\buffer, d.trump,
 		\startPos, Pdef(\startPos,
 			Pstutter(5, Pseq([0.19, 0.201, 0.339, 0.54], inf))
 		),

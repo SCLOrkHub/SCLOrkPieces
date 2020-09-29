@@ -10,8 +10,8 @@ aastha's live coding file
 (
 var samples;
 //switch off between these
-//samples = [\bass117!3, \bass118!3, \bass129!3, \bass128!3]; // more airy bouncy spooky
-//samples = [\bass118, \bass117]; // very stranger things esque
+samples = [\bass117!3, \bass118!3, \bass129!3, \bass128!3]; // more airy bouncy spooky
+// samples = [\bass118, \bass117]; // very stranger things esque
 samples = [\feelfx0, \feelfx2!2]; // weird ethereal sounds
 
 Ndef(\a1).quant = 4;
@@ -21,8 +21,8 @@ Ndef(\a1,
 		\sampleName, Pseq(samples.flat, inf),
 		\dur, Pseq(~dursFrom.(samples), inf),
 		\stretch, 4, //make it smaller as you progress
-		\amp, Pseq([0.4, 0.29, 0.4, 0.3], inf) * 0.1, // change the * 0.1 time for volume
-		\rate, Pwhite(-1, 1.01) * 0.9,
+		\amp, Pseq([0.4, 0.29, 0.4, 0.3], inf) * 0.5, // change the * for volume
+		\rate, Pwhite(0.1, 1.01) * Prand([-1, 1], inf) * 0.9, // AVOID ZERO RATE
 		\pan, Pwhite(-1.0, 1.0),
 	)
 ).play
@@ -44,7 +44,7 @@ Ndef(\afx, {
 		in: snd,
 		maxdelaytime: 1,
 		delaytime: p.clock.tempo / 2.5, // make delay in sync with tempo
-		decaytime: 3.5
+		decaytime: 5.5
 	);
 	snd.distort.tanh;
 
@@ -55,7 +55,13 @@ Ndef(\afx, {
 		damp: 0.97,
 		mul: 0.3
 	);
-	snd = Pan2.ar(in: snd, pos: Saw.ar(XLine.kr(0,100)));
+	snd = Pan2.ar(
+		in: snd,
+		// pos: Saw.ar(XLine.kr(0,100)) // Aastha's original crackling
+		// pos: Saw.ar(freq: XLine.kr(1, 100, 10)) // variation 1 (reaches crackling in x seconds)
+		pos: LFNoise2.ar(freq: XLine.kr(1, 5, 10)) // variation 2
+	);
+	snd = Splay.ar(snd.flat);
 
 }).play;
 )
