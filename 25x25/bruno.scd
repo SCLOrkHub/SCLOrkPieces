@@ -2,7 +2,6 @@
 bruno live coding file
 */
 
-1:26 bring in high pitched voices
 
 "test".postln;
 
@@ -25,9 +24,7 @@ bruno live coding file
 // =====================================
 
 ~listAll.value;
-
 ~freeAll.value(5, [\tempo, \t]);
-
 ~freeAll.value(5, [\btrump]);
 
 // Aastha's a1
