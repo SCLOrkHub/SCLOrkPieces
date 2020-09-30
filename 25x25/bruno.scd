@@ -54,7 +54,7 @@ Ndef(\cov).stop(10);
 // =====================================
 
 (
-Ndef(\cov).fadeTime = 3;
+Ndef(\cov).fadeTime = 1;
 Ndef(\cov, {
 	var snd;
 	var sample;
@@ -89,7 +89,7 @@ Ndef(\cov).free(12)
 Ndef(\raw2, { PlayBuf.ar(1, d.trump, startPos: 0.275 * BufFrames.kr(d.trump), loop: 1) });
 
 // some 2-channel controls
-Ndef(\li, { Line.kr([1, 1], [0.95, 1.08], 80) }).kr(2);
+Ndef(\li, { Line.kr([1, 1], [0.9995, 1.00008], 80) }).kr(2);
 Ndef(\li, { LFNoise0.kr([12, 14]).range(0.25, 5) })
 
 (
@@ -103,7 +103,7 @@ Ndef(\btrump, {
 		windowSize: 0.2,
 		// pitchRatio: 1, //[1.0, 1.005, 0.995],
 		pitchRatio: Ndef(\li).kr(2),
-		pitchDispersion: XLine.kr(0.5, 0.00001, 5), //SinOsc.ar(1/3).range(0, 0.19),
+		pitchDispersion: XLine.kr(0.0001, 5, 35), //SinOsc.ar(1/3).range(0, 0.19),
 		timeDispersion: 0.0,
 		mul: 4, //[1, 0.5]
 	);
@@ -150,6 +150,7 @@ Ndef(\prog1, {
 	var sample;
 	var rate;
 	sample = d.progress;
+	// sample = [d.progress, d.kaba];
 	rate = rrand(0.999, 1.01) * [1, 1.01, 0.975, 1.05];
 	snd = PlayBuf.ar(
 		numChannels: 1,
@@ -164,6 +165,10 @@ Ndef(\prog1, {
 }).play;
 )
 
+Ndef(\prog1).stop;
+Ndef(\prog).free;
+Ndef(\b1).stop(4);
+Ndef(\bfx).stop(4);
 
 (
 Ndef(\prog).quant = 1;
@@ -171,17 +176,18 @@ Ndef(\prog,
 	Pbind(
 		\instrument, \gr,
 		\buffer, d.progress,
-		\startPos, Pdef(\jbstart, Pseq([
-			Pseries(0.00, 0.002, 230),
+		// \buffer, d.kaba,
+		\startPos, Pseq([
+			Pseries(0.00, 0.01, 30),
 			Pwhite(0.3, 0.45, inf)
-		], inf)),
-		\dur, 1/9, //Pseq([Pn(7, 8), Pn(1, inf)], inf),
+		], inf),
+		\dur, 1/5, //Pseq([Pn(7, 8), Pn(1, inf)], inf),
 		\stretch, 1,
 		\att, 0.001,
-		\rel, 2, //Pseq([Pseq([7, 7, 6, 5, 5, 5, 2]), Pseq([3, 1], inf)], inf).trace,
+		\rel, 1, //Pseq([Pseq([7, 7, 6, 5, 5, 5, 2]), Pseq([3, 1], inf)], inf).trace,
 		\legato, 1,
 		\rate, 1,
-		\amp, 1,
+		\amp, 2,
 		\pan, Pwhite(-1.0, 1.0),
 	)
 ).play;
@@ -191,16 +197,10 @@ Ndef(\prog,
 (
 var samples;
 samples = [\bd0, \techno0, \bd0, \techno1, \cp0, \drum2, \techno1, \drum2];
-samples = [\techno2, \bd0, \cp0, \cp1];
-samples = [\bubble3!2, \house3!rrand(1, 3), \house2!2, \cp0];
-// samples = [\house1, \house2, \cp0, \a808ht4];
+// samples = [\bubble3!2, \house3!rrand(1, 3), \house2!2, \cp0];
 // samples = [\bass10, \e7!5, \east2!3, \dork22]; // \r is a rest
 // samples = [\control0, \gab7, Prand([\east2, \coins0])!2, \dork22]; // \r is a rest
-// samples = [\glitch23!3, \e7!5, \east2!3, \ifdrums0!3]; // \r is a rest
-// samples = [\glitch23!2, \birds4, \can6!2, \ifdrums0!2]; //BIRD
-// samples = [\glitch20, \e7!2, \bass1, \can7]; // NICE
-samples = [\sid1!2, \sid7, \sid9!2, \sf1!2];
-samples = [\amencutup0, [\drum2, \drum2], \drum0!2, \drum1, \hh3, \techno1, \amencutup13, \techno1];
+// samples = [\amencutup0, [\drum2, \drum2], \drum0!2, \drum1, \hh3, \techno1, \amencutup13, \techno1];
 // samples = [\house5!2, \house2, Prand([\bass112, \sn1, \sn2]), \db3];
 // samples = [\house5!2, \house2, \cp0, \db3];
 
@@ -483,6 +483,13 @@ Ndef(\b1,
 	)
 ).play
 )
+
+
+// samples = [\glitch23!3, \e7!5, \east2!3, \ifdrums0!3]; // \r is a rest
+// samples = [\glitch23!2, \birds4, \can6!2, \ifdrums0!2]; //BIRD
+// samples = [\glitch20, \e7!2, \bass1, \can7]; // NICE
+// samples = [\sid1!2, \sid7, \sid9!2, \sf1!2];
+
 
 
 
