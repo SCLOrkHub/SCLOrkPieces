@@ -1,13 +1,15 @@
 /*
-
 bruno live coding file
-
-
 */
 
 1:26 bring in high pitched voices
 
 "test".postln;
+
+
+// =====================================
+// VIDEO STUFF
+// =====================================
 
 ~openVideo.(1);
 
@@ -18,15 +20,22 @@ bruno live coding file
 ~closeSCLOrkWatch.value;
 )
 
+// =====================================
+// CONDUCTOR STUFF (for end of piece)
+// =====================================
+
+~listAll.value;
+
+~freeAll.value(5, [\tempo, \t]);
+
+~freeAll.value(5, [\btrump]);
+
+// Aastha's a1
 Ndef(\a1).free(1)
 Ndef(\a1).send;
 
+// don't use it out in the open
 // Ndef.clear(1);
-
-~listAll.value;
-~freeAll.value(5, [\tempo, \t]);
-~freeAll.value(5, [\btrump]);
-"echo stop | jack_transport".unixCmd;
 
 
 Ndef(\b1).free(5);
@@ -37,10 +46,15 @@ Ndef(\trump).stop(5);
 Ndef(\ssaw).pause;
 Ndef(\prog1).stop(5);
 Ndef(\prog).stop(5);
-
 Ndef(\btrump).stop(4);
-
 Ndef(\cov).stop(10);
+
+
+
+
+// =====================================
+// A3 (1:26) covid newscast voices
+// =====================================
 
 (
 Ndef(\cov).fadeTime = 3;
@@ -49,7 +63,8 @@ Ndef(\cov, {
 	var sample;
 	var rate;
 	sample = [d.covid1, d.covid2, d.covid3].choose;
-	rate = rrand(0.9, 1.01) * [1, 1.04, 0.95, 1.2, 0.5];
+	rate = 1;
+	// rate = rrand(0.9, 1.01) * [1, 1.04, 0.95, 1.2, 0.5];
 	// rate = [1, -1.2, 0.99, 1.01] * [1, SinOsc.kr(1/[3.2, 2]).range(4, 7), 1];
 	snd = PlayBuf.ar(
 		numChannels: 1,
@@ -63,17 +78,29 @@ Ndef(\cov, {
 	// snd = snd * LFPulse.kr(5, 0, LFNoise2.kr(1/4).range(0.1, 0.9));
 }).play;
 )
+
 Ndef(\cov).send
 Ndef(\cov).free(12)
 
+
+// =====================================
+// A4 (2:37) trump covid denial
+// =====================================
+
+// run this repeatedly to restart from given startPos
+// this will feed into \btrump
+Ndef(\raw2, { PlayBuf.ar(1, d.trump, startPos: 0.275 * BufFrames.kr(d.trump), loop: 1) });
+
+// some 2-channel controls
 Ndef(\li, { Line.kr([1, 1], [0.95, 1.08], 80) }).kr(2);
 Ndef(\li, { LFNoise0.kr([12, 14]).range(0.25, 5) })
+
 (
 // Ndef(\raw).send;
 Ndef(\btrump).fadeTime = 0;
 Ndef(\btrump, {
 	var sample = d.trump;
-	var snd = PlayBuf.ar(1, d.trump, startPos: 0.275 * BufFrames.kr(d.trump));
+	var snd = Ndef(\raw2).ar;
 	snd = PitchShift.ar(
 		in: snd,
 		windowSize: 0.2,

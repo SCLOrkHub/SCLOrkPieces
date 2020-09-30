@@ -53,8 +53,11 @@ Event.addEventType(\dirt, {
 };
 
 // Free all Ndefs except the ones in the list provided as argument
-~freeAll = { | fadeTime = 5, leaveAlone = \t |
+~freeAll = { | fadeTime = 5, leaveAlone |
 	var exceptions = if( leaveAlone.isArray.not, { [ leaveAlone ] }, { leaveAlone });
+
+	// never free metronome Ndefs
+	exceptions = exceptions.add([\t, \tempo]).flat;
 
 	Ndef.dictFor(s).do({ | ndef |
 		var key = ndef.key;
@@ -81,20 +84,21 @@ Event.addEventType(\dirt, {
 	}
 };
 
-~openVideo = { arg all = 0; // if 0, only obs player actually runs
+~openVideo = { arg all = 0; // if 0, only obs player can run this function
 	if( (~myName == "obs") || (all == 1), {
 		{
+			try { ~xjadeo.sendMsg('/jadeo/quit') };
+			0.2.wait;
 			"xjadeo -O 7890".unixCmd;
 			1.wait;
 			~xjadeo = NetAddr("localhost", 7890);
 			~xjadeo.sendMsg('/jadeo/jack/connect');
-			~xjadeo.sendMsg('/jadeo/load', "25x25.mp4".resolveRelative);
+			~xjadeo.sendMsg('/jadeo/load', PathName.new(q.hyperfolder).parentPath ++ "25x25.mp4");
 			"echo locate 0 | jack_transport".unixCmd;
 		}.fork;
 	})
 };
 
-// only obs player can control video functions (avoid mess in public mode)
 ~rewindVideo = { arg all = 0;
 	if( (~myName == "obs") || (all == 1), {
 		"echo locate 0 | jack_transport".unixCmd;
@@ -123,7 +127,7 @@ Event.addEventType(\dirt, {
 	// start SCLOrkWatch
 	SCLOrkWatch.new([
 		"0:20", {
-			var msg = "chaos getting started...";
+			var msg = "**A1: chaos getting started...";
 			~sendScoreMsg.value(msg);
 			msg.postln;
 		},
@@ -134,62 +138,62 @@ Event.addEventType(\dirt, {
 			msg.postln;
 		},
 		"0:56", {
-			var msg = "25x25 grid now; sudden shift coming at 1:26";
+			var msg = "**A2: 25x25 grid; speed increase coming at 1:26";
 			~sendScoreMsg.(msg);
 			msg.postln;
 		},
 		"1:26", {
-			var msg = "suddenly busy, agitated, hectic";
+			var msg = "**A3: suddenly busy, agitated, hectic";
 			~sendScoreMsg.(msg);
 			msg.postln;
 		},
 		"2:37", {
-			var msg = "1st separation [dizzy, unsettling] ... next at 3:09";
+			var msg = "**A4: 1st separation [dizzy, unsettling] ... next at 3:09";
 			~sendScoreMsg.(msg);
 			msg.postln;
 		},
 		"3:09", {
-			var msg = "2nd separation [slower, orderly]... next at 3:54";
+			var msg = "**A5: 2nd separation [slower, orderly]... next at 3:54";
 			~sendScoreMsg.(msg);
 			msg.postln;
 		},
-		"3:54", { var msg = "3rd separation [HECTIC]... next at 4:39";
+		"3:54", { var msg = "**A6: 3rd separation [HECTIC]... next at 4:39";
 			~sendScoreMsg.(msg);
 			msg.postln; },
 		"4:39", {
-			var msg = "4th last separation (4 corners). Bouncing squares coming at 5:53";
+			var msg = "**A7: last separation (4 corners). Bouncing squares coming at 5:53";
 			~sendScoreMsg.(msg);
 			msg.postln;
 		},
 		// "5:44", { "negative image inversion".postln },
 		"5:53", {
-			var msg = "Bouncing squares now. BLM coming at 6:32";
+			var msg = "**B1: Bouncing squares now. BLM coming at 6:32";
 			~sendScoreMsg.(msg);
 			msg.postln;
 		},
 		"6:32", {
-			var msg = "BLM now. Bouncing squares again at 7:01";
+			var msg = "**B2: BLM flashes. Bouncing squares coming again at 7:01";
 			~sendScoreMsg.(msg);
 			msg.postln;
 		},
 		"7:01", {
-			var msg = "Bouncing squares, second round. No Justice No Peace coming at 8:18";
+			var msg = "**B3: Bouncing squares, second round. No Justice No Peace coming at 8:18";
 			~sendScoreMsg.(msg);
 			msg.postln;
 		},
 		"8:18", {
-			var msg = "No Justice No Peace word dance - less than 20 seconds to blackout";
+			var msg = "**B4: No Justice No Peace word dance - less than 20 seconds to blackout";
 			~sendScoreMsg.(msg);
 			msg.postln;
 		},
 		"8:37", {
-			var msg = "Blackout coda, breathing dots coming soon to end";
+			var msg = "**CODA: Blackout, breathing dots coming soon to end";
 			~sendScoreMsg.(msg);
 			msg.postln;
 		},
 		// "8:44", { "breathing dots".postln },
 		"9:01", {
-			var msg = "don't run any more code; bruno to clearAll & fadeOut soon";
+			var msg = "don't run any more code; bruno to freeAll & fadeOut soon";
 			~sendScoreMsg.(msg);
 			msg.postln;
 		},
@@ -197,13 +201,13 @@ Event.addEventType(\dirt, {
 			var msg = "end of piece; pausing video on white screen";
 			~sendScoreMsg.(msg);
 			msg.postln;
-			"echo stop | jack_transport".unixCmd;
+			~rewindVideo.(1); // hack, but gives me white screen I need to end
 		},
 		"9:15", { "end".postln }
 	]);
 };
 
-currentEnvironment.keys.postln;
+currentEnvironment.pairsDo({ |k, v| [k, v].postln });
 
 "Utility Functions loaded".postln;
 
