@@ -11,9 +11,7 @@ SCLOrkJack.connect("SuperCollider:out_2", "JACK Input Client:in_2");
 
 // after PUBLIC
 
-
 ~openVideo.value(1); // open to all
-
 
 ~startVideoAndSCLOrkWatch.value(1);
 
