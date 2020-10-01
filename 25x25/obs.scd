@@ -2,11 +2,82 @@
 cm20 file
 */
 
+
+// Friday stream key
+// um6m-gdd9-1w2j-1fdu-d9k9
+
+// Bruno's test stream key
+// u67b-541h-jep0-zph6-1uvd
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// looks like no need for Limiter if we have Safety quark installed!
+
+
+// really the only step needed here may be the limiter
+
+// ARE YOU PRIVATE??? YOU SHOULD!!!
+
+// Be sure you are PRIVATE before running this
+// OPEN LIMITER FIRST
+"calfjackhost \"Limiter\" &".unixCmd;
+
+// MAKE CONNECTIONS
+(
+// Remove all previous connections
+SCLOrkJack.disconnectAll;
+
+// Connect SC to Limiter
+SCLOrkJack.connect("SuperCollider:out_1", "Calf Studio Gear:Limiter In #1");
+SCLOrkJack.connect("SuperCollider:out_2", "Calf Studio Gear:Limiter In #2");
+
+// Connect Limiter to OBS
+SCLOrkJack.connect("Calf Studio Gear:Limiter Out #1", "JACK Input Client:in_1");
+SCLOrkJack.connect("Calf Studio Gear:Limiter Out #2", "JACK Input Client:in_2");
+
+// Connect Limiter to local speakers
+SCLOrkJack.connect("Calf Studio Gear:Limiter Out #1", "system:playback_1");
+SCLOrkJack.connect("Calf Studio Gear:Limiter Out #2", "system:playback_2");
+)
+
+
+Safety.limit
+
+
+
+
+
+
+
+
+
+
+
+// if jack patchbay is active, this step is not needed!
 // after OBS is  or SC restarted BEFORE PUBLIC
+
 (
 SCLOrkJack.connect("SuperCollider:out_1", "JACK Input Client:in_1");
 SCLOrkJack.connect("SuperCollider:out_2", "JACK Input Client:in_2");
 )
+
+
+
+
+
 
 
 // after PUBLIC
@@ -79,6 +150,7 @@ Ndef(\cmn20,
 
 Ndef(\cmn20).stop;
 Ndef(\cmn20).play;
+
 
 
 

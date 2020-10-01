@@ -3,8 +3,13 @@ bruno live coding file
 */
 
 
-"test".postln;
+// TO DO
+// listen to recordings
+// add a limiter to streaming laptop (calf limiter?) if needed -- listen to recording
 
+"this is a test, a really good test".postln;
+"but not more than just a test".postln;
+"".postln;
 
 // =====================================
 // VIDEO STUFF
@@ -28,7 +33,7 @@ bruno live coding file
 ~freeAll.value(5, [\btrump]);
 
 // Aastha's a1
-Ndef(\a1).free(1)
+Ndef(\a1).free
 Ndef(\a1).send;
 
 // don't use it out in the open
@@ -36,13 +41,13 @@ Ndef(\a1).send;
 
 
 Ndef(\b1).free(5);
-Ndef(\b2).stop(5);
+Ndef(\b1).stop(5);
 Ndef(\bfx1).stop(15);
 Ndef(\bfx2).stop(5);
 Ndef(\trump).stop(5);
 Ndef(\ssaw).pause;
 Ndef(\prog1).stop(5);
-Ndef(\prog).stop(5);
+Ndef(\prog2).stop(5);
 Ndef(\btrump).stop(4);
 Ndef(\cov).stop(10);
 
@@ -54,30 +59,32 @@ Ndef(\cov).stop(10);
 // =====================================
 
 (
-Ndef(\cov).fadeTime = 1;
+Ndef(\cov).fadeTime = 2;
 Ndef(\cov, {
 	var snd;
 	var sample;
 	var rate;
 	sample = [d.covid1, d.covid2, d.covid3].choose;
 	rate = 1;
-	// rate = rrand(0.9, 1.01) * [1, 1.04, 0.95, 1.2, 0.5];
-	// rate = [1, -1.2, 0.99, 1.01] * [1, SinOsc.kr(1/[3.2, 2]).range(4, 7), 1];
+	rate = rrand(0.999, 1.01) * [1, 1.04, 0.95, 1.008, 0.5];
+	rate = [1, -1.2, 0.99, 1.01] * [1, SinOsc.kr(1/[3.2, 2]).range(2, 7), 1];
 	snd = PlayBuf.ar(
 		numChannels: 1,
 		bufnum: sample,
 		rate: rate * BufRateScale.kr(sample),
-		startPos: 0.1, //rrand(0, 0.9) * BufFrames.kr(sample),
+		startPos: rrand(0, 0.9) * BufFrames.kr(sample),
 		loop: 1
 	);
-	snd = snd * [0.7, 0.3, 0.3, 0.7] / 2;
+	snd = snd * [0.7, 0.3, 0.3, 0.7] * 0.9;
+	// snd = snd * [0.7, 0.3, 0.3, 0.7] * SinOsc.ar(1/3).range(0.1, 0.5);
 	snd = Splay.ar(snd);
-	// snd = snd * LFPulse.kr(5, 0, LFNoise2.kr(1/4).range(0.1, 0.9));
+	snd = Limiter.ar(snd);
+	snd = snd * LFPulse.kr(15, 0, LFNoise2.kr(1/4).range(0.4, 0.9));
+
 }).play;
 )
 
-Ndef(\cov).send
-Ndef(\cov).free(12)
+Ndef(\cov).stop(15);
 
 
 // =====================================
@@ -89,12 +96,14 @@ Ndef(\cov).free(12)
 Ndef(\raw2, { PlayBuf.ar(1, d.trump, startPos: 0.275 * BufFrames.kr(d.trump), loop: 1) });
 
 // some 2-channel controls
-Ndef(\li, { Line.kr([1, 1], [0.9995, 1.00008], 80) }).kr(2);
-Ndef(\li, { LFNoise0.kr([12, 14]).range(0.25, 5) })
+Ndef(\li, { Line.kr([1, 1], [0.9999, 1.08], 80) }).kr(2);
+Ndef(\li, { LFNoise0.kr(1/[2, 4]).range(0.95, 1.55) });
+
+Ndef(\disp, { XLine.kr(0.0001, 5, 35) });
 
 (
 // Ndef(\raw).send;
-Ndef(\btrump).fadeTime = 0;
+Ndef(\btrump).fadeTime = 2;
 Ndef(\btrump, {
 	var sample = d.trump;
 	var snd = Ndef(\raw2).ar;
@@ -103,9 +112,9 @@ Ndef(\btrump, {
 		windowSize: 0.2,
 		// pitchRatio: 1, //[1.0, 1.005, 0.995],
 		pitchRatio: Ndef(\li).kr(2),
-		pitchDispersion: XLine.kr(0.0001, 5, 35), //SinOsc.ar(1/3).range(0, 0.19),
+		pitchDispersion: Ndef(\disp), //SinOsc.ar(1/3).range(0, 0.19),
 		timeDispersion: 0.0,
-		mul: 4, //[1, 0.5]
+		mul: 1.35, //[1, 0.5]
 	);
 	snd = FreeVerb.ar(
 		in: snd,
@@ -116,6 +125,8 @@ Ndef(\btrump, {
 	snd = Splay.ar(snd);
 }).play;
 )
+
+Ndef(\btrump).stop(19);
 
 (
 Ndef(\biden).quant = 4;
@@ -133,16 +144,18 @@ Ndef(\biden,
 		\rel, Pseq([Pseq([7, 7, 6, 5, 5, 5, 2]), Pseq([3, 1], inf)], inf).trace,
 		\legato, 1,
 		\rate, 1,
-		\amp, 0.7,
+		\amp, 0.57,
 		\pan, Pwhite(-1.0, 1.0),
 	)
 ).play;
 )
 
+Ndef(\cov).stop(10);
 Ndef(\biden).stop(10);
 Ndef(\btrump).stop(10)
 
 
+// NEGATIVE IMAGE
 (
 Ndef(\prog1).fadeTime = 0;
 Ndef(\prog1, {
@@ -151,7 +164,9 @@ Ndef(\prog1, {
 	var rate;
 	sample = d.progress;
 	// sample = [d.progress, d.kaba];
-	rate = rrand(0.999, 1.01) * [1, 1.01, 0.975, 1.05];
+	rate = rrand(0.999, 1.01);
+	// rate = rate * [1, 1.01, 0.975, 1.05] * 0.98;
+	// rate = rate * SinOsc.ar(1).range(0.9, 1.4);
 	snd = PlayBuf.ar(
 		numChannels: 1,
 		bufnum: sample,
@@ -159,20 +174,20 @@ Ndef(\prog1, {
 		startPos: 0.0 * BufFrames.kr(sample),
 		loop: 1
 	);
-	snd = snd * [1, 0.5, 0.5, 1] * 10;
+	snd = snd * [1, 0.5] * 6; // start at 7
 	snd = Splay.ar(snd);
-	// snd = snd * LFPulse.kr(5, 0, LFNoise2.kr(1/4).range(0.1, 0.9));
+	snd = snd * LFPulse.kr(MouseX.kr(5, 10), 0, LFNoise2.kr(1/4).range(0.1, 0.9));
 }).play;
 )
 
-Ndef(\prog1).stop;
-Ndef(\prog).free;
+Ndef(\prog1).stop(15);
+Ndef(\prog2).stop;
 Ndef(\b1).stop(4);
 Ndef(\bfx).stop(4);
 
 (
-Ndef(\prog).quant = 1;
-Ndef(\prog,
+Ndef(\prog2).quant = 1;
+Ndef(\prog2,
 	Pbind(
 		\instrument, \gr,
 		\buffer, d.progress,
@@ -181,13 +196,13 @@ Ndef(\prog,
 			Pseries(0.00, 0.01, 30),
 			Pwhite(0.3, 0.45, inf)
 		], inf),
-		\dur, 1/5, //Pseq([Pn(7, 8), Pn(1, inf)], inf),
+		\dur, 1/15, //Pseq([Pn(7, 8), Pn(1, inf)], inf),
 		\stretch, 1,
 		\att, 0.001,
 		\rel, 1, //Pseq([Pseq([7, 7, 6, 5, 5, 5, 2]), Pseq([3, 1], inf)], inf).trace,
 		\legato, 1,
-		\rate, 1,
-		\amp, 2,
+		\rate,  Pwhite(1, 1.5),
+		\amp, 1,
 		\pan, Pwhite(-1.0, 1.0),
 	)
 ).play;
@@ -196,15 +211,15 @@ Ndef(\prog,
 
 (
 var samples;
-samples = [\bd0, \techno0, \bd0, \techno1, \cp0, \drum2, \techno1, \drum2];
+samples = [\bd0, \techno0, \bd0, \techno1, \cp0!4, \drum2, \techno1, \drum2];
 // samples = [\bubble3!2, \house3!rrand(1, 3), \house2!2, \cp0];
 // samples = [\bass10, \e7!5, \east2!3, \dork22]; // \r is a rest
 // samples = [\control0, \gab7, Prand([\east2, \coins0])!2, \dork22]; // \r is a rest
-// samples = [\amencutup0, [\drum2, \drum2], \drum0!2, \drum1, \hh3, \techno1, \amencutup13, \techno1];
+samples = [\amencutup0, [\drum2, \drum2], \drum0!2, \drum1, \hh3, \techno1, \amencutup13, \techno1];
 // samples = [\house5!2, \house2, Prand([\bass112, \sn1, \sn2]), \db3];
 // samples = [\house5!2, \house2, \cp0, \db3];
 
-
+Ndef(\b1).fadeTime = 0;
 Ndef(\b1).quant = 4;
 Ndef(\b1,
 	Pbind(
@@ -212,14 +227,14 @@ Ndef(\b1,
 		\sampleName, Pseq(samples.flat, inf),
 		\dur, Pseq(~dursFrom.(samples), inf),
 		\stretch, 4,
-		\amp, Pseq([0.4, 0.29, 0.4, 0.3], inf) * 3,
+		\amp, Pseq([0.4, 0.29, 0.4, 0.3], inf) * 4,
 		\rate, Pwhite(1, 1.01) * Pwrand([1, 0.5, -0.91], [9, 3, 1].normalizeSum, inf)
 	)
 ).play
 )
 
 // Stop monitoring the dry Ndef:
-Ndef(\b1).stop; // notice that "stop" really means just stop sending to speakers, does not stop running the Ndef
+Ndef(\b1).stop(13); // notice that "stop" really means just stop sending to speakers, does not stop running the Ndef
 Ndef(\b1).play; // or bring it back
 
 
