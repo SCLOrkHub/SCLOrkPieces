@@ -50,13 +50,6 @@ Butz.add('SCLOrkSynths', {
 	SCLOrkSynths.gui;
 });
 
-Butz.add('Something Else', {
-
-	"this does something else".postln;
-
-});
-
-
 Butz.add('SCLOrkChat', {
 	if( ~myName == "bruno", {
 
@@ -74,6 +67,13 @@ Butz.add('SCLOrkChat', {
 	});
 });
 
+Butz.add('Load All The Rest', {
+
+	(q.hyperfolder +/+ "customProxySpaceTempoClock.scd").load;
+	(q.hyperfolder +/+ "customSynthDefs.scd").load;
+	(q.hyperfolder +/+ "customFunctions.scd").load;
+
+});
 
 
 Butz.add('-', { "this is just a space divider" });
@@ -107,9 +107,11 @@ Butz.add('  -  ', { "this is just a space divider" });
 
 // ====================
 // utility buttons
-Butz.add('StartupFile', { StartupFile.choose });
+Butz.add('StartupFile', {
+	if( (try { StartupFile.select }).isNil, { StartupFile.choose });
+});
 
-Butz.add('hyperfolder', { q.hyperfolder.openOS });
+// Butz.add('hyperfolder', { q.hyperfolder.openOS });
 
 Butz.add(\postPeers, {
 	var peers = q.oscRouter.peers;
@@ -129,8 +131,7 @@ Butz.add( \SyncText, MFdef(\SyncText) );
 
 
 // Butz.add('ndefmix', { WinBounds.showOrMake(\ndefmix) });
-// Butz.add('Tdef.all', { WinBounds.showOrMake('Tdef.all') });
-// Butz.add('Pdef.all', { WinBounds.showOrMake('Pdef.all') });
+
 
 // Butz.add(\DRAW, { WinBounds.showOrMake(\DRAW) });
 // Butz.add('MFdef_draw', { WinBounds.showOrMake('MFdef_draw') });
@@ -147,15 +148,11 @@ Butz.add(\meter, {
 // Butz.add('record', { s.record });
 // Butz.add('stopRec', { s.stopRecording });
 
+/*
 Butz.add(\MainFX, { WinBounds.showOrMake(\MasterFX) });
 WinBounds.addMake(\MasterFX, { MasterFX(s).gui.parent.name_(\MasterFX) });
+*/
 
-// Butz.add(\load_JaMoP, MFdef(\load_JaMoP));
-
-
-// make all the simple ones here:
-// WinBounds.addMake('Tdef.all', { TdefAllGui(24).parent });
-// WinBounds.addMake('Pdef.all', { PdefAllGui(24).parent });
 
 WinBounds.addMake(\ndefmix, {
 	q.mixer = NdefMixer(s, 24);
@@ -201,29 +198,3 @@ WinBounds.addMake(\scope, {
 
 
 
-
-MFdef(\CodingDojo).add(\startDoc, {
-	var text;
-	var founddoc = Document.allDocuments. detect { |d| d.title == "Dojo_start" };
-	if (founddoc.notNil) {
-		founddoc.front
-	} {
-		text =
-		"// Join the CodingDojo with:\n"
-		"~dojo = CodingDojo(q.myID.postcs, 'udkDojo', q.myoscserver, userPassword: q.mypassword);\n\n"
-		"// add ordered list of participants:\n"
-		"~dojo.startSession();\n"
-		"// switch to next triple:\n"
-		"~dojo.rotate;\n"
-		"\n// reopen timer window if needed: \n"
-		"~dojo.showTimer;\n"
-		"\n// leave dojo:\n"
-		"~dojo.leave;\n"
-		"\n// rejoin dojo:\n"
-		"~dojo.leave;\n"
-		"~dojo.join;\n";
-
-		defer ({ Document("Dojo_start", text).front }, 0.1)
-	}
-});
-*/

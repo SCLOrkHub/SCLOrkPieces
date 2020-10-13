@@ -3,8 +3,8 @@
 // SCLOrkSynths.gui;
 
 (
-Ndef(\tt).quant = 4;
-Ndef(\tt,
+Ndef(\mm).quant = 4;
+Ndef(\mm,
 	Pbind(
 		\instrument, "modalMarimba",
 		\ctranspose, Pseq([-12, 0, -12, 24], inf) + [0, 7] + 7,
@@ -20,12 +20,13 @@ Ndef(\tt,
 ).play;
 )
 
+Ndef(\tt).clear
 
 (
 Ndef(\fx).fadeTime = 2;
 Ndef(\fx, {
 	var snd;
-	snd = Ndef(\tt);
+	snd = Ndef(\mm);
 	snd = RHPF.ar(
 		in: snd,
 		freq: SinOsc.ar(1/[2, 3]).range(100, 3450),
@@ -50,4 +51,74 @@ Ndef(\fx, {
 	snd = Splay.ar(snd);
 }).play;
 )
+
+
+
+
+// ===========
+
+
+
+
+(
+Ndef(\a,
+	Pbind(
+		\instrument, "doubleBass",
+		\dur, 1,
+		\ctranspose, -24,
+		\degree, Pseq([0, 3, 6, -2], inf),
+		\amp, Pwhite(0.5, 0.9),
+		\rel, 3
+	)
+).play;
+)
+
+
+
+// "cycles" rhythmic construction style
+(
+var degrees;
+degrees = [0, 3, 6!2, 7!3];
+degrees = [0, 3, 6!2, 7!3, 0, 8, 9, 10];
+// degrees = [[0, 1, 3], 5, -6!2, 6!3, 9];
+
+Ndef(\a).fadeTime = 0;
+Ndef(\a,
+	Pbind(
+		\instrument, "doubleBass",
+		\dur, Pseq(~dursFrom.(degrees), inf),
+		\stretch, 4,
+		\ctranspose, -12,
+		\degree, Pseq(degrees.flat, inf) + [0, 2],
+		\amp, Pwhite(0.5, 0.9),
+		\rel, 3
+	)
+).play;
+)
+
+(
+var degrees;
+degrees = [0, 3, 0, 3];
+
+Ndef(\b).fadeTime = 0;
+Ndef(\b,
+	Pbind(
+		\instrument, "sawSynth",
+		\dur, Pseq(~dursFrom.(degrees), inf),
+		\stretch, 4,
+		\ctranspose, -24,
+		\degree, Pseq(degrees.flat, inf),
+		\amp, Pwhite(0.05, 0.15),
+		\rel, 0.1
+	)
+).play;
+)
+
+Ndef(\a).clear;
+
+p.quant = 4
+p.quant
+
+~bpm.(90)
+
 

@@ -60,7 +60,7 @@ SynthDef("gr", {arg out = 0, buffer, rate = 1, startPos = 0, gate = 1, att = 0.0
 
 
 
-SynthDef(\superSaw, {
+SynthDef(\superSaw25, {
 	arg
 	//Standard Values
 	out = 0, pan = 0, gate = 1, amp = 0.5, freq = 40,
