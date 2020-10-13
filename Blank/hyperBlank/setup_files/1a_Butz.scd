@@ -37,10 +37,8 @@ Butz.add('   -   ', { "this is just a space divider" });
 
 
 
-Butz.add('Dirts Samples', {
-	"this should load Dirt Samples".postln;
-	"and browse sample window after loading".postln;
-	/*(PathName(q.hyperfolder).parentPath ++ "25x25_SCLOrkDirtSamplesLoad.scd").load;*/
+Butz.add('Dirt Samples', {
+	d = SCLOrkSamples.loadFolder(Quarks.folder +/+ "Dirt-Samples")
 });
 
 Butz.add('SCLOrkSynths', {
