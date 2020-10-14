@@ -1,31 +1,12 @@
-# SCLOrk
+# SCLOrkPieces
 
-This repository contains full pieces, demos, and examples for the Santa Clara Laptop Orchestra (SCLOrk).
+This repository contains complete materials for pieces that SCLOrk has performed over the years. It also includes some teaching demos and examples.
+SCLOrk is the Santa Clara Laptop Orchestra.
 
-Wish list:
+Typical installation can be done directly from SuperCollider as a Quark:
 
-* Simple OSC messaging between computers
+`Quarks.install("https://github.com/SCLOrkHub/SCLOrkPieces/")`
 
-* Shared TempoClock
-  * simple example with sender computer, receiving computer
+Some of the folders are pointers to other github repositories.
 
-* QuNeo load samples
-  * accepts stereo OR mono files
-  * outputs always same mono signal to L/R (to allow for headphone listening)
-  * example with drum kit
-  * example with nature samples
-
-* QuNeo plays a SynthDef
-  * either single notes or chords (similar as Ken's example)
-
-* QuNeo plays Patterns (Pbindefs)
-
-* SuperCollider Pbindefs playing Yoshimi
-
-* QuNeo playing SuperCollider Pbindefs playing Yoshimi
-
-* Theremin into SuperCollider as a controller
-
-* nanoKONTROL2 with Calf plugins
-
-* Cups and GameTrak example code
+git submodule update --init
