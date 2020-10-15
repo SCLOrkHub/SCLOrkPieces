@@ -4,6 +4,7 @@
 (
 var file = "".resolveRelative ++ "startup_Blank.scd";
 var destination = StartupFile.filesDir;
+var command;
 
 Platform.case(
     \osx,       {
@@ -14,7 +15,7 @@ Platform.case(
 	\windows,   { "nothing" }
 );
 
-("cp " ++ file ++ " " ++ destination).unixCmd;
+command = ("cp " ++ file ++ " " ++ destination);
+command.postln;
+command.unixCmd;
 )
-
-Quarks.openFolder
