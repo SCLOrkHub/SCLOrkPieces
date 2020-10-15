@@ -5,7 +5,7 @@ SCLOrk is the Santa Clara Laptop Orchestra.
 
 Typical installation can be done directly from SuperCollider as a Quark:
 
-`Quarks.install("https://github.com/SCLOrkHub/SCLOrkPieces/")`
+`Quarks.install("https://github.com/SCLOrkHub/SCLOrkPieces")`
 
 Some of the folders are pointers to other github repositories. To get all their content, you can run the [download-submodules.scd](download-submodules.scd) file once. For convenience, the same code is also copied here:
 
