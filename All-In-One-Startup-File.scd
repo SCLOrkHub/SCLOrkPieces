@@ -103,6 +103,7 @@ w.onClose = {
 			"Quarks.install(\"SCLOrkSynths\");".postln;
 			"Quarks.install(\"Dirt-Samples\");".postln;
 			"Quarks.install(\"ddwSnippets\");".postln;
+			"Quarks.install(\"https://github.com/SCLOrkHub/SCLOrkPieces\");".postln;
 			// LanguageConfig.store;
 		}, {
 			// if HyperDisCo is installed, continue:
