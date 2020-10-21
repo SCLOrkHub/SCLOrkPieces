@@ -90,34 +90,42 @@ w.onClose = {
 	"***  q.hyperfolder = %; ".postf(q.hyperfolder);
 	*/
 
+
+	// Check whether needed quarks are installed:
+	[
+		"SafetyNet",
+		"HyperDisCo",
+		"StartupFile",
+		"SCLOrkTools",
+		"SCLOrkSynths",
+		"SCLOrkSynths",
+		"SCLOrkPieces",
+		"Dirt-Samples",
+		"ddwSnippets"
+	].do({ | name |
+		if( (Quarks.installed.any({ | quark | quark.name == name })), {
+			(name ++ " Quark is installed :-)").postln;
+			"".postln;
+		}, {
+			// notify that quark is not installed
+			("***" ++ name ++ " Quark is NOT installed! :-(").postln;
+			// adjust for the one odd case
+			if( name == "SCLOrkPieces", { name = "https://github.com/SCLOrkHub/SCLOrkPieces" });
+			// print installation instructions
+			("Please install it by running:\nQuarks.install(\"" ++ name ++ "\");").postln;
+			"".postln;
+		});
+	});
+
 	if( Quarks.installed.any({ |quark| quark.name == "HyperDisCo" }).not,
 		// if HyperDisCo is not installed, install it and throw warning:
 		{
 			// if missing, add quark folder, and recompile by Hand:
-			"Needed Quarks not installed!".postln;
-			"Please do the following then and restart SuperCollider:".postln;
-			"Quarks.fetchDirectory;".postln;
-			"Quarks.install(\"HyperDisCo\");".postln;
-			"Quarks.install(\"StartupFile\");".postln;
-			"Quarks.install(\"SCLOrkTools\");".postln;
-			"Quarks.install(\"SCLOrkSynths\");".postln;
-			"Quarks.install(\"Dirt-Samples\");".postln;
-			"Quarks.install(\"ddwSnippets\");".postln;
-			"Quarks.install(\"https://github.com/SCLOrkHub/SCLOrkPieces\");".postln;
+			"Cannot proceed without HyperDisCo".postln;
 			// LanguageConfig.store;
 		}, {
 			// if HyperDisCo is installed, continue:
 			// (q.hyperfolder +/+ "setup_files/00_loadMe.scd").loadPaths;
-
-
-
-			//// load all files for the hyperdisco setup.
-			// q = q ? ();
-			// q.hyperfolder = q.hyperfolder ?? { thisProcess.nowExecutingPath.dirname };
-
-			// (q.hyperfolder +/+ "libs/_SynthLib.scd").loadPaths;
-			// (q.hyperfolder +/+ "libs/_FXLib.scd").loadPaths;
-
 
 			// ****************
 			// MAKE HISTORY
