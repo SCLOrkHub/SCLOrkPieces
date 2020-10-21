@@ -294,10 +294,16 @@ w.onClose = {
 			Butz.add('   -   ', { "this is just a space divider" });
 
 			Butz.add('Dirt Samples', {
-				d = SCLOrkSamples.loadFolder(Quarks.folder +/+ "Dirt-Samples")
+				if( d.isNil, {
+					d = SCLOrkSamples.loadFolder(Quarks.folder +/+ "Dirt-Samples");
+					// to open GUI, user has to push button again
+				}, {
+					d.postln;
+					SCLOrkSamples.gui;
+				});
 			});
 
-			Butz.add('SCLOrkSynths', { SCLOrkSynths.gui });
+			Butz.add('SCLOrkSynths', { SCLOrkSynths.gui; Window.find(\SCLOrkSynths).front; });
 
 			Butz.add('SCLOrkChat', {
 				if( ~myName == "bruno", {
@@ -430,13 +436,6 @@ w.onClose = {
 				// etc
 			});
 
-
-			Butz.add('-', { "this is just a space divider" });
-
-
-
-
-
 			// this button needs to be reinvented.
 			// if there is a global variable like ~currentPiece, then my scd file could try to open a file inside that pieces' folder with the username.
 			// or maybe just let the user defeine which file they want to open
@@ -470,6 +469,9 @@ w.onClose = {
 			MFdef('PRIVATE').add(\winColor, { Butz.w.background_(Color.red) });
 
 			Butz.add('  -  ', { "this is just a space divider" });
+
+			// Consider having more than one SyncText "room"
+			Butz.add('SyncText', MFdef(\SyncText) );
 
 			Butz.add('StartupFile', {
 				if( (try { StartupFile.select }).isNil, { StartupFile.choose });
@@ -888,6 +890,90 @@ w.onClose = {
 
 			}.play(AppClock);
 
+
+
+			if( Quarks.isInstalled("ddwSnippets"), {
+
+				// add Ndef fadeTime
+				DDWSnippets.put("fadeTime", "Ndef(\\##name##).fadeTime = 0;");
+
+				// add Ndef set
+				DDWSnippets.put("set", "Ndef(\\##name##).set(\\param, value);");
+
+				// add ndef vanilla
+				DDWSnippets.put("ndef",
+					"(
+Ndef(\\##name##, {
+\targ snd, env, pos;
+\tenv = ;
+\tsnd =  ;
+\tpos = 0.0;
+\tsnd = Pan2.ar(Mix.ar(snd), pos);
+\tsnd = Limiter.ar(snd);
+}).play;
+)"
+				);
+
+				// add pbind vanilla (inside ndef)
+				DDWSnippets.put("pbind",
+					"(
+Ndef(\\##name##,
+\tPbind(
+\t\t\\instrument, ,
+\t\t\\degree, ,
+\t\t\\dur, ,
+\t\t\\amp, ,
+\t\t\\att, ,
+\t\t\\rel, ,
+\t)
+).play;
+)"
+				);
+
+
+				// add pbind wich cycles function (for degrees)
+				DDWSnippets.put("degreeCycles",
+					"(
+var degrees;
+degrees = [##0, 1, 2, 3##];
+Ndef(\\name, // customize name
+\tPbind(
+\t\t\\instrument, \"chooseSynth\" ,
+\t\t\\scale, Scale.major,
+\t\t\\degree, Pseq(degrees.flat, inf),
+\t\t\\dur, Pseq(~dursFrom.(degrees), inf),
+\t\t\\amp, ,
+\t\t\\att, 0.001,
+\t\t\\rel, 2,
+\t)
+).play;
+)"
+				);
+
+				// add pbind wich cycles function (for samples)
+				DDWSnippets.put("samplesCycles",
+					"(
+var samples;
+samples = [\\bd0, \\techno0, \\bd0, \\cp0!4];
+// samples = [ ];
+
+Ndef(\\##name##).quant = 0; // customize name
+Ndef(\\name, // customize name
+	Pbind(
+		\\type, \\dirt,
+		\\sampleName, Pseq(samples.flat, inf),
+		\\dur, Pseq(~dursFrom.(samples), inf),
+		\\stretch, 4,
+		\\amp, 0.2,
+		\\rate, 1
+	)
+).play
+)"
+				);
+
+				"ddwSnippets added. Try Control + ` to use them!".postln;
+
+			}); // end of ddwSnippets if/else
 
 
 
