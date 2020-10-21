@@ -1,5 +1,5 @@
 // YOU ONLY HAVE TO DO THIS ONCE EVER
-// The code below will automatically make a copy of startup_25x25.scd into the right SC folder
+// The code below will automatically make a copy of this file into the right folder
 
 (
 var file = "".resolveRelative ++ "All-In-One-Startup-File.scd";
