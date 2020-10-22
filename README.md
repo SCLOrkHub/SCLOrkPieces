@@ -25,3 +25,14 @@ var path = Quarks.folder +/+ "SCLOrkPieces";
 ("cd " ++ path ++ "; git submodule update --init").unixCmd;
 )
 ```
+
+Other Quarks typically used by SCLOrk are:
+```
+Quarks.fetchDirectory;
+Quarks.install("HyperDisCo");
+Quarks.install("StartupFile");
+Quarks.install("SCLOrkTools");
+Quarks.install("SCLOrkSynths");
+Quarks.install("Dirt-Samples");
+Quarks.install("ddwSnippets");
+```
