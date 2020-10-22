@@ -1,13 +1,8 @@
 // SCLOrk All In One Startup File
 // NOTE: this file must be located under
 // ~/.config/SuperCollider/startup_files/
+// run the file called "move startup file to right place" to make this copy automatically
 
-
-
-
-// next: add to update quarks a print of last commit date git show?
-// history button not working?
-// Create a SC script that copies the entire content of All-In-One from SCLOrkPieces, creates a new file with it, and saves inside the proper startup_files folder. Perhaps add a DATE TAG at header?
 
 // Don't touch anything below this line...
 
@@ -911,102 +906,17 @@ w.onClose = {
 
 			}.play(AppClock);
 
-/*
+
 
 			if( Quarks.isInstalled("ddwSnippets"), {
-
-				"
-
-				// ndef fadeTime
-				DDWSnippets.put(\"fadeTime\", \"Ndef(\\##name##).fadeTime = 0;\");
-
-				// ndef fadeTime
-				DDWSnippets.put(\"stop\", \"Ndef(\\##name##).stop(5);\");
-
-				// ndef set
-				DDWSnippets.put(\"set\", \"Ndef(\\##name##).set(\\param, value);\");
-
-				// ndef vanilla
-				DDWSnippets.put(\"ndef\",
-					\"(
-Ndef(\\##name##, {
-\targ snd, env, pos;
-\tenv = ;
-\tsnd =  ;
-\tpos = 0.0;
-\tsnd = Pan2.ar(Mix.ar(snd), pos);
-\tsnd = Limiter.ar(snd);
-}).play;
-)\"
-				);
-
-				// add pbind vanilla (inside ndef)
-				DDWSnippets.put(\"pbind\",
-					\"(
-Ndef(\\##name##,
-\tPbind(
-\t\t\\instrument, ,
-\t\t\\degree, ,
-\t\t\\dur, ,
-\t\t\\amp, ,
-\t\t\\att, ,
-\t\t\\rel, ,
-\t)
-).play;
-)\"
-				);
-
-
-				// add pbind wich cycles function (for degrees)
-				DDWSnippets.put(\"degreeCycles\",
-					\"(
-var degrees;
-degrees = [##0, 1, 2, 3##];
-Ndef(\\name, // customize name
-\tPbind(
-\t\t\\instrument, \"chooseSynth\" ,
-\t\t\\scale, Scale.major,
-\t\t\\degree, Pseq(degrees.flat, inf),
-\t\t\\dur, Pseq(~dursFrom.(degrees), inf),
-\t\t\\amp, ,
-\t\t\\att, 0.001,
-\t\t\\rel, 2,
-\t)
-).play;
-)\"
-				);
-
-				// add pbind wich cycles function (for samples)
-				DDWSnippets.put(\"samplesCycles\",
-					\"(
-var samples;
-samples = [\\bd0, \\techno0, \\bd0, \\cp0!4];
-// samples = [ ];
-
-Ndef(\\##name##).quant = 0; // customize name
-Ndef(\\name, // customize name
-	Pbind(
-		\\type, \\dirt,
-		\\sampleName, Pseq(samples.flat, inf),
-		\\dur, Pseq(~dursFrom.(samples), inf),
-		\\stretch, 4,
-		\\amp, 0.2,
-		\\rate, 1
-	)
-).play
-)\"
-				);
-
-						".interpret;
-
+				(Quarks.folder +/+ "SCLOrkPieces/Settings/ddwSnippets.scd").load;
 				"ddwSnippets added. Try Control + ` to use them!".postln;
-
 			}, {
-				"ddwSnippets Quark not installed. No shortcuts added.\n If you wish to use ddwSnippets, please run:\n Quarks.install(\"ddwSnippets\");".postln;
+				"ddwSnippets Quark not installed. No shortcuts added.".postln;
+				"If you wish to use ddwSnippets, please run:".postln;
+				"Quarks.install(\"ddwSnippets\");".postln;
 			}); // end of ddwSnippets if/else
 
-
-*/
 
 	}); // end of Quark installation if/else
 }; // end of w.onClose
