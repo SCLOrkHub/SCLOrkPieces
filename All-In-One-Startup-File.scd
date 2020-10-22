@@ -11,7 +11,19 @@
 
 
 
-var a, w;
+var a, w, requiredQuarks;
+
+requiredQuarks = [
+	"SafetyNet",
+	"HyperDisCo",
+	"StartupFile",
+	"SCLOrkTools",
+	"SCLOrkSynths",
+	"SCLOrkSynths",
+	"SCLOrkPieces",
+	"Dirt-Samples",
+	"ddwSnippets"
+];
 
 w = Window.new(
 	name: "please type your name or nickname (a single word)",
@@ -90,32 +102,25 @@ w.onClose = {
 	"***  q.hyperfolder = %; ".postf(q.hyperfolder);
 	*/
 
-
-	// Check whether needed quarks are installed:
-	[
-		"SafetyNet",
-		"HyperDisCo",
-		"StartupFile",
-		"SCLOrkTools",
-		"SCLOrkSynths",
-		"SCLOrkSynths",
-		"SCLOrkPieces",
-		"Dirt-Samples",
-		"ddwSnippets"
-	].do({ | name |
-		if( (Quarks.installed.any({ | quark | quark.name == name })), {
-			(name ++ " Quark is installed :-)").postln;
-			"".postln;
-		}, {
-			// notify that quark is not installed
-			("***" ++ name ++ " Quark is NOT installed! :-(").postln;
-			// adjust for the one odd case
-			if( name == "SCLOrkPieces", { name = "https://github.com/SCLOrkHub/SCLOrkPieces" });
-			// print installation instructions
-			("Please install it by running:\nQuarks.install(\"" ++ name ++ "\");").postln;
-			"".postln;
-		});
+	MFdef(\quarksCheck).add(\quarks, {
+		// Check whether needed quarks are installed:
+		requiredQuarks.do({ | name |
+			if( (Quarks.installed.any({ | quark | quark.name == name })), {
+				(name ++ " Quark is installed :-)").postln;
+				"".postln;
+			}, {
+				// notify that quark is not installed
+				("***" ++ name ++ " Quark is NOT installed! :-(").postln;
+				// adjust for the one odd case
+				if( name == "SCLOrkPieces", { name = "https://github.com/SCLOrkHub/SCLOrkPieces" });
+				// print installation instructions
+				("Please install it by running:\nQuarks.install(\"" ++ name ++ "\");").postln;
+				"".postln;
+			});
+		})
 	});
+
+	MFdef(\quarksCheck).value;
 
 	if( Quarks.installed.any({ |quark| quark.name == "HyperDisCo" }).not,
 		// if HyperDisCo is not installed, install it and throw warning:
@@ -484,8 +489,6 @@ w.onClose = {
 
 			Butz.add('History', { WinBounds.showOrMake(\History) });
 
-			// Consider having more than one SyncText "room"
-			Butz.add('SyncText', MFdef(\SyncText) );
 
 			Butz.add('meter', {
 				// s.meter.window.close;
@@ -500,6 +503,21 @@ w.onClose = {
 				w.alwaysOnTop_(true);
 				w;
 			});
+
+			MFdef(\quarksCheck).add('update', {
+				requiredQuarks.do({ |name|
+					if( Quarks.isInstalled(name), {
+						("Updating " ++ name ++ "...").postln;
+						Quarks.update(name);
+					});
+				});
+			});
+
+			Butz.add('update Quarks',
+				MFdef(\quarksCheck);
+			);
+
+
 
 			// Not in use:
 			// Butz.add('ndefmix', { WinBounds.showOrMake(\ndefmix) });
@@ -894,13 +912,16 @@ w.onClose = {
 
 			if( Quarks.isInstalled("ddwSnippets"), {
 
-				// add Ndef fadeTime
+				// ndef fadeTime
 				DDWSnippets.put("fadeTime", "Ndef(\\##name##).fadeTime = 0;");
 
-				// add Ndef set
+				// ndef fadeTime
+				DDWSnippets.put("stop", "Ndef(\\##name##).stop(5);");
+
+				// ndef set
 				DDWSnippets.put("set", "Ndef(\\##name##).set(\\param, value);");
 
-				// add ndef vanilla
+				// ndef vanilla
 				DDWSnippets.put("ndef",
 					"(
 Ndef(\\##name##, {
