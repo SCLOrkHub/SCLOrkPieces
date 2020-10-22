@@ -490,7 +490,7 @@ w.onClose = {
 				"*** q.oscRouter has % peers: \n%\n".postf(peers.size, peers.sort)
 			});
 
-			Butz.add('History', { WinBounds.showOrMake(\History) });
+			Butz.add('History', { WinBounds.showOrMake('sharedHistory') });
 
 
 			Butz.add('meter', {
@@ -638,7 +638,7 @@ w.onClose = {
 				};
 			});
 
-			// MFdef(\updateShareButs).value;
+			MFdef(\updateShareButs).value;
 
 			WinBounds.addMake('sharedHistory', {
 				var g = History.makeWin;
@@ -911,7 +911,7 @@ w.onClose = {
 
 			}.play(AppClock);
 
-
+/*
 
 			if( Quarks.isInstalled("ddwSnippets"), {
 
@@ -1006,7 +1006,7 @@ Ndef(\\name, // customize name
 			}); // end of ddwSnippets if/else
 
 
-
+*/
 
 	}); // end of Quark installation if/else
 }; // end of w.onClose
