@@ -5,8 +5,11 @@
 
 
 
-// Don't touch anything below this line...
+// next: add to update quarks a print of last commit date git show?
+// history button not working?
+// Create a SC script that copies the entire content of All-In-One from SCLOrkPieces, creates a new file with it, and saves inside the proper startup_files folder. Perhaps add a DATE TAG at header?
 
+// Don't touch anything below this line...
 
 
 
@@ -912,18 +915,20 @@ w.onClose = {
 
 			if( Quarks.isInstalled("ddwSnippets"), {
 
-				// ndef fadeTime
-				DDWSnippets.put("fadeTime", "Ndef(\\##name##).fadeTime = 0;");
+				"
 
 				// ndef fadeTime
-				DDWSnippets.put("stop", "Ndef(\\##name##).stop(5);");
+				DDWSnippets.put(\"fadeTime\", \"Ndef(\\##name##).fadeTime = 0;\");
+
+				// ndef fadeTime
+				DDWSnippets.put(\"stop\", \"Ndef(\\##name##).stop(5);\");
 
 				// ndef set
-				DDWSnippets.put("set", "Ndef(\\##name##).set(\\param, value);");
+				DDWSnippets.put(\"set\", \"Ndef(\\##name##).set(\\param, value);\");
 
 				// ndef vanilla
-				DDWSnippets.put("ndef",
-					"(
+				DDWSnippets.put(\"ndef\",
+					\"(
 Ndef(\\##name##, {
 \targ snd, env, pos;
 \tenv = ;
@@ -932,12 +937,12 @@ Ndef(\\##name##, {
 \tsnd = Pan2.ar(Mix.ar(snd), pos);
 \tsnd = Limiter.ar(snd);
 }).play;
-)"
+)\"
 				);
 
 				// add pbind vanilla (inside ndef)
-				DDWSnippets.put("pbind",
-					"(
+				DDWSnippets.put(\"pbind\",
+					\"(
 Ndef(\\##name##,
 \tPbind(
 \t\t\\instrument, ,
@@ -948,13 +953,13 @@ Ndef(\\##name##,
 \t\t\\rel, ,
 \t)
 ).play;
-)"
+)\"
 				);
 
 
 				// add pbind wich cycles function (for degrees)
-				DDWSnippets.put("degreeCycles",
-					"(
+				DDWSnippets.put(\"degreeCycles\",
+					\"(
 var degrees;
 degrees = [##0, 1, 2, 3##];
 Ndef(\\name, // customize name
@@ -968,12 +973,12 @@ Ndef(\\name, // customize name
 \t\t\\rel, 2,
 \t)
 ).play;
-)"
+)\"
 				);
 
 				// add pbind wich cycles function (for samples)
-				DDWSnippets.put("samplesCycles",
-					"(
+				DDWSnippets.put(\"samplesCycles\",
+					\"(
 var samples;
 samples = [\\bd0, \\techno0, \\bd0, \\cp0!4];
 // samples = [ ];
@@ -989,11 +994,15 @@ Ndef(\\name, // customize name
 		\\rate, 1
 	)
 ).play
-)"
+)\"
 				);
+
+						".interpret;
 
 				"ddwSnippets added. Try Control + ` to use them!".postln;
 
+			}, {
+				"ddwSnippets Quark not installed. No shortcuts added.\n If you wish to use ddwSnippets, please run:\n Quarks.install(\"ddwSnippets\");".postln;
 			}); // end of ddwSnippets if/else
 
 
