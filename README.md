@@ -26,7 +26,7 @@ var path = Quarks.folder +/+ "SCLOrkPieces";
 )
 ```
 
-Other Quarks typically used by SCLOrk are:
+So the full list of Quarks typically used by SCLOrk are:
 ```
 Quarks.fetchDirectory;
 Quarks.install("HyperDisCo");
@@ -35,4 +35,5 @@ Quarks.install("SCLOrkTools");
 Quarks.install("SCLOrkSynths");
 Quarks.install("Dirt-Samples");
 Quarks.install("ddwSnippets");
+Quarks.install("https://github.com/SCLOrkHub/SCLOrkPieces");
 ```
