@@ -9,7 +9,7 @@
 
 
 
-var a, w, requiredQuarks;
+var a, w, requiredQuarks, currentPiece;
 
 requiredQuarks = [
 	"SafetyNet",
@@ -29,6 +29,7 @@ w = Window.new(
 	resizable: false
 ).front;
 w.background = Color.black;
+
 a = TextField(
 	parent: w,
 	bounds: Rect(
@@ -38,6 +39,7 @@ a = TextField(
 		height: 100
 	)
 );
+
 a.font = Font("Arial", 40);
 a.string = "your name?";
 a.align = \center;
@@ -45,7 +47,6 @@ a.stringColor = Color.gray;
 a.mouseDownAction = { a.string = "" };
 a.keyDownAction = { a.string = ""; a.keyDownAction = nil };
 a.action = {arg field; ~myName = field.value.postln; w.close };
-
 
 w.onClose = {
 
@@ -329,6 +330,7 @@ w.onClose = {
 
 				// Clear all
 				Ndef.clear;
+				"Cleared all Ndefs".postln;
 
 				// Create general purpose clock that Ndefs can use;
 				// Also quants all proxies to 1 beat
@@ -339,7 +341,8 @@ w.onClose = {
 				// Create convenience "Impulse metronome" Ndef
 				Ndef(\t, { Impulse.ar(Ndef(\tempo)) }); // we'll use Ndef(\t) to get a trigger on the clock
 
-				("Metronome running at 60 BPM.").postln;
+				"Metronome running at 60 BPM.".postln;
+				"Global quantization set to 1 beat.".postln;
 
 				// shortcut to change tempo
 				// usage in performance: ~bpm.(120);
@@ -413,17 +416,6 @@ w.onClose = {
 
 				"Utility Functions loaded".postln;
 
-
-
-
-
-
-
-
-
-
-
-
 				// If there is need to load other files, place them here?
 				// likely will save those files 'per piece' in their own folder
 				// folder should be inside SCLOrkPieces
@@ -476,11 +468,15 @@ w.onClose = {
 			// Consider having more than one SyncText "room"
 			Butz.add('SyncText', MFdef(\SyncText) );
 
+			// Since I'm going for an all-in-one startup file, players do not need
+			// do pick startup files. I can use StartupFile.choose when I need to debug.
+			/*
 			Butz.add('StartupFile', {
 				if( (try { StartupFile.select }).isNil, { StartupFile.choose });
 			});
+			*/
 
-			Butz.add('postPeers', {
+			Butz.add('Post Peers', {
 				var peers = q.oscRouter.peers;
 				"*** q.oscRouter has % peers: \n%\n".postf(peers.size, peers.sort)
 			});
@@ -488,7 +484,7 @@ w.onClose = {
 			Butz.add('History', { WinBounds.showOrMake('sharedHistory') });
 
 
-			Butz.add('meter', {
+			Butz.add('Meter', {
 				// s.meter.window.close;
 				WinBounds.showOrMake(\meter);
 				Window.find(\meter).moveTo(120, 0);
@@ -511,10 +507,57 @@ w.onClose = {
 				});
 			});
 
-			Butz.add('update Quarks',
+			Butz.add('Update Quarks',
 				MFdef(\quarksCheck);
 			);
 
+			Butz.add('   -   ', { "this is just a space divider" });
+
+			Butz.add('Load New Piece', {
+				var win, selectButtons;
+				var pieces = [
+					"25x25",
+					"Cycles",
+					"GMO",
+					"Wherever We Are",
+					"Another piece goes here 1",
+					"Another piece goes here 2",
+					"Another piece goes here 3"
+				];
+
+				win = Window.new(
+					name: "Select a piece to load",
+					bounds: Rect.aboutPoint(Window.screenBounds.center, 200, 200)
+				);
+
+				selectButtons = pieces.collect { |name|
+					var color = if(name == currentPiece, { Color.green });
+					Button.new(parent: win)
+					.states_([[name, nil, color]])
+					.action_({
+						switch(name,
+							"25x25", {
+								"Loading 25x25...".postln;
+								(Quarks.folder +/+ "SCLOrkPieces/25x25/25x25_Setup.scd").load;
+							},
+							"Cycles", {
+								"Loading cycles".postln;
+							},
+							"GMO", {
+								"Loading gmo".postln;
+							},
+							"Wherever We Are", {
+								"Loading WWA".postln;
+							}
+						);
+						currentPiece = name;
+						win.close
+					})
+				};
+
+				win.layout = VLayout(*selectButtons);
+				win.front;
+			});
 
 
 			// Not in use:
