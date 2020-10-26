@@ -73,7 +73,7 @@ if(d.notNil, {
 				1.wait;
 				~xjadeo = NetAddr("localhost", 7890);
 				~xjadeo.sendMsg('/jadeo/jack/connect');
-				~xjadeo.sendMsg('/jadeo/load', PathName.new(q.hyperfolder).parentPath ++ "25x25.mp4");
+				~xjadeo.sendMsg('/jadeo/load', Quarks.folder +/+ "SCLOrkPieces/25x25/25x25.mp4");
 				"echo locate 0 | jack_transport".unixCmd;
 			}.fork;
 		})
