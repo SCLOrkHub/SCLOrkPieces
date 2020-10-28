@@ -468,8 +468,6 @@ w.onClose = {
 			// Consider having more than one SyncText "room"
 			Butz.add('SyncText', MFdef(\SyncText) );
 
-			// Since I'm going for an all-in-one startup file, players do not need
-			// do pick startup files. I can use StartupFile.choose when I need to debug.
 			/*
 			Butz.add('StartupFile', {
 				if( (try { StartupFile.select }).isNil, { StartupFile.choose });
@@ -508,7 +506,10 @@ w.onClose = {
 			});
 
 			Butz.add('Update Quarks',
-				MFdef(\quarksCheck);
+				MFdef(\quarksCheck).value;
+				"Finished updating Quarks.".postln;
+				"Now copying Startup File to the right place...".postln;
+				(Quarks.folder +/+ "SCLOrkPieces/Settings/Move-Startup-File-To-Right-Place.scd").load;
 			);
 
 			Butz.add('   -   ', { "this is just a space divider" });
