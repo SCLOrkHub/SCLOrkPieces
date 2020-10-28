@@ -1,10 +1,52 @@
+//
 // SCLOrk All In One Startup File
-// NOTE: this file must be located under
+//
+// NOTE: the 'template' (backup) copy of this file lives in SCLOrkPieces/Settings.
+// A copy should be made under
 // ~/.config/SuperCollider/startup_files/
-// run the file called "move startup file to right place" to make this copy automatically
+// (that's the one SC will actually load at startup)
+// Button "Update Quarks" now AUTOMATICALLY COPIES TEMPLATE FROM SETTINGS INTO .CONFIG
 
 
-// Don't touch anything below this line...
+
+// *!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!
+/*
+//
+//  IF YOU NEED TO MAKE MODIFICATIONS, MAKE THEM IN THE SOURCE TEMPLATE
+//  WHICH IS INSIDE SCLOrkPieces/Settings !!!!!
+//  ...then copy it over to .config to test
+//  ...and if it looks good, don't forget to git add * etc.
+*/
+// *!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -505,12 +547,12 @@ w.onClose = {
 				});
 			});
 
-			Butz.add('Update Quarks',
+			Butz.add('Update Quarks', {
 				MFdef(\quarksCheck).value;
 				"Finished updating Quarks.".postln;
-				"Now copying Startup File to the right place...".postln;
+				"Now copying latest Startup File to the right place...".postln;
 				(Quarks.folder +/+ "SCLOrkPieces/Settings/Move-Startup-File-To-Right-Place.scd").load;
-			);
+			});
 
 			Butz.add('   -   ', { "this is just a space divider" });
 
