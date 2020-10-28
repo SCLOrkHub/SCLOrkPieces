@@ -10,15 +10,17 @@
 
 
 // *!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!
-/*
+//
 //
 //  IF YOU NEED TO MAKE MODIFICATIONS, MAKE THEM IN THE SOURCE TEMPLATE
 //  WHICH IS INSIDE SCLOrkPieces/Settings !!!!!
 //  ...then copy it over to .config to test
-//  ...and if it looks good, don't forget to git add * etc.
-*/
+//
+// (Quarks.folder +/+ "SCLOrkPieces/Settings/Move-Startup-File-To-Right-Place.scd").load;
+//
+//  ...try it, and if all looks good, don't forget to git add * etc.
+//
 // *!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!
-
 
 
 
@@ -342,14 +344,19 @@ w.onClose = {
 			Butz.add('Dirt Samples', {
 				if( d.isNil, {
 					d = SCLOrkSamples.loadFolder(Quarks.folder +/+ "Dirt-Samples");
-					// to open GUI, user has to push button again
 				}, {
 					d.postln;
 					SCLOrkSamples.gui;
 				});
 			});
 
-			Butz.add('SCLOrkSynths', { SCLOrkSynths.gui; Window.find(\SCLOrkSynths).front; });
+			Butz.add('SCLOrkSynths', {
+				if( SCLOrkSynths.isLoaded, {
+					SCLOrkSynths.gui;
+				}, {
+					SCLOrkSynths.load;
+				})
+			});
 
 			Butz.add('SCLOrkChat', {
 				if( ~myName == "bruno", {
