@@ -610,6 +610,36 @@ w.onClose = {
 			});
 
 
+
+			Butz.add('Demos', {
+
+				var win, selectButtons;
+				var demos = PathName.new(Quarks.folder +/+ "SCLOrkPieces/Demos").files;
+
+				win = Window.new(
+					name: "Open Demo",
+					bounds: Rect.aboutPoint(Window.screenBounds.center, 120, 100)
+				);
+
+				selectButtons = demos.collect { |path|
+					Button.new(parent: win)
+					.states_([[path.fileName]])
+					.action_({
+						Document.new(
+							title: path.fileNameWithoutExtension.asString ++ " copy",
+							string: String.readNew(File.new(path.fullPath, "r"));
+						).front;
+						win.close
+					})
+				};
+
+				win.layout = VLayout(*selectButtons);
+				win.front;
+			});
+
+
+
+
 			// Not in use:
 			// Butz.add('ndefmix', { WinBounds.showOrMake(\ndefmix) });
 			// Butz.add(\DRAW, { WinBounds.showOrMake(\DRAW) });

@@ -1,3 +1,7 @@
+//
+// demo-5
+//
+
 (
 var degrees;
 degrees = [
@@ -31,8 +35,8 @@ Ndef(\har,
 		\degree, Pseq([
 			[0, 2b, 4, 6b],
 			[0, 2b, 4s, 7],
-			[-4, 1, 2, 3],
-			[-5, 0, 1, -2],
+			[-4, 1, 2b, 7],
+			[-6, -3, 0, 3],
 		], inf),
 		\ctranspose, [0, 12],
 		\dur, 4,
@@ -101,7 +105,6 @@ Ndef(\fx, {
 		room: 0.5,
 		damp: 0.6
 	);
-	snd = snd * amp;
 	snd = Pan2.ar(Mix(snd), 0)
 }).play;
 )
