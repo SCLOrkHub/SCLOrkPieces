@@ -372,6 +372,13 @@ w.onClose = {
 				}, {
 					SCLOrkChat.new(~myName.asString)
 				});
+
+				Window.find("SCLOrkChat").bounds = Rect(
+					left: Window.screenBounds.width - 550,
+					top: Window.screenBounds.height - 333,
+					width: 550,
+					height: 333
+				)
 			});
 
 			Butz.add('Load All The Rest', {
@@ -518,7 +525,7 @@ w.onClose = {
 
 			/*
 			Butz.add('StartupFile', {
-				if( (try { StartupFile.select }).isNil, { StartupFile.choose });
+			if( (try { StartupFile.select }).isNil, { StartupFile.choose });
 			});
 			*/
 
