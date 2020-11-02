@@ -61,7 +61,6 @@ requiredQuarks = [
 	"StartupFile",
 	"SCLOrkTools",
 	"SCLOrkSynths",
-	"SCLOrkSynths",
 	"SCLOrkPieces",
 	"Dirt-Samples",
 	"ddwSnippets"
@@ -546,7 +545,13 @@ w.onClose = {
 			});
 
 			MFdef(\quarksCheck).add('update', {
-				requiredQuarks.do({ |name|
+				// Update only SCLOrk stuff
+				// (avoid unexpected HyperDisCo updates for example)
+				[
+					"SCLOrkTools",
+					"SCLOrkSynths",
+					"SCLOrkPieces"
+				].do({ |name|
 					if( Quarks.isInstalled(name), {
 						("Updating " ++ name ++ "...").postln;
 						Quarks.update(name);
@@ -554,7 +559,7 @@ w.onClose = {
 				});
 			});
 
-			Butz.add('Update Quarks', {
+			Butz.add('Update SCLOrk', {
 				MFdef(\quarksCheck).value;
 				"Finished updating Quarks.".postln;
 				"Now copying latest Startup File to the right place...".postln;
