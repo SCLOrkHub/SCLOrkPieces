@@ -9,8 +9,8 @@
 var samples;
 samples = [\bass10, \e7!5, \east2!3, \dork22]; // \r is a rest
 
-Ndef(\b1).quant = 4;
-Ndef(\b1,
+Ndef(\bx).quant = 4;
+Ndef(\bx,
 	Pbind(
 		\type, \dirt,
 		\sampleName, Pseq(samples.flat, inf),
@@ -27,7 +27,7 @@ Ndef(\b1,
 
 // dark synth
 (
-Ndef(\ssaw).quant = 1;
+Ndef(\ssaw).quant = 4;
 Ndef(\ssaw,
 	Pbind(
 		\instrument, "feedbackPad1",
@@ -50,7 +50,7 @@ Ndef(\ssaw,
 Ndef(\fx2).fadeTime = 2;
 Ndef(\fx2, {
 	var snd;
-	snd = Ndef(\ssaw).ar + Ndef(\b1).ar;
+	snd = Ndef(\ssaw).ar + Ndef(\bx).ar;
 	snd = RHPF.ar(
 		in: snd,
 		freq: LFNoise2.ar(1/4).range(100, 1220),
@@ -69,11 +69,11 @@ Ndef(\fx2, {
 
 // stop source, listen to fx2 only
 Ndef(\ssaw).stop(3);
-Ndef(\b1).stop(2);
+Ndef(\bx).stop(2);
 
 // and back
-Ndef(\b1).play;
+Ndef(\bx).play;
 Ndef(\ssaw).play;
 
 // actually free the synths
-Ndef(\b1).free(10); Ndef(\ssaw).free(10);
+Ndef(\bx).free(10); Ndef(\ssaw).free(10);

@@ -47,6 +47,24 @@ Ndef(\a)[1] = \set -> Pbind(
 )
 
 
+// adding an effect to the chain (another slot in same Ndef):
+(
+Ndef(\a)[2] = \filter -> { |in|
+	Decimator.ar(
+		in: in,
+		rate: LFNoise0.ar(1).range(10000, 15000),
+		bits: LFNoise2.ar(1/4).range(6, 15)
+	);
+}
+)
+
+// some built-in convenience methods
+Ndef(\a).xset(\wet2, 0); // uses fadeTime
+Ndef(\a).set(\wet2, 0.7); // does not use fadeTime
+
+// remove Pbind from slot 1
+Ndef(\a)[1] = nil;
+
 
 
 

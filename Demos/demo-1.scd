@@ -29,19 +29,16 @@ Ndef(\b1,
 		\sampleName, Pseq(samples.flat, inf),
 		\dur, Pseq(~dursFrom.(samples), inf),
 		\stretch, 4,
-		\amp, Pseq([0.4, 0.29, 0.4, 0.3], inf) * 2,
+		\amp, Pseq([0.8, 0.6, 0.8, 0.5], inf) * Pwhite(0.6, 1),
 		\rate, Pwhite(1, 1.01) * Prand([1, 1, 1, 1, 1, -1], inf)
 	)
 ).play
 )
 
+
 // Stop monitoring the dry Ndef:
 Ndef(\b1).stop; // notice that "stop" really means just stop sending to speakers, does not stop running the Ndef
 Ndef(\b1).play; // or bring it back
-
-// you can also adjust global volume like this:
-Ndef(\b1).set(\amp, 0.5);
-Ndef(\b1).set(\amp, 1);
 
 
 // Easily add fx
@@ -66,14 +63,16 @@ Ndef(\fx, {
 		damp: 0.97,
 		mul: 1
 	);
-	snd = Limiter.ar(snd);
+	snd = Limiter.ar(snd) * Ndef(\fxAmp, 1).kr; // note the use of an Ndef for control
 }).play;
 )
 
-
 // Set fx amp to something else
-Ndef(\fx).set(\amp, 0.2);
-Ndef(\fx).set(\amp, 0.9);
+Ndef(\fxAmp, 0);
+Ndef(\fxAmp, 1);
+// or even
+Ndef(\fxAmp, { LFPulse.kr(10).range(0, 1) });
+
 
 // Or stop monitoring the fx completely (arg is fade out time)
 Ndef(\fx).stop(4);

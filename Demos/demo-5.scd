@@ -51,9 +51,9 @@ Ndef(\har,
 var samples;
 samples = [\bd0, \r, \bd0, \lt4];
 // samples = [\bd0, \r, \bd0, [\lt4, \r, \r, \lt3]];
-samples = [\bd0, \r, \bd0, \lt4!2];
-samples = [\bd0!2, \r, \bd0, \lt1!3];
-samples = [\bd0!2, \r, \bd0, \lt1!3, [ \hc2, \popkick7, \tabla17, \can9 ]];
+samples = [\bd0, \bd1, \bd0, \lt4!2];
+// samples = [\bd0!2, \r, \bd0, \lt1!3];
+// samples = [\bd0!2, \r, \bd0, \lt1!3, [ \hc2, \popkick7, \tabla17, \can9 ]];
 
 
 Ndef(\dr).quant = 4; // customize name
@@ -105,10 +105,13 @@ Ndef(\fx, {
 		room: 0.5,
 		damp: 0.6
 	);
-	snd = Pan2.ar(Mix(snd), 0)
+	snd = Pan2.ar(Mix(snd), 0) * Ndef(\fxAmp, 1).kr
 }).play;
 )
 
 
-Ndef(\fx).xset(\amp, 0);
+Ndef(\fxAmp, { SinOsc.kr(MouseY.kr(5, 10)).range(0, 1) });
+Ndef(\fxAmp, { LFPulse.kr(MouseY.kr(10, 39)).range(0.5, 4) });
+Ndef(\fxAmp, 0).quant_(4);
+
 Ndef(\fx).xset(\amp, 1);
