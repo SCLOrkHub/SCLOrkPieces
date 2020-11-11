@@ -573,7 +573,15 @@ w.onClose = {
 				(Quarks.folder +/+ "SCLOrkPieces/Settings/Move-Startup-File-To-Right-Place.scd").load;
 			});
 
-			Butz.add('   -   ', { "this is just a space divider" });
+			Butz.add('NdefMixer', { WinBounds.showOrMake(\ndefmix) });
+			WinBounds.addMake(\ndefmix, {
+				var mixer;
+				mixer = NdefMixer(s, 24);
+				mixer.parent.name_(\ndefmix);
+				ProxyMeter.addMixer(mixer);
+				mixer.parent;
+			});
+
 
 			Butz.add('Load New Piece', {
 				var win, selectButtons;
@@ -653,7 +661,7 @@ w.onClose = {
 
 
 			// Not in use:
-			// Butz.add('ndefmix', { WinBounds.showOrMake(\ndefmix) });
+
 			// Butz.add(\DRAW, { WinBounds.showOrMake(\DRAW) });
 			// Butz.add('MFdef_draw', { WinBounds.showOrMake('MFdef_draw') });
 			// Butz.add('scope', { WinBounds.showOrMake(\scope) });
@@ -666,12 +674,7 @@ w.onClose = {
 			Butz.add(\MainFX, { WinBounds.showOrMake(\MasterFX) });
 			WinBounds.addMake(\MasterFX, { MasterFX(s).gui.parent.name_(\MasterFX) });
 
-			WinBounds.addMake(\ndefmix, {
-			q.mixer = NdefMixer(s, 24);
-			q.mixer.parent.name_(\ndefmix);
-			ProxyMeter.addMixer(q.mixer);
-			q.mixer.parent;
-			});
+
 
 			MFdef('recSetup').add(\makeDoc, {
 			Document("myRecSetup", [
