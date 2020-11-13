@@ -573,15 +573,17 @@ w.onClose = {
 				(Quarks.folder +/+ "SCLOrkPieces/Settings/Move-Startup-File-To-Right-Place.scd").load;
 			});
 
-			Butz.add('NdefMixer', { WinBounds.showOrMake(\ndefmix) });
-			WinBounds.addMake(\ndefmix, {
+			Butz.add('NdefAuditioner', { (Quarks.quarkNameAsLocalPath("SCLOrkPieces") ++ "/Settings/Ndef-Auditioner.scd").load });
+
+			// Butz.add('NdefAuditioner', { WinBounds.showOrMake(\ndefmix) });
+			/*WinBounds.addMake(\ndefmix, {
 				var mixer;
 				mixer = NdefMixer(s, 24);
 				mixer.parent.name_(\ndefmix);
 				ProxyMeter.addMixer(mixer);
 				mixer.parent;
 			});
-
+*/
 
 			Butz.add('Load New Piece', {
 				var win, selectButtons;
