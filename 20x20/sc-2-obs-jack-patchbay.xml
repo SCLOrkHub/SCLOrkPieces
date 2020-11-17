@@ -1,0 +1,60 @@
+<!DOCTYPE patchbay>
+<patchbay name="sc-2-obs" version="0.4.5">
+ <output-sockets>
+  <socket exclusive="off" name="system" client="system" type="jack-audio">
+   <plug>capture_1</plug>
+   <plug>capture_2</plug>
+   <plug>capture_3</plug>
+   <plug>capture_4</plug>
+   <plug>capture_5</plug>
+   <plug>capture_6</plug>
+  </socket>
+  <socket exclusive="off" name="PulseAudio JACK Sink" client="PulseAudio JACK Sink" type="jack-audio">
+   <plug>front-left</plug>
+   <plug>front-right</plug>
+  </socket>
+  <socket exclusive="off" name="SuperCollider" client="SuperCollider" type="jack-audio">
+   <plug>out_1</plug>
+   <plug>out_2</plug>
+  </socket>
+  <socket exclusive="off" name="a2j" client="a2j" type="jack-midi">
+   <plug>Midi Through \[14\] \(capture\): Midi Through Port-0</plug>
+   <plug>Komplete Audio 6 \[20\] \(capture\): Komplete Audio 6 MIDI 1</plug>
+  </socket>
+ </output-sockets>
+ <input-sockets>
+  <socket exclusive="off" name="system" client="system" type="jack-audio">
+   <plug>playback_1</plug>
+   <plug>playback_2</plug>
+   <plug>playback_3</plug>
+   <plug>playback_4</plug>
+   <plug>playback_5</plug>
+   <plug>playback_6</plug>
+  </socket>
+  <socket exclusive="off" name="PulseAudio JACK Source" client="PulseAudio JACK Source" type="jack-audio">
+   <plug>front-left</plug>
+   <plug>front-right</plug>
+  </socket>
+  <socket exclusive="off" name="JACK Input Client" client="JACK Input Client" type="jack-audio">
+   <plug>in_1</plug>
+   <plug>in_2</plug>
+  </socket>
+  <socket exclusive="off" name="SuperCollider" client="SuperCollider" type="jack-audio">
+   <plug>in_1</plug>
+   <plug>in_2</plug>
+  </socket>
+  <socket exclusive="off" name="a2j" client="a2j" type="jack-midi">
+   <plug>Midi Through \[14\] \(playback\): Midi Through Port-0</plug>
+   <plug>Komplete Audio 6 \[20\] \(playback\): Komplete Audio 6 MIDI 1</plug>
+  </socket>
+ </input-sockets>
+ <slots/>
+ <cables>
+  <cable output="system" input="PulseAudio JACK Source" type="jack-audio"/>
+  <cable output="system" input="SuperCollider" type="jack-audio"/>
+  <cable output="PulseAudio JACK Sink" input="system" type="jack-audio"/>
+  <cable output="SuperCollider" input="JACK Input Client" type="jack-audio"/>
+  <cable output="SuperCollider" input="system" type="jack-audio"/>
+ </cables>
+</patchbay>
+
