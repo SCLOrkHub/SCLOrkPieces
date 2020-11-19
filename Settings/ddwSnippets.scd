@@ -1,3 +1,5 @@
+DDWSnippets.autoEnable = true;
+
 // ndef fadeTime
 DDWSnippets.put("fadeTime", "Ndef(\\##name##).fadeTime = 0;");
 
@@ -52,7 +54,7 @@ DDWSnippets.put("degreeCycles",
 			\t\t\\att, 0.001,
 			\t\t\\rel, 2,
 			\t)
-	).play;
+).play.quant_(4);
 )"
 );
 
@@ -63,7 +65,6 @@ DDWSnippets.put("samplesCycles",
 	samples = [\\bd0, \\techno0, \\bd0, \\cp0!4];
 	// samples = [ ];
 
-	Ndef(\\##name##).quant = 0; // customize name
 	Ndef(\\name, // customize name
 		Pbind(
 			\\type, \\dirt,
@@ -73,7 +74,7 @@ DDWSnippets.put("samplesCycles",
 			\\amp, 0.2,
 			\\rate, 1
 		)
-	).play
+).play.quant_(4);
 )"
 );
 

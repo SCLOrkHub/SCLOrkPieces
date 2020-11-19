@@ -73,7 +73,7 @@ if(d.notNil, {
 				1.wait;
 				~xjadeo = NetAddr("localhost", 7890);
 				~xjadeo.sendMsg('/jadeo/jack/connect');
-				~xjadeo.sendMsg('/jadeo/load', Quarks.folder +/+ "SCLOrkPieces/25x25/25x25.mp4");
+				~xjadeo.sendMsg('/jadeo/load', Quarks.folder +/+ "SCLOrkPieces/20x20/20x20.mp4");
 				"echo locate 0 | jack_transport".unixCmd;
 			}.fork;
 		})
@@ -192,9 +192,9 @@ if(d.notNil, {
 
 	currentEnvironment.pairsDo({ |k, v| [k, v].postln });
 
-	"25x25 Functions loaded".postln;
+	"20x20 Functions loaded".postln;
 
 }, {
 	// ELSE, (if d was nil)
-	"***ERROR: Could not load 25x25.\nNo sample dictionary available.\nPlease load Dirt Samples first then try again.".postln;
+	"***ERROR: Could not load 20x20.\nNo sample dictionary available.\nPlease load Dirt Samples first then try again.".postln;
 });

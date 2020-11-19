@@ -588,7 +588,7 @@ w.onClose = {
 			Butz.add('Load New Piece', {
 				var win, selectButtons;
 				var pieces = [
-					"25x25",
+					"20x20",
 					"Cycles",
 					"GMO",
 					"Wherever We Are",
@@ -608,9 +608,9 @@ w.onClose = {
 					.states_([[name, nil, color]])
 					.action_({
 						switch(name,
-							"25x25", {
-								"Loading 25x25...".postln;
-								(Quarks.folder +/+ "SCLOrkPieces/25x25/25x25_Setup.scd").load;
+							"20x20", {
+								"Loading 20x20...".postln;
+								(Quarks.folder +/+ "SCLOrkPieces/20x20/20x20_Setup.scd").load;
 							},
 							"Cycles", {
 								"Loading cycles".postln;
