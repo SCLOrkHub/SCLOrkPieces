@@ -401,7 +401,19 @@ w.onClose = {
 
 				// shortcut to change tempo
 				// usage in performance: ~bpm.(120);
-				~bpm = { |bpm| p.clock.tempo = bpm/60 };
+				~bpm = { |bpm|
+					if(bpm.isNil,
+						{
+							p.clock.tempo * 60; // if no bpm provided, return current BPM
+						}, {
+							p.clock.tempo = bpm/60;
+						}
+					)
+				};
+
+				// convenience function that returns current # of seconds per beat ("spb")
+				// useful for example to set delay lines in synch with beat
+				~spb = { 1 / p.clock.tempo };
 
 				// CYCLES-STYLE function for Pbinds
 				// Takes in a list, and optional cycle duration in beats.
