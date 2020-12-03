@@ -467,6 +467,25 @@ w.onClose = {
 					"freeing active Ndefs over % seconds... \n".postf(fadeTime);
 				};
 
+				// End all Ndefs except the ones in the list provided as argument
+				~endAll = { | fadeTime = 5, leaveAlone |
+					var exceptions = if( leaveAlone.isArray.not, { [ leaveAlone ] }, { leaveAlone });
+
+					// never free metronome Ndefs
+					exceptions = exceptions.add([\t, \tempo]).flat;
+
+					Ndef.dictFor(s).do({ | ndef |
+						var key = ndef.key;
+						if( (exceptions.includes(key).not) && (ndef.isPlaying), {
+							("Ending Ndef(\\" ++ key.asString ++ ")...").postln;
+							Ndef(key.asSymbol).end(fadeTime, true);
+						}, {
+							// ("Ndef(\\" ++ key.asString ++ ") left untouched").postln;
+						})
+					});
+					"ending active Ndefs over % seconds... \n".postf(fadeTime);
+				};
+
 				currentEnvironment.pairsDo({ |k, v| [k, v].postln });
 
 				"Utility Functions loaded".postln;
