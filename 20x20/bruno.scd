@@ -59,32 +59,32 @@ Ndef(\cov).stop(10);
 // =====================================
 
 (
-Ndef(\cov).fadeTime = 2;
+Ndef(\cov).fadeTime = 1;
 Ndef(\cov, {
 	var snd;
 	var sample;
 	var rate;
-	sample = [d.covid1, d.covid2, d.covid3].choose;
+	sample = d.covid4; //[d.covid1, d.covid2, d.covid3].choose;
 	rate = 1;
-	rate = rrand(0.999, 1.01) * [1, 1.04, 0.95, 1.008, 0.5];
-	rate = [1, -1.2, 0.99, 1.01] * [1, SinOsc.kr(1/[3.2, 2]).range(2, 7), 1];
+	rate = rrand(0.999, 1.01) * LFSaw.ar(1/[4,6,10]).range(0.9, 1.1);
+	// rate = [1, -1.2, 0.99, 1.01] * [1, SinOsc.kr(1/[3.2, 2]).range(2, 7), 1];
 	snd = PlayBuf.ar(
 		numChannels: 1,
 		bufnum: sample,
 		rate: rate * BufRateScale.kr(sample),
-		startPos: rrand(0, 0.9) * BufFrames.kr(sample),
+		startPos: [0, 0.00015, 0.00003] * BufFrames.kr(sample),
 		loop: 1
 	);
-	snd = snd * [0.7, 0.3, 0.3, 0.7] * 0.9;
+	// snd = snd * [0.7, 0.3, 0.3, 0.7] * 0.9;
 	// snd = snd * [0.7, 0.3, 0.3, 0.7] * SinOsc.ar(1/3).range(0.1, 0.5);
 	snd = Splay.ar(snd);
 	snd = Limiter.ar(snd);
-	snd = snd * LFPulse.kr(15, 0, LFNoise2.kr(1/4).range(0.4, 0.9));
+	// snd = snd * LFPulse.kr(15, 0, LFNoise2.kr(1/4).range(0.4, 0.9));
 
 }).play;
 )
 
-Ndef(\cov).stop(15);
+Ndef(\cov).stop(5);
 
 
 // =====================================
@@ -99,7 +99,7 @@ Ndef(\raw2, { PlayBuf.ar(1, d.trump, startPos: 0.275 * BufFrames.kr(d.trump), lo
 Ndef(\li, { Line.kr([1, 1], [0.9999, 1.08], 80) }).kr(2);
 Ndef(\li, { LFNoise0.kr(1/[2, 4]).range(0.95, 1.55) });
 
-Ndef(\disp, { XLine.kr(0.0001, 5, 35) });
+Ndef(\disp, { XLine.kr(0.0001, 0.1, 35) });
 
 (
 // Ndef(\raw).send;

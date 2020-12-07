@@ -24,6 +24,7 @@ if(d.notNil, {
 	d.put(\covid1, Buffer.read(s, "covid1.wav".resolveRelative));
 	d.put(\covid2, Buffer.read(s, "covid2.wav".resolveRelative));
 	d.put(\covid3, Buffer.read(s, "covid3.wav".resolveRelative));
+	d.put(\covid4, Buffer.read(s, "covid4.wav".resolveRelative));
 	d.put(\progress, Buffer.read(s, "progress-mono.wav".resolveRelative));
 	d.put(\kaba, Buffer.read(s, "kaba.wav".resolveRelative));
 
@@ -106,6 +107,11 @@ if(d.notNil, {
 
 		// start SCLOrkWatch
 		SCLOrkWatch.new([
+			"0:06", {
+				var msg = "20x20 starting. Section A1 coming up at 0:20";
+				~sendScoreMsg.value(msg);
+				msg.postln;
+			},
 			"0:20", {
 				var msg = "**A1: chaos getting started...";
 				~sendScoreMsg.value(msg);
