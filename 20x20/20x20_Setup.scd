@@ -157,7 +157,7 @@ if(d.notNil, {
 				msg.postln;
 			},
 			"5:57", {
-				var msg = "**B1: Bouncing squares now. BLM coming at 8:29";
+				var msg = "**B1: Bouncing squares now. BLM coming at 8:46";
 				~sendScoreMsg.(msg);
 				msg.postln;
 			},
@@ -197,6 +197,59 @@ if(d.notNil, {
 	};
 
 	currentEnvironment.pairsDo({ |k, v| [k, v].postln });
+
+
+[1, 2].do({ |n|
+
+	var name = (\pb ++ n).asSymbol;
+	SynthDef(name, {
+		arg out=0, amp=0.2, rate=1, buf, pan=0, loop=1;
+		var snd, env;
+		env = Env.linen(
+			attackTime: 0,
+			sustainTime: BufDur.kr(buf) / rate.abs - 0.01,
+			releaseTime: 0.01
+		).kr(doneAction: 2);
+		snd = PlayBuf.ar(
+			numChannels: n,
+			bufnum: buf,
+			rate: BufRateScale.kr(buf) * rate,
+			loop: loop
+		);
+		if(n==1, {
+			// if a mono sample
+			snd = Pan2.ar(snd, pan);
+		}, {
+			// else, if a stereo sample
+			snd = Balance2.ar(snd[0], snd[1], pan);
+		});
+		snd = snd * amp * env;
+		Out.ar(out, snd);
+	}).add;
+});
+
+
+// SynthDescLib.global.at(\pb1).postln;
+// SynthDescLib.global.at(\pb2).postln;
+// [];
+
+
+
+SynthDef("gr", {arg out = 0, buffer, rate = 1, startPos = 0, gate = 1, att = 0.01, rel = 0.1, amp = 1, pan = 0;
+	var env, snd;
+	env = Env.asr(att, amp, rel).kr(gate: gate, doneAction: 2);
+	snd = PlayBuf.ar(
+		numChannels:  1,
+		bufnum:  buffer,
+		rate: rate,
+		startPos: startPos * BufSamples.kr(buffer)
+	);
+	snd = snd * env;
+	Out.ar(out, Pan2.ar(snd, pan));
+}).add;
+
+
+
 
 	"20x20 Functions loaded".postln;
 

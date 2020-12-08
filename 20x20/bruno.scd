@@ -4,8 +4,36 @@ bruno live coding file
 
 
 // TO DO
-// listen to recordings
-// add a limiter to streaming laptop (calf limiter?) if needed -- listen to recording
+/*
+December 2020
+- Make sure gr synthdef is loading OK
+- Consider loading dirt samples and sclorksynths automatically
+- Fix sclorksynths so it does not do s.freeAll (it should be safe to audition synths while playing live in public)
+- Build a bass from bouncing squares towards BLM
+- Make that fit the progression with baldwin vocals
+- fix SCLOrkWatch score that has BLM time wrong
+- Load New Piece button - move it to just below Load All the Rest
+- Rename Load All the Rest to RESET or something?
+- If players click Load All the Rest, they MUST click on Load New Piece 20x20 again. How to simplify?
+
+- BRUNO SCORE:
+- less loud voices at beginning
+- less loud trump
+- less loud baldwin fx
+- less loud drums
+- plan for clear break at downbeat of bouncing squares
+- (make compose out the Ndefs for the negative image moment)
+- REHEARSE - get re-familiarized with Ndefs!
+
+- aastha will work on guitar for njnp
+- noonan textures
+
+*/
+
+
+
+
+
 
 "this is a test, a really good test".postln;
 "but not more than just a test".postln;
@@ -65,20 +93,21 @@ Ndef(\cov, {
 	var sample;
 	var rate;
 	sample = d.covid4; //[d.covid1, d.covid2, d.covid3].choose;
+	// sample = [d.covid1, d.covid2, d.covid3, d.covid4, d.covid4].choose;
 	rate = 1;
-	rate = rrand(0.999, 1.01) * LFSaw.ar(1/[4,6,10]).range(0.9, 1.1);
+	// rate = rrand(0.999, 1.01) * LFSaw.ar(1/[4,6,10]).range(0.9, 1.9);
 	// rate = [1, -1.2, 0.99, 1.01] * [1, SinOsc.kr(1/[3.2, 2]).range(2, 7), 1];
 	snd = PlayBuf.ar(
 		numChannels: 1,
 		bufnum: sample,
 		rate: rate * BufRateScale.kr(sample),
-		startPos: [0, 0.00015, 0.00003] * BufFrames.kr(sample),
+		startPos: [0, 0.015, 0.003] * BufFrames.kr(sample),
 		loop: 1
 	);
 	// snd = snd * [0.7, 0.3, 0.3, 0.7] * 0.9;
 	// snd = snd * [0.7, 0.3, 0.3, 0.7] * SinOsc.ar(1/3).range(0.1, 0.5);
 	snd = Splay.ar(snd);
-	snd = Limiter.ar(snd);
+	snd = Limiter.ar(snd) / 4;
 	// snd = snd * LFPulse.kr(15, 0, LFNoise2.kr(1/4).range(0.4, 0.9));
 
 }).play;
@@ -143,7 +172,7 @@ Ndef(\biden,
 		\att, 0.001,
 		\rel, Pseq([Pseq([7, 7, 6, 5, 5, 5, 2]), Pseq([3, 1], inf)], inf).trace,
 		\legato, 1,
-		\rate, 1,
+		\rate, 2,
 		\amp, 0.57,
 		\pan, Pwhite(-1.0, 1.0),
 	)
@@ -155,7 +184,7 @@ Ndef(\biden).stop(10);
 Ndef(\btrump).stop(10)
 
 
-// NEGATIVE IMAGE
+// NEGATIVE IMAGE 5:47
 (
 Ndef(\prog1).fadeTime = 0;
 Ndef(\prog1, {
@@ -163,7 +192,7 @@ Ndef(\prog1, {
 	var sample;
 	var rate;
 	sample = d.progress;
-	// sample = [d.progress, d.kaba];
+	sample = [d.progress, d.kaba];
 	rate = rrand(0.999, 1.01);
 	// rate = rate * [1, 1.01, 0.975, 1.05] * 0.98;
 	// rate = rate * SinOsc.ar(1).range(0.9, 1.4);
@@ -174,11 +203,13 @@ Ndef(\prog1, {
 		startPos: 0.0 * BufFrames.kr(sample),
 		loop: 1
 	);
-	snd = snd * [1, 0.5] * 6; // start at 7
+	snd = snd * [1, 0.5] * 1; // start at 7
 	snd = Splay.ar(snd);
-	snd = snd * LFPulse.kr(MouseX.kr(5, 10), 0, LFNoise2.kr(1/4).range(0.1, 0.9));
+	// snd = snd * LFPulse.kr(MouseX.kr(5, 10), 0, LFNoise2.kr(1/4).range(0.1, 0.9));
 }).play;
 )
+
+d.crow2
 
 Ndef(\prog1).stop(15);
 Ndef(\prog2).stop;
@@ -201,8 +232,8 @@ Ndef(\prog2,
 		\att, 0.001,
 		\rel, 1, //Pseq([Pseq([7, 7, 6, 5, 5, 5, 2]), Pseq([3, 1], inf)], inf).trace,
 		\legato, 1,
-		\rate,  Pwhite(1, 1.5),
-		\amp, 1,
+		\rate,  Pwhite(0.91, 1.015),
+		\amp, 1/10,
 		\pan, Pwhite(-1.0, 1.0),
 	)
 ).play;
@@ -227,7 +258,7 @@ Ndef(\b1,
 		\sampleName, Pseq(samples.flat, inf),
 		\dur, Pseq(~dursFrom.(samples), inf),
 		\stretch, 4,
-		\amp, Pseq([0.4, 0.29, 0.4, 0.3], inf) * 4,
+		\amp, Pseq([0.4, 0.29, 0.4, 0.3], inf) * 5,
 		\rate, Pwhite(1, 1.01) * Pwrand([1, 0.5, -0.91], [9, 3, 1].normalizeSum, inf)
 	)
 ).play
@@ -244,19 +275,19 @@ Ndef(\b1).play; // or bring it back
 Ndef(\bfx).fadeTime = 2;
 Ndef(\bfx, {
 	var snd, snd1;
-	snd = \in1.ar([0, 0]) + \in2.ar([0, 0]) + \in3.ar([0, 0]);
+	snd = Ndef(\b1).ar;
 	snd = CombC.ar(
 		in: snd,
 		maxdelaytime: 1,
 		delaytime: p.clock.tempo / 2.5, // make delay in sync with tempo
-		decaytime: 3.5
+		decaytime: 5
 	);
 	snd.distort.tanh;
 
 	snd = FreeVerb.ar(
 		in: snd,
 		mix: 0.405,
-		room: 0.37,
+		room: 0.57,
 		damp: 0.97,
 		mul: 1
 	);
@@ -265,12 +296,17 @@ Ndef(\bfx, {
 )
 
 // Send \b1 into \bfx
-Ndef(\bfx).map(\in1, Ndef(\b1));
-// OR
-Ndef(\bfx) <<>.in1 Ndef(\b1);
-Ndef(\bfx).unmap(\in1);
-Ndef(\bfx).stop(3); // remove fx (stop monitoring)
-Ndef(\bfx).play; // add it back on
+Ndef(\bfx).stop(20);
+Ndef(\b1).clear
+
+(
+~rewindVideo.value(1);
+~closeSCLOrkWatch.value;
+)
+
+~freeAll.(10);
+
+
 
 
 
