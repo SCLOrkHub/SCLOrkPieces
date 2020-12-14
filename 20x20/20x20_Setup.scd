@@ -38,11 +38,6 @@ if(d.notNil, {
 	// Creates a convenience Ndef to act as metronome wherever an Impulse can be used
 	Ndef(\t, { Impulse.ar(Ndef(\tempo)) }); // we'll use Ndef(\t) to get a trigger on the clock
 
-	"".postln;
-	"Trump buffer loaded and playing under Ndef(\\raw)".postln;
-	"TempoBusClock started at 150 BPM".postln;
-	"Ndef(\\t) is available as a 150 BPM 'trigger metronome'".postln;
-	"Ndef setup OK".postln;
 
 	// ************************
 	// ************************
@@ -152,27 +147,27 @@ if(d.notNil, {
 				msg.postln;
 			},
 			"5:47", {
-				var msg = "end of A section: negative image busy blinking. Bouncing square in a few seconds";
+				var msg = "end of A section: negative image busy blinking. Bouncing squares at 5:57";
 				~sendScoreMsg.(msg);
 				msg.postln;
 			},
 			"5:57", {
-				var msg = "**B1: Bouncing squares now. BLM coming at 8:29";
+				var msg = "**B1: Bouncing squares now. Over 2 minutes long. Bass only at first, others come in sparsely and building up. BLM coming at 8:28";
+				~sendScoreMsg.(msg);
+				msg.postln;
+			},
+			"8:28", {
+				var msg = "**B2: BLM flashing. Full drum pattern. Speed up coming at 8:46";
 				~sendScoreMsg.(msg);
 				msg.postln;
 			},
 			"8:46", {
-				var msg = "**B2: BLM flashing. Bouncing squares coming again at 7:01";
-				~sendScoreMsg.(msg);
-				msg.postln;
-			},
-			"7:01", {
-				var msg = "**B3: Bouncing squares, second round. No Justice No Peace coming at 9:01";
+				var msg = "**Faster flashes leading up to NJNP at 9:01";
 				~sendScoreMsg.(msg);
 				msg.postln;
 			},
 			"9:01", {
-				var msg = "**B4: No Justice No Peace";
+				var msg = "**B3: No Justice No Peace. Blackout + outro coming at 10:52";
 				~sendScoreMsg.(msg);
 				msg.postln;
 			},
@@ -181,7 +176,6 @@ if(d.notNil, {
 				~sendScoreMsg.(msg);
 				msg.postln;
 			},
-			// "8:44", { "breathing dots".postln },
 			"11:25", {
 				var msg = "don't run any more code; bruno to freeAll & fadeOut soon";
 				~sendScoreMsg.(msg);
@@ -196,8 +190,29 @@ if(d.notNil, {
 		]);
 	};
 
+
+
+	// Open COPY of this user 20x20 starter code:
+	Document.new(
+		title: ~myName.asString ++ " 20x20 copy",
+		string: String.readNew(
+			File.new(
+				pathName: Quarks.quarkNameAsLocalPath("SCLOrkPieces")
+				+/+
+				"20x20"
+				+/+ (~myName.asString) ++ ".scd",
+				mode: "r"
+		));
+	);
+
 	currentEnvironment.pairsDo({ |k, v| [k, v].postln });
 
+	"".postln;
+	"Trump buffer loaded and playing under Ndef(\\raw)".postln;
+	"TempoBusClock started at 150 BPM".postln;
+	"Ndef(\\t) is available as a 150 BPM 'trigger metronome'".postln;
+	"Ndef setup OK".postln;
+	"STARTER CODE FILE OPEN IN A NEW TAB".postln;
 	"20x20 Functions loaded".postln;
 
 }, {

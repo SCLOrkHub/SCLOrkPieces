@@ -1,3 +1,24 @@
+//
+// 20x20 BRUNO STARTER CODE
+//
+// rule of thumb: always close this tab after playing the piece;
+// then open a fresh new one to play again (red button "Load New Piece > 20x20")
+
+/*
+Info:
+
+Every time you click on red button "Load New Piece" and select "20x20", a new tab will open with a COPY of the contents of your personal starter file. You should live code on that newly open tab. This way you don't have to worry about ever messing up with the starter code, saving unwanted updates, etc.
+
+If you ever need to make actual changes to the starter code, send your new starter file to Bruno to incorporate directly on GitHub, then next time you hit "Update SCLOrk" you will get the latest.
+
+You can also request a change directly through the GitHub interface on your browser: log in to your account, open your file there: https://github.com/SCLOrkHub/SCLOrkPieces/tree/master/20x20 - click the little pen button to edit, make your modifications, then submit as a pull request (Bruno will have to approve before changes take effect in main repository).
+
+
+DO NOT SAVE THIS TAB
+
+*/
+
+
 /*
 bruno live coding file
 */
@@ -12,9 +33,13 @@ bruno live coding file
 "".postln;
 
 // =====================================
-// VIDEO STUFF
+// VIDEO STUFF & RESET
 // =====================================
 
+// Reload settings (must do if anyone recompiles class library
+(Quarks.folder +/+ "SCLOrkPieces/20x20/20x20_Setup.scd").load;
+
+// Now custom functions should work:
 ~openVideo.(1);
 
 ~startVideoAndSCLOrkWatch.value(1);
@@ -55,51 +80,78 @@ Ndef(\cov).stop(10);
 
 
 // =====================================
-// A3 (1:26) covid newscast voices
+// 1:02 Add one recording of news reports
 // =====================================
+// after first full statement, begin with random .choose of voices
 
 (
 Ndef(\cov).fadeTime = 1;
 Ndef(\cov, {
-	var snd;
-	var sample;
-	var rate;
-	sample = d.covid4; //[d.covid1, d.covid2, d.covid3].choose;
-	rate = 1;
-	rate = rrand(0.999, 1.01) * LFSaw.ar(1/[4,6,10]).range(0.9, 1.1);
-	// rate = [1, -1.2, 0.99, 1.01] * [1, SinOsc.kr(1/[3.2, 2]).range(2, 7), 1];
+	var snd, sample, rate, amp;
+	sample = d.covid4;
+	// sample = [d.covid1, d.covid2, d.covid3, d.covid4].choose;
+	rate = [1, rrand(0.9, 1.03)];
+	amp = 0.4;
 	snd = PlayBuf.ar(
 		numChannels: 1,
 		bufnum: sample,
 		rate: rate * BufRateScale.kr(sample),
-		startPos: [0, 0.00015, 0.00003] * BufFrames.kr(sample),
+		startPos: 0 * BufFrames.kr(sample),
 		loop: 1
 	);
 	// snd = snd * [0.7, 0.3, 0.3, 0.7] * 0.9;
 	// snd = snd * [0.7, 0.3, 0.3, 0.7] * SinOsc.ar(1/3).range(0.1, 0.5);
 	snd = Splay.ar(snd);
-	snd = Limiter.ar(snd);
-	// snd = snd * LFPulse.kr(15, 0, LFNoise2.kr(1/4).range(0.4, 0.9));
-
+	snd = Limiter.ar(snd) * amp;
 }).play;
 )
 
-Ndef(\cov).stop(5);
+
+// =====================================
+// 1:30 suddently busy -- add more voices, add high pitch
+// =====================================
+
+(
+Ndef(\cov).stop(30);
+Ndef(\covhi).fadeTime = 1;
+Ndef(\covhi, {
+	var snd, sample, rate, amp;
+	sample = d.covid4;
+	sample = { [d.covid1, d.covid2, d.covid3, d.covid4].choose }.dup(4);
+	rate = Line.kr(1, [2, 0.7, 1, 5], [1, 1.1, 1.2]);
+	amp = 0.4;
+	snd = PlayBuf.ar(
+		numChannels: 1,
+		bufnum: sample,
+		rate: rate * BufRateScale.kr(sample),
+		startPos: 0 * BufFrames.kr(sample),
+		loop: 1
+	) * amp;
+	// snd = snd * [0.7, 0.3, 0.3, 0.7] * 0.9;
+	// snd = snd * SinOsc.ar([1,2,3,4]).range(0.5, 1);
+	snd = Splay.ar(snd);
+	snd = Limiter.ar(snd) * amp;
+}).play;
+)
+
+
+
 
 
 // =====================================
-// A4 (2:37) trump covid denial
+// 2:41 dizzy unsettling - trump's denial
 // =====================================
 
 // run this repeatedly to restart from given startPos
 // this will feed into \btrump
+(
 Ndef(\raw2, { PlayBuf.ar(1, d.trump, startPos: 0.275 * BufFrames.kr(d.trump), loop: 1) });
-
 // some 2-channel controls
-Ndef(\li, { Line.kr([1, 1], [0.9999, 1.08], 80) }).kr(2);
-Ndef(\li, { LFNoise0.kr(1/[2, 4]).range(0.95, 1.55) });
-
+Ndef(\pitchRatio).reshaping = \elastic;
+Ndef(\pitchRatio, { Line.kr([1, 1], [0.9999, 1.08], 80) }).kr;
+// Ndef(\li, { LFNoise0.kr(1/[2, 4]).range(0.95, 1.55) });
 Ndef(\disp, { XLine.kr(0.0001, 0.1, 35) });
+)
 
 (
 // Ndef(\raw).send;
@@ -111,7 +163,7 @@ Ndef(\btrump, {
 		in: snd,
 		windowSize: 0.2,
 		// pitchRatio: 1, //[1.0, 1.005, 0.995],
-		pitchRatio: Ndef(\li).kr(2),
+		pitchRatio: Ndef(\pitchRatio).kr,
 		pitchDispersion: Ndef(\disp), //SinOsc.ar(1/3).range(0, 0.19),
 		timeDispersion: 0.0,
 		mul: 1.35, //[1, 0.5]
@@ -122,9 +174,72 @@ Ndef(\btrump, {
 		room: 0.6,
 		damp: 0.1
 	);
+	snd = snd * [1, 1, 1];
 	snd = Splay.ar(snd);
 }).play;
 )
+
+Ndef(\raw2).send;
+
+
+Ndef(\disp, { XLine.kr(0.0001, 0.2, 5) });
+
+Ndef(\pitchRatio, { Line.kr([1, 1], [0.5, 1, 1.5, 4], 10) })
+
+Ndef(\pitchRatio, { LFNoise0.kr(1/[2, 4]).range(0.95, 1.55) });
+
+
+// =====================================
+// 3:14 slower orderly
+// =====================================
+
+Ndef(\covhi).stop(1);
+
+Ndef(\pitchRatio, { XLine.kr([0.5, 1, 2], 4, 10) }).fadeTime_(2)
+
+
+
+
+// NEXT STEPS:
+
+// prepare a sudden halt into looping mass ? at 4:42, four corners slow blink.
+
+// prepare a sudden burst / transition for negative image (10 seconds) - or buildup
+
+// which will lead into sparse bass octaves.
+
+
+
+
+
+
+
+// section A6 at 3:56 - only 9 dots, nervous
+
+// section A7 at 4:42 - 4 corners, slow blink - full minute of it
+
+// section A end: negative image at 5:47 to 5:57
+
+// SECTION B - 5:57
+
+// B1 - bouncing squares until 8:28
+// bass only - take your time -- add drums slowly
+//
+
+
+// 6:58 - NOTHING - remove score ref
+
+// B2 - BLM at 8:28
+
+// 8:45 BLM flashing rapidly
+
+// 9:01-10:50+- NJNP
+
+// 10:50 - breathing dots
+
+// 11:30 end, stop running any more code, Bruno to begin fade out
+
+
 
 Ndef(\btrump).stop(19);
 
