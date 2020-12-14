@@ -194,7 +194,7 @@ if(d.notNil, {
 
 	// Open COPY of this user 20x20 starter code:
 	Document.new(
-		title: ~myName.asString ++ " 20x20 copy",
+		title: ~myName.asString ++ " 20x20 copy " ++ (Date.localtime.stamp[7..10]).asString,
 		string: String.readNew(
 			File.new(
 				pathName: Quarks.quarkNameAsLocalPath("SCLOrkPieces")
@@ -203,7 +203,7 @@ if(d.notNil, {
 				+/+ (~myName.asString) ++ ".scd",
 				mode: "r"
 		));
-	);
+	).front;
 
 	currentEnvironment.pairsDo({ |k, v| [k, v].postln });
 
