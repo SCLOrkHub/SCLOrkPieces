@@ -55,7 +55,6 @@ December 2020
 
 
 
-
 "this is a test, a really good test".postln;
 "but not more than just a test".postln;
 "".postln;
@@ -135,6 +134,8 @@ Ndef(\cov, {
 	snd = Splay.ar(snd);
 	snd = Limiter.ar(snd) / 4;
 	// snd = snd * LFPulse.kr(15, 0, LFNoise2.kr(1/4).range(0.4, 0.9));
+}).play;
+)
 
 
 // =====================================
@@ -176,9 +177,11 @@ Ndef(\covhi, {
 // this will feed into \btrump
 (
 Ndef(\raw2, { PlayBuf.ar(1, d.trump, startPos: 0.275 * BufFrames.kr(d.trump), loop: 1) });
+
 // some 2-channel controls
 Ndef(\pitchRatio).reshaping = \elastic;
 Ndef(\pitchRatio, { Line.kr([1, 1], [0.9999, 1.08], 80) }).kr;
+
 // Ndef(\li, { LFNoise0.kr(1/[2, 4]).range(0.95, 1.55) });
 Ndef(\disp, { XLine.kr(0.0001, 0.1, 35) });
 )
