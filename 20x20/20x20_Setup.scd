@@ -152,11 +152,7 @@ if(d.notNil, {
 				msg.postln;
 			},
 			"5:57", {
-<<<<<<< HEAD
 				var msg = "**B1: Bouncing squares now. Over 2 minutes long. Bass only at first, others come in sparsely and building up. BLM coming at 8:28";
-=======
-				var msg = "**B1: Bouncing squares now. BLM coming at 8:46";
->>>>>>> 5d25f83cdb502aab52ca38b5b0bfd1f34263f962
 				~sendScoreMsg.(msg);
 				msg.postln;
 			},
@@ -211,14 +207,13 @@ if(d.notNil, {
 
 	currentEnvironment.pairsDo({ |k, v| [k, v].postln });
 
-<<<<<<< HEAD
 	"".postln;
 	"Trump buffer loaded and playing under Ndef(\\raw)".postln;
 	"TempoBusClock started at 150 BPM".postln;
 	"Ndef(\\t) is available as a 150 BPM 'trigger metronome'".postln;
 	"Ndef setup OK".postln;
-	"STARTER CODE FILE OPEN IN A NEW TAB".postln;
-=======
+	"20x20 STARTER CODE FILE OPEN IN A NEW TAB".postln;
+
 
 [1, 2].do({ |n|
 
@@ -268,12 +263,6 @@ SynthDef("gr", {arg out = 0, buffer, rate = 1, startPos = 0, gate = 1, att = 0.0
 	snd = snd * env;
 	Out.ar(out, Pan2.ar(snd, pan));
 }).add;
-
-
-
-
->>>>>>> 5d25f83cdb502aab52ca38b5b0bfd1f34263f962
-	"20x20 Functions loaded".postln;
 
 }, {
 	// ELSE, (if d was nil)
