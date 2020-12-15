@@ -107,7 +107,7 @@ Ndef(\cov).stop(10);
 
 
 // =====================================
-// 1:02 Add one recording of news reports
+// 1:02 Add intro recording of news reports
 // =====================================
 // after first full statement, begin with random .choose of voices
 
@@ -149,7 +149,8 @@ Ndef(\covhi, {
 	var snd, sample, rate, amp;
 	sample = d.covid4;
 	sample = { [d.covid1, d.covid2, d.covid3, d.covid4].choose }.dup(4);
-	rate = Line.kr(1, [2, 0.7, 1, 5], [1, 1.1, 1.2]);
+	// rate = Line.kr(1, [2, 0.7, 1, 5], [1, 1.1, 1.2]);
+	rate = Line.kr(1, [2, 0.7, 1, 5], [10, 2, 1.1, 13, 1.2]);
 	amp = 0.4;
 	snd = PlayBuf.ar(
 		numChannels: 1,
@@ -164,8 +165,6 @@ Ndef(\covhi, {
 	snd = Limiter.ar(snd) * amp;
 }).play;
 )
-
-
 
 
 
@@ -184,9 +183,7 @@ Ndef(\pitchRatio, { Line.kr([1, 1], [0.9999, 1.08], 80) }).kr;
 
 // Ndef(\li, { LFNoise0.kr(1/[2, 4]).range(0.95, 1.55) });
 Ndef(\disp, { XLine.kr(0.0001, 0.1, 35) });
-)
 
-(
 // Ndef(\raw).send;
 Ndef(\btrump).fadeTime = 2;
 Ndef(\btrump, {
@@ -203,8 +200,8 @@ Ndef(\btrump, {
 	);
 	snd = FreeVerb.ar(
 		in: snd,
-		mix: 0.2,
-		room: 0.6,
+		mix: \mix.kr(0.2),
+		room: \room.kr(0.6),
 		damp: 0.1
 	);
 	snd = snd * [1, 1, 1];
@@ -212,10 +209,13 @@ Ndef(\btrump, {
 }).play;
 )
 
+
+// restart trum sample
 Ndef(\raw2).send;
 
 
 Ndef(\disp, { XLine.kr(0.0001, 0.2, 5) });
+
 
 Ndef(\pitchRatio, { Line.kr([1, 1], [0.5, 1, 1.5, 4], 10) })
 
@@ -226,84 +226,51 @@ Ndef(\pitchRatio, { LFNoise0.kr(1/[2, 4]).range(0.95, 1.55) });
 // 3:14 slower orderly
 // =====================================
 
+// clean up
 Ndef(\covhi).stop(1);
+Ndef(\cov).clear;
+Ndef(\covhi).clear;
 
+// nice plateau on high pitches
 Ndef(\pitchRatio, { XLine.kr([0.5, 1, 2], 4, 10) }).fadeTime_(2)
 
+// for variety -- rhythmic unison to high spread
+Ndef(\disp, { XLine.kr(0.0001, 0.8, 5) });
+Ndef(\disp, { LFNoise2.kr(1/5).range(0.0001, 0.8) });
+Ndef(\disp, { SinOsc.kr(1/2).range(0.0001, 0.8) });
 
 
 
-// NEXT STEPS:
+// =====================================
+// 3:56 (9 dots) or 4:30 (pre-4) - trump's nosedive
+// =====================================
 
-// prepare a sudden halt into looping mass ? at 4:42, four corners slow blink.
+Ndef(\pitchRatio, { XLine.kr(4, 0.25, 20).round(0.125) }).fadeTime_(2)
+Ndef(\btrump).set(\mix, 0.5, \room, 0.9)
 
-// prepare a sudden burst / transition for negative image (10 seconds) - or buildup
+// if needed, go back to beginning of sample
+Ndef(\raw2).send;
 
-// which will lead into sparse bass octaves.
-
-
-
-
-
-
-
-// section A6 at 3:56 - only 9 dots, nervous
-
-// section A7 at 4:42 - 4 corners, slow blink - full minute of it
-
-// section A end: negative image at 5:47 to 5:57
-
-// SECTION B - 5:57
-
-// B1 - bouncing squares until 8:28
-// bass only - take your time -- add drums slowly
-//
+Ndef(\btrump).end(10);
 
 
-// 6:58 - NOTHING - remove score ref
+// =====================================
+// 5:47 - NEGATIVE IMAGE - all fade out
+// =====================================
 
-// B2 - BLM at 8:28
+// remove & clear all previous Ndefs
 
-// 8:45 BLM flashing rapidly
+Ndef(\cov).clear;
+Ndef(\covhi).clear;
+Ndef(\brump).end(10); // if not ended already
+Ndef(\brump).clear(10); // or this
 
-// 9:01-10:50+- NJNP
-
-// 10:50 - breathing dots
-
-// 11:30 end, stop running any more code, Bruno to begin fade out
-
-
-
-Ndef(\btrump).stop(19);
-
-(
-Ndef(\biden).quant = 4;
-Ndef(\biden,
-	Pbind(
-		\instrument, \gr,
-		\buffer, d.biden,
-		\startPos, Pseq([
-			Pseries(0.38, 0.01, 10),
-			Pseq([0.47, 0.5], inf)
-		], inf),
-		\dur, Pseq([Pn(7, 8), Pn(1, inf)], inf),
-		\stretch, Pdef(\stretch, 1),
-		\att, 0.001,
-		\rel, Pseq([Pseq([7, 7, 6, 5, 5, 5, 2]), Pseq([3, 1], inf)], inf).trace,
-		\legato, 1,
-		\rate, 2,
-		\amp, 0.57,
-		\pan, Pwhite(-1.0, 1.0),
-	)
-).play;
-)
-
-Ndef(\cov).stop(10);
-Ndef(\biden).stop(10);
-Ndef(\btrump).stop(10)
+// =====================================
+// 5:57 - bouncing squares BASS ONLY
+// =====================================
 
 
-// NEGATIVE IMAGE 5:47
+// bass goes on for a while. Eventually introduce James Baldwin's voice:
 (
 Ndef(\prog1).fadeTime = 0;
 Ndef(\prog1, {
@@ -311,10 +278,10 @@ Ndef(\prog1, {
 	var sample;
 	var rate;
 	sample = d.progress;
-	sample = [d.progress, d.kaba];
+	// sample = [d.progress, d.kaba];
 	rate = rrand(0.999, 1.01);
 	// rate = rate * [1, 1.01, 0.975, 1.05] * 0.98;
-	// rate = rate * SinOsc.ar(1).range(0.9, 1.4);
+	// rate = rate * LFNoise2.ar(3).range(0.95, 1.102);
 	snd = PlayBuf.ar(
 		numChannels: 1,
 		bufnum: sample,
@@ -322,26 +289,21 @@ Ndef(\prog1, {
 		startPos: 0.0 * BufFrames.kr(sample),
 		loop: 1
 	);
-	snd = snd * [1, 0.5] * 1; // start at 7
+	snd = snd * [1, 0.5, 1]; // * SinOsc.ar([2, 3]);
 	snd = Splay.ar(snd);
 	// snd = snd * LFPulse.kr(MouseX.kr(5, 10), 0, LFNoise2.kr(1/4).range(0.1, 0.9));
 }).play;
 )
 
-d.crow2
+// shortly after, introduce M. Kaba's voice too
 
-Ndef(\prog1).stop(15);
-Ndef(\prog2).stop;
-Ndef(\b1).stop(4);
-Ndef(\bfx).stop(4);
-
+// optional background made with same voices
 (
 Ndef(\prog2).quant = 1;
 Ndef(\prog2,
 	Pbind(
 		\instrument, \gr,
 		\buffer, d.progress,
-		// \buffer, d.kaba,
 		\startPos, Pseq([
 			Pseries(0.00, 0.01, 30),
 			Pwhite(0.3, 0.45, inf)
@@ -359,15 +321,24 @@ Ndef(\prog2,
 )
 
 
+Ndef(\prog1).end(10);
+Ndef(\prog2).end(10);
+
+
+// =====================================
+// 8:28 - DRUMS COME IN RIGHT ON DOWNBEAT
+// =====================================
+// 8:45 speed up?
+
 (
 var samples;
-samples = [\bd0, \techno0, \bd0, \techno1, \cp0!4, \drum2, \techno1, \drum2];
-// samples = [\bubble3!2, \house3!rrand(1, 3), \house2!2, \cp0];
-// samples = [\bass10, \e7!5, \east2!3, \dork22]; // \r is a rest
-// samples = [\control0, \gab7, Prand([\east2, \coins0])!2, \dork22]; // \r is a rest
-samples = [\amencutup0, [\drum2, \drum2], \drum0!2, \drum1, \hh3, \techno1, \amencutup13, \techno1];
-// samples = [\house5!2, \house2, Prand([\bass112, \sn1, \sn2]), \db3];
-// samples = [\house5!2, \house2, \cp0, \db3];
+samples = [\bd0, \techno0, \bd0, \techno1, \cp0!2, \drum2, \techno1, \drum2];
+// samples = [\amencutup0, [\drum2, \drum2], \drum0!2, \drum1, \hh3, \techno1, \amencutup13, \techno1];
+// samples = [\amencutup0, [\house2, \drum2], \drum0!2, \drum1, \hh3, \techno1, \amencutup13, \techno1];
+samples = [\amencutup0, [\drum2, \cp0], \drum0!2, \drum1, \hh3, \techno1, \amencutup13, \techno1];
+// samples = [\amencutup3, [\bubble3, \drum2], \drum0!2, \drum1, \hh3, \techno1, \amencutup13, \techno1];
+samples = [\amencutup0, [\drum3, \drum2], \drum0!2, \drum1, \hh3, \techno1, \amencutup13, \techno1];
+// samples = [\bd0, [\techno0, \drum2], \bd0, \drum1, \hh3, \techno1, \amencutup13, \techno1];
 
 Ndef(\b1).fadeTime = 0;
 Ndef(\b1).quant = 4;
@@ -377,21 +348,27 @@ Ndef(\b1,
 		\sampleName, Pseq(samples.flat, inf),
 		\dur, Pseq(~dursFrom.(samples), inf),
 		\stretch, 4,
-		\amp, Pseq([0.4, 0.29, 0.4, 0.3], inf) * 5,
-		\rate, Pwhite(1, 1.01) * Pwrand([1, 0.5, -0.91], [9, 3, 1].normalizeSum, inf)
+		\amp, Pseq([0.4, 0.29, 0.4, 0.3], inf) * 2,
+		\rate, Pwhite(1, 1.01) * Pwrand([1, 0.5, 0.91], [9, 3, 1].normalizeSum, inf)
+		// make Pwhite go up to 2 at fast flashing
+		// and make 0.91 negative
 	)
 ).play
 )
 
+Ndef(\b1).clear;
 // Stop monitoring the dry Ndef:
-Ndef(\b1).stop(13); // notice that "stop" really means just stop sending to speakers, does not stop running the Ndef
-Ndef(\b1).play; // or bring it back
+Ndef(\b1).stop(1);
+Ndef(\b1).play;
 
 
-// Easily add fx
-// first create Ndef(\bfx), then map desired input (line 92)
+
+// =======================================
+// 9:01 - NJNP for 2 minutes until 10:50 -- add fx?
+// =======================================
+
 (
-Ndef(\bfx).fadeTime = 2;
+Ndef(\bfx).fadeTime_(1).quant_(4);
 Ndef(\bfx, {
 	var snd, snd1;
 	snd = Ndef(\b1).ar;
@@ -403,68 +380,28 @@ Ndef(\bfx, {
 	);
 	snd.distort.tanh;
 
+	snd = LFPulse.ar(p.clock.tempo*2, 0, 0.25) * snd;
 	snd = FreeVerb.ar(
 		in: snd,
 		mix: 0.405,
 		room: 0.57,
 		damp: 0.97,
-		mul: 1
+		mul: 4
 	);
 
 }).play;
 )
 
-// Send \b1 into \bfx
-Ndef(\bfx).stop(20);
-Ndef(\b1).clear
 
-(
-~rewindVideo.value(1);
-~closeSCLOrkWatch.value;
-)
-
-~freeAll.(10);
+Ndef(\b1).play(vol: 1.0);
+Ndef(\bfx).play(vol: 1);
 
 
+Ndef(\b1).stop(1);
+Ndef(\bfx).stop(1);
 
 
-
-
-// a bit of trumpET
-
-(
-var samples;
-samples = [\trump0, \r, \trump1, \r];
-samples = [\trump0, \r, \trump1!2, \trump3];
-// samples = [\trump0, \trump3!2, \trump1!2, \trump3];
-// samples = [\trump0, \trump3!2, \trump1!2, \trump3!4];
-// samples = [\house6!2, \house3!rrand(1, 3), \house2!2, \cp0];
-
-Ndef(\tpt,
-	Pbind(
-		\type, \dirt,
-		\sampleName, Pseq(samples.flat, inf),
-		\dur, Pseq(~dursFrom.(samples), inf),
-		\stretch, 2,
-		\amp, Pseq([0.4, 0.29, 0.4, 0.3], inf),
-		\rate, Pwhite(0.25, 2.0).round(0.25) * 1.12,
-		\pan, Pwhite(-1, 1)
-	)
-).play
-)
-
-
-// Send \tpt into \bfx
-Ndef(\bfx).map(\in2, Ndef(\tpt));
-Ndef(\bfx).unmap(\in2)
-Ndef(\tpt).stop(10);
-
-
-
-
-// and now a bit of trump
-// notice that this Pbind does NOT use the Cycles style for durations, we compose durs manually here (the 'usual' way)
-
+// extra
 (
 Ndef(\trump).quant = 4;
 Ndef(\trump,
@@ -488,112 +425,21 @@ Ndef(\trump,
 ).play;
 )
 
-(
-Pdef(\rel, 0.3);
-Pdef(\legato, 1);
-Pdef(\stretch, 4);
-)
-
-(
-Pdef(\rate, Pstutter(10, Prand([1.5, 1, 1], inf)) )
-)
-
-(
-Pdef(\rel, Pwrand([1, 0.2], [0.1, 0.9], inf));
-Pdef(\stretch, 1);
-Pdef(\startPos,
-	Pstutter(5, Pseq([0.119, 0.2201, 0.3339, 0.554], inf))
-)
-)
-
-Ndef(\trump).stop(10);
 
 
-// =======================================
-// =======================================
-// Dark texture
-(
-var samples;
-samples = [\bd0, \techno0, \bd0, \techno1, \cp0, \drum2, \techno1, \drum2];
-samples = [\techno2, \bd0, \cp0, \cp1];
-samples = [\bubble3!2, \house3!rrand(1, 3), \house2!2, \cp0];
-// samples = [\house1, \house2, \cp0, \a808ht4];
-samples = [\bass10, \e7!5, \east2!3, \dork22]; // \r is a rest
-// samples = [\bass10, \e7!5, \east2!3, [\bd5, \r, \bd0]]; // \r is a rest
-
-Ndef(\b1).quant = 4;
-Ndef(\b1,
-	Pbind(
-		\type, \dirt,
-		\sampleName, Pseq(samples.flat, inf),
-		\dur, Pseq(~dursFrom.(samples), inf),
-		\stretch, 10,
-		\amp, Pseq([0.4, Pgeom(0.25, 1.2, 5), Pseq([0.4, 0.3, 0.2]), 1.9], inf),
-		\rate, Pwhite(1, 1.01) * 1
-		* Pfunc({ |e|
-			if(e.sampleName === \dork22, { -1.09 }, { 1 })
-		}),
-	)
-).play;
-)
-(
-Ndef(\ssaw,
-	Pbind(
-		\instrument, "superSaw",
-		\note, Pseq([0, 2, 3, 0, 2, 3, 5, 3, 2, 7, 0, -7], inf),
-		\ctranspose, -12,
-		\amp, 0.1,
-		\legato, 0.6,
-		\numberOscs, Pseq([10, 25, 10, 25, 25, 5, 8, 11, 12], inf),
-		\dur, Pseq([3, 3, 8, 2, 8, 3, 3, 5, 1], inf) * Prand([1, 0.5, 0.5], inf),
-		\stretch, 3,
-		\fatt, Pseq([0.5, 0.5, 1, 0.5, 1, 0.5, 0.5, 0.7, 0.4], inf),
-	);
-).play;
-)
-(
-Ndef(\bfx2).fadeTime = 2;
-Ndef(\bfx2, {
-	var snd, in1, in2, in3;
-	in1 = \in1.ar([0, 0]); in2 = \in2.ar([0, 0]); in3 = \in3.ar([0, 0]);
-
-	snd = (in1 * 0.25) + (in2 * 1) + (in3 * 1);
-	snd = CombC.ar(
-		in: HPF.ar(snd, 1000),
-		maxdelaytime: 1,
-		delaytime: p.clock.tempo / [3, 5, 4], // make delay in sync with tempo
-		decaytime: [2.5, 2, 1.4] * 5
-	);
-	snd.distort.tanh;
-	snd = FreeVerb.ar(
-		in: in1 + snd,
-		mix: 0.64,
-		room: 0.57,
-		damp: 0.97,
-		mul: 1
-	);
-	Splay.ar(snd);
-}).play;
-)
-
-Ndef(\bfx2) <<>.in1 Ndef(\b1);
+~endAll.(10);
 
 
-Ndef(\bfx2).unmap(\in1)
-Ndef(\bfx2) <<>.in1 nil;
-Ndef(\bfx2).map(\in2, Ndef(\ssaw));
-
-Ndef(\ssaw).stop(5);
-Ndef(\b1).stop(5);
-Ndef(\bfx2).stop(5);
 
 
-Ndef(\ssaw).pause;
-Ndef(\b1).pause;
 
-// =======================================
-// =======================================
-// =======================================
+// NEXT STEPS:
+
+// prepare a sudden halt into looping mass ? at 4:42, four corners slow blink.
+
+// prepare a sudden burst / transition for negative image (10 seconds) - or buildup
+
+// which will lead into sparse bass octaves.
 
 
 
@@ -601,64 +447,31 @@ Ndef(\b1).pause;
 
 
 
+// section A6 at 3:56 - only 9 dots, nervous
+
+// section A7 at 4:42 - 4 corners, slow blink - full minute of it
+// josh's voices enter
+
+// section A end: negative image at 5:47 to 5:57
+
+// SECTION B - 5:57
+
+// B1 - bouncing squares until 8:28
+// bass only - take your time -- add drums slowly
+//
 
 
+// 6:58 - NOTHING - remove score ref
 
+// B2 - BLM at 8:28
 
+// 8:45 BLM flashing rapidly
 
+// 9:01-10:50+- NJNP
 
+// 10:50 - breathing dots
 
-
-
-
-
-
-(
-var samples;
-samples = [\bd0, \techno0, \bd0, \techno1, \flick11, \drum2, \techno1, \drum2];
-// samples = [\dr7, \dr29!rrand(1, 3), \house2!2, \glitch23];
-// samples = [\blip1, \blip0, \a808oh3, \blip1];
-// samples = [\ab4, \alphabet6, Prand([\bass112, \sn1, \sn2]), \db3];
-
-Ndef(\blah,
-	Pbind(
-		\type, \dirt,
-		\sampleName, Pseq(samples.flat, inf),
-		\dur, Pseq(~dursFrom.(samples), inf),
-		\stretch, 1,
-		\amp, Pseq([0.5, 0.45, 0.4, 0.3], inf) * 0.9 * Pwhite(0.90, 1),
-		\rate, Pstutter(4, Pseq([1, 1.1, 1.02, 0.998, 1.5], inf))
-	)
-).play
-)
-
-(
-var samples;
-samples = [\bd0, \techno0, \bd0, \techno1, \cp0, \drum2, \techno1, \drum2];
-samples = [\techno2, \bd0, \cp0, \cp1];
-samples = [\bubble3!2, \house3!rrand(1, 3), \house2!2, \cp0];
-// samples = [\house1, \house2, \cp0, \a808ht4];
-samples = [\bass10, \e7!5, \east2!3, \dork22]; // \r is a rest
-samples = [\bass10, \e7!5, \east2!3, [\bd5, \r, \bd0]]; // \r is a rest
-
-Ndef(\b1).quant = 4;
-Ndef(\b1,
-	Pbind(
-		\type, \dirt,
-		\sampleName, Pseq(samples.flat, inf).trace,
-		\dur, Pseq(~dursFrom.(samples), inf),
-		\stretch, 4,
-		\amp, Pseq([0.4, 0.29, 0.4, 0.3], inf),
-		\rate, Pwhite(1, 1.01) * 1
-	)
-).play
-)
-
-
-// samples = [\glitch23!3, \e7!5, \east2!3, \ifdrums0!3]; // \r is a rest
-// samples = [\glitch23!2, \birds4, \can6!2, \ifdrums0!2]; //BIRD
-// samples = [\glitch20, \e7!2, \bass1, \can7]; // NICE
-// samples = [\sid1!2, \sid7, \sid9!2, \sf1!2];
+// 11:30 end, stop running any more code, Bruno to begin fade out
 
 
 
