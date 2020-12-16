@@ -214,17 +214,17 @@ if(d.notNil, {
 	"Ndef setup OK".postln;
 	"20x20 STARTER CODE FILE OPEN IN A NEW TAB".postln;
 
-
 [1, 2].do({ |n|
 
 	var name = (\pb ++ n).asSymbol;
 	SynthDef(name, {
-		arg out=0, amp=0.2, rate=1, buf, pan=0, loop=1;
-		var snd, env;
+		arg out=0, amp=0.2, rate=1, buf, pan=0, loop=1, sus=10, rel=0.01;
+		var snd, env, sustain;
+		sustain = min(BufDur.kr(buf) / rate.abs - 0.01, sus);
 		env = Env.linen(
-			attackTime: 0,
-			sustainTime: BufDur.kr(buf) / rate.abs - 0.01,
-			releaseTime: 0.01
+				attackTime: 0,
+				sustainTime: sustain,
+			releaseTime: min(BufDur.kr(buf) / rate.abs - sustain, rel)
 		).kr(doneAction: 2);
 		snd = PlayBuf.ar(
 			numChannels: n,
@@ -243,7 +243,6 @@ if(d.notNil, {
 		Out.ar(out, snd);
 	}).add;
 });
-
 
 // SynthDescLib.global.at(\pb1).postln;
 // SynthDescLib.global.at(\pb2).postln;

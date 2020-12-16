@@ -84,26 +84,6 @@ December 2020
 ~freeAll.value(5, [\tempo, \t]);
 ~freeAll.value(5, [\btrump]);
 
-// Aastha's a1
-Ndef(\a1).free
-Ndef(\a1).send;
-
-// don't use it out in the open
-// Ndef.clear(1);
-
-
-Ndef(\b1).free(5);
-Ndef(\b1).stop(5);
-Ndef(\bfx1).stop(15);
-Ndef(\bfx2).stop(5);
-Ndef(\trump).stop(5);
-Ndef(\ssaw).pause;
-Ndef(\prog1).stop(5);
-Ndef(\prog2).stop(5);
-Ndef(\btrump).stop(4);
-Ndef(\cov).stop(10);
-
-
 
 
 // =====================================
@@ -172,8 +152,6 @@ Ndef(\covhi, {
 // 2:41 dizzy unsettling - trump's denial
 // =====================================
 
-// run this repeatedly to restart from given startPos
-// this will feed into \btrump
 (
 Ndef(\raw2, { PlayBuf.ar(1, d.trump, startPos: 0.275 * BufFrames.kr(d.trump), loop: 1) });
 
@@ -232,7 +210,7 @@ Ndef(\cov).clear;
 Ndef(\covhi).clear;
 
 // nice plateau on high pitches
-Ndef(\pitchRatio, { XLine.kr([0.5, 1, 2], 4, 10) }).fadeTime_(2)
+Ndef(\pitchRatio, { XLine.kr([0.5, 1, 2], 4, 10) })
 
 // for variety -- rhythmic unison to high spread
 Ndef(\disp, { XLine.kr(0.0001, 0.8, 5) });
@@ -245,7 +223,9 @@ Ndef(\disp, { SinOsc.kr(1/2).range(0.0001, 0.8) });
 // 3:56 (9 dots) or 4:30 (pre-4) - trump's nosedive
 // =====================================
 
-Ndef(\pitchRatio, { XLine.kr(4, 0.25, 20).round(0.125) }).fadeTime_(2)
+// josh to start voices at tail end of trump glissando
+
+Ndef(\pitchRatio, { XLine.kr(4, 0.25, 20).round(0.125) })
 Ndef(\btrump).set(\mix, 0.5, \room, 0.9)
 
 // if needed, go back to beginning of sample
@@ -279,9 +259,9 @@ Ndef(\prog1, {
 	var rate;
 	sample = d.progress;
 	// sample = [d.progress, d.kaba];
-	rate = rrand(0.999, 1.01);
+	rate = rrand(0.99, 1.01);
 	// rate = rate * [1, 1.01, 0.975, 1.05] * 0.98;
-	// rate = rate * LFNoise2.ar(3).range(0.95, 1.102);
+	// rate = rate * LFNoise2.ar(3).range(0.935, 1.102);
 	snd = PlayBuf.ar(
 		numChannels: 1,
 		bufnum: sample,
@@ -289,7 +269,7 @@ Ndef(\prog1, {
 		startPos: 0.0 * BufFrames.kr(sample),
 		loop: 1
 	);
-	snd = snd * [1, 0.5, 1]; // * SinOsc.ar([2, 3]);
+	// snd = snd * [1, 0.5, 1] * SinOsc.ar([2, 3]);
 	snd = Splay.ar(snd);
 	// snd = snd * LFPulse.kr(MouseX.kr(5, 10), 0, LFNoise2.kr(1/4).range(0.1, 0.9));
 }).play;
@@ -299,7 +279,7 @@ Ndef(\prog1, {
 
 // optional background made with same voices
 (
-Ndef(\prog2).quant = 1;
+Ndef(\prog2).fadeTime_(5).quant = 1;
 Ndef(\prog2,
 	Pbind(
 		\instrument, \gr,
@@ -332,12 +312,11 @@ Ndef(\prog2).end(10);
 
 (
 var samples;
-samples = [\bd0, \techno0, \bd0, \techno1, \cp0!2, \drum2, \techno1, \drum2];
-// samples = [\amencutup0, [\drum2, \drum2], \drum0!2, \drum1, \hh3, \techno1, \amencutup13, \techno1];
+samples = [\amencutup0, [\drum2, \drum2], \drum0!2, \drum1, \hh3, \techno1, \amencutup13, \techno1];
 // samples = [\amencutup0, [\house2, \drum2], \drum0!2, \drum1, \hh3, \techno1, \amencutup13, \techno1];
-samples = [\amencutup0, [\drum2, \cp0], \drum0!2, \drum1, \hh3, \techno1, \amencutup13, \techno1];
+// samples = [\amencutup0, [\drum2, \cp0], \drum0!2, \drum1, \hh3, \techno1, \amencutup13, \techno1];
 // samples = [\amencutup3, [\bubble3, \drum2], \drum0!2, \drum1, \hh3, \techno1, \amencutup13, \techno1];
-samples = [\amencutup0, [\drum3, \drum2], \drum0!2, \drum1, \hh3, \techno1, \amencutup13, \techno1];
+// samples = [\amencutup0, [\drum3, \drum2], \drum0!2, \drum1, \hh3, \techno1, \amencutup13, \techno1];
 // samples = [\bd0, [\techno0, \drum2], \bd0, \drum1, \hh3, \techno1, \amencutup13, \techno1];
 
 Ndef(\b1).fadeTime = 0;
@@ -348,8 +327,10 @@ Ndef(\b1,
 		\sampleName, Pseq(samples.flat, inf),
 		\dur, Pseq(~dursFrom.(samples), inf),
 		\stretch, 4,
-		\amp, Pseq([0.4, 0.29, 0.4, 0.3], inf) * 2,
-		\rate, Pwhite(1, 1.01) * Pwrand([1, 0.5, 0.91], [9, 3, 1].normalizeSum, inf)
+		\amp, Pseq([0.4, 0.29, 0.4, 0.3], inf) * 3,
+		// \amp, Pkey(\amp) * Prand([0, 1, 1, 1, 1], inf),
+		\rate, Pwhite(1, 1.1) * Pwrand([1, 0.5, 0.91], [9, 3, 1].normalizeSum, inf),
+		// \rate, Pwhite(1, 2.5) * Pwrand([1, 0.5, -0.85], [9, 3, 1].normalizeSum, inf)
 		// make Pwhite go up to 2 at fast flashing
 		// and make 0.91 negative
 	)
@@ -368,7 +349,7 @@ Ndef(\b1).play;
 // =======================================
 
 (
-Ndef(\bfx).fadeTime_(1).quant_(4);
+Ndef(\bfx).fadeTime_(0).quant_(4);
 Ndef(\bfx, {
 	var snd, snd1;
 	snd = Ndef(\b1).ar;
@@ -380,13 +361,13 @@ Ndef(\bfx, {
 	);
 	snd.distort.tanh;
 
-	snd = LFPulse.ar(p.clock.tempo*2, 0, 0.25) * snd;
+	snd = LFPulse.ar(p.clock.tempo*2, 0, 0.5) * snd;
 	snd = FreeVerb.ar(
 		in: snd,
 		mix: 0.405,
 		room: 0.57,
 		damp: 0.97,
-		mul: 4
+		mul: 2
 	);
 
 }).play;
@@ -394,10 +375,10 @@ Ndef(\bfx, {
 
 
 Ndef(\b1).play(vol: 1.0);
-Ndef(\bfx).play(vol: 1);
+Ndef(\bfx).play(vol: 0);
 
 
-Ndef(\b1).stop(1);
+Ndef(\b1).stop(6);
 Ndef(\bfx).stop(1);
 
 
