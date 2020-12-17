@@ -18,10 +18,6 @@ DO NOT SAVE THIS TAB
 
 */
 
-
-
-
-
 (
 var samples;
 samples = [\stab9, \stab8];
@@ -34,22 +30,20 @@ Ndef(\stabz,
 		\type, \dirt,
 		\sampleName, Pseq(samples.flat, inf),
 		\dur, Pseq(~dursFrom.(samples), inf),
-		\stretch, 16,
+		\stretch, 8,
 		\amp, 0.5,
-		\rate, 1/2// * Pwrand([1, 0.5, -0.91], [9, 3, 1].normalizeSum, inf)
+		\rate, 1/2
 	)
 ).play
 )
 
-Ndef(\stabz).stop(20);
+Ndef(\stabz).free(20);
 
 
 
 
 
 (
-
-
 var samples;
 samples = [\gretsch19, \gretsch6];
 
@@ -61,7 +55,7 @@ Ndef(\cymbalz,
 		\sampleName, Pseq(samples.flat, inf),
 		\dur, Pseq(~dursFrom.(samples), inf),
 		\stretch, 4,
-		\amp, Pseq([Pwhite(0.3, 0.5, 13), Pn(1, 6)], inf)*0.2,
+		\amp, Pseq([Pwhite(0.3, 0.5, 13), Pn(1, 6)], inf)*0.35,
 		\rate, Pseq([Pwhite(1, 2, 11), Pn(3, 4)], inf),
 		\pan, Pwhite(-1, 1)
 	)
@@ -69,7 +63,9 @@ Ndef(\cymbalz,
 
 )
 
-Ndef(\cymbalz).stop(20);
+Ndef(\cymbalz).stop(10);
+
+
 
 
 
@@ -123,6 +119,59 @@ Ndef(\glitches).free(5);
 
 
 
+// after drums kick in
+(
+var samples;
+samples = [\crow2];
+
+Ndef(\crowzfx).fadeTime = 0.5;
+Ndef(\crowzfx, {
+	var snd;
+
+	snd = Ndef(\crowz,
+		Pbind(
+			\type, \dirt,
+			\sampleName, Pseq(samples.flat, inf),
+			\dur, Pseq(~dursFrom.(samples), inf),
+			\stretch, Pwhite(0.25, 1.5),
+			\amp, 0.5,
+			\rate, Pwhite(0.25, 3.0)
+		)
+	);
+
+	snd = CombC.ar(
+		in: snd,
+		maxdelaytime: 2.5,
+		delaytime: p.clock.tempo, // make delay in sync with tempo
+		decaytime: 2.5*(1/(LFNoise1.ar(p.clock.tempo/4).range(1/5, 2)))
+	);
+
+	snd = FreeVerb.ar(
+		in: snd,
+		mix: 0.75,
+		room: 0.9,
+		damp: 0.97,
+		mul: 4
+	);
+
+	snd.clip.clip.clip;
+
+	snd = Resonz.ar(snd, 100, 2, 2);
+
+
+	snd = BPF.ar(snd, LFNoise2.ar(16).range(LFPulse.ar(1/4).range(100, 1000), LFPulse.ar(1/4).range(2000, 8000)), 0.5, 2);
+
+	snd = Pan2.ar(Mix.ar(snd), SinOsc.ar(LFNoise2.ar(1).range(1/16, 1/4)).range(-0.85, 0.85));
+
+}).play;
+
+)
+
+
+
+
+
+
 
 
 
@@ -146,7 +195,7 @@ Ndef(\chaosbass,
 		\sampleName, Pseq(samples.flat, inf),
 		\dur, Pseq(~dursFrom.(samples), inf),
 		\stretch, 0.8,
-		\amp, Pseq([Pwhite(0.3, 0.5, 13), Pn(1, 6)], inf)*(1/4),//Pseq([0.4, 0.29, 0.4, 0.3], inf) * 0.6,
+		\amp, Pseq([Pwhite(0.3, 0.5, 13), Pn(1, 6)], inf)*(1/4),
 		\rate, Pseq([Pwhite(1, 2, 11), Pn(3, 4)], inf),
 		\pan, Pwhite(-0.75, 0.75)
 	)
