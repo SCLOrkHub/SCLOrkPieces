@@ -1,23 +1,3 @@
-//
-// 20x20 JOSH STARTER CODE
-//
-// rule of thumb: always close this tab after playing the piece;
-// then open a fresh new one to play again (red button "Load New Piece > 20x20")
-
-/*
-Info:
-
-Every time you click on red button "Load New Piece" and select "20x20", a new tab will open with a COPY of the contents of your personal starter file. You should live code on that newly open tab. This way you don't have to worry about ever messing up with the starter code, saving unwanted updates, etc.
-
-If you ever need to make actual changes to the starter code, send your new starter file to Bruno to incorporate directly on GitHub, then next time you hit "Update SCLOrk" you will get the latest.
-
-You can also request a change directly through the GitHub interface on your browser: log in to your account, open your file there: https://github.com/SCLOrkHub/SCLOrkPieces/tree/master/20x20 - click the little pen button to edit, make your modifications, then submit as a pull request (Bruno will have to approve before changes take effect in main repository).
-
-
-DO NOT SAVE THIS TAB
-
-*/
-
 // ==================================================
 // 1:30 or 2:41 - Untested with group
 // ==================================================
@@ -44,7 +24,8 @@ Ndef(\joshKlinkFx).fadeTime_(0.5);
 Ndef(\joshKlinkFx, {
 	var snd;
 	snd = Ndef(\joshKlink).ar;
-	snd = HPF.ar(snd, 1500, 1);
+	snd = HPF.ar(snd, 1500, 0.3);
+	snd = snd * Line.ar(0, 1, 15);
 	/*snd = snd + CombN.ar(
 		in: snd,
 		maxdelaytime: p.clock.tempo * (1/6),
@@ -63,12 +44,13 @@ Ndef(\joshKlinkFx).stop(15);
 // ==================================================
 
 (
-var samplesl, samplesr, del, feedback, wobble;
+var samplesl, samplesr, del, feedback, wobble, dist;
 samplesl = [\ade0, \ade3, \ade9, \bleep11, \em21, \fm10, \fm14, \hmm0];
 samplesr = [\ade0, \ade3, \ade9, \bleep11, \em21, \fm10, \fm14, \hmm0];
 del = 0.75; // Delay time in tempo clock divisions (gets added to other delay)
-feedback = 0.85; // increase this to ramp up emotion, overdrive kicks in ~0.7
+feedback = 0.9; // increase this to ramp up emotion, overdrive kicks in ~0.7
 wobble = 0.333; // increase this to less than 1 for chaos
+dist = 1.2;
 
 Ndef(\joshFb1).quant = 4;
 Ndef(\joshFb1,
@@ -112,7 +94,7 @@ Ndef(\joshFbFx, {
 			srclo: -1, srchi: 1,
 			dstlo: 0.02, dsthi: 0.08),
 		decaytime: 0.1);
-	LocalOut.ar((snd).tanh * feedback);
+	LocalOut.ar((snd * dist).tanh * feedback);
 	snd = FreeVerb.ar(
 		in: snd,
 		mix: 0.5,
@@ -127,7 +109,7 @@ Ndef(\joshFbFx, {
 // 5:47 - Run rampdown
 // ==================================================
 
-Ndef(\joshFbListen, { Ndef(\joshFbFx).ar * Line.kr(0, 1, 20) }).play;
+Ndef(\joshFbListen, { Ndef(\joshFbFx).ar * Line.kr(0, 1, 18) }).play;
 
 Ndef(\joshFbListen, { Ndef(\joshFbFx).ar * Line.kr(1, 0, 10) }).play;
 
@@ -213,7 +195,7 @@ Ndef(\joshBassFx).fadeTime_(0.5);
 Ndef(\joshBassFx, {
 	var snd;
 	snd = Ndef(\joshBass).ar;
-	snd = (snd * 35).tanh * 0.05; //distortion at ~ * 15
+	snd = (snd * 45).tanh * 0.05; //distortion at ~ * 15
 	snd = snd + DelayN.ar(
 		in: snd,
 		maxdelaytime: 0.05,
