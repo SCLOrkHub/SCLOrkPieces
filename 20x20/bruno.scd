@@ -179,7 +179,7 @@ Ndef(\btrump, {
 	snd = FreeVerb.ar(
 		in: snd,
 		mix: \mix.kr(0.2),
-		room: \room.kr(0.6),
+		room: \room.kr(0.3),
 		damp: 0.1
 	);
 	snd = snd * [1, 1, 1];
@@ -270,7 +270,7 @@ Ndef(\prog1, {
 		loop: 1
 	);
 	// snd = snd * [1, 0.5, 1] * SinOsc.ar([2, 3]);
-	snd = Splay.ar(snd);
+	snd = Splay.ar(snd) * 0.8;
 	// snd = snd * LFPulse.kr(MouseX.kr(5, 10), 0, LFNoise2.kr(1/4).range(0.1, 0.9));
 }).play;
 )
@@ -327,7 +327,7 @@ Ndef(\b1,
 		\sampleName, Pseq(samples.flat, inf),
 		\dur, Pseq(~dursFrom.(samples), inf),
 		\stretch, 4,
-		\amp, Pseq([0.4, 0.29, 0.4, 0.3], inf) * 3,
+		\amp, Pseq([0.4, 0.29, 0.4, 0.3], inf) * 7,
 		// \amp, Pkey(\amp) * Prand([0, 1, 1, 1, 1], inf),
 		\rate, Pwhite(1, 1.1) * Pwrand([1, 0.5, 0.91], [9, 3, 1].normalizeSum, inf),
 		// \rate, Pwhite(1, 2.5) * Pwrand([1, 0.5, -0.85], [9, 3, 1].normalizeSum, inf)
@@ -337,6 +337,8 @@ Ndef(\b1,
 ).play
 )
 
+// ^^^ MAKE PWHITE RATE GO UP BY FASTER FLASH
+
 Ndef(\b1).clear;
 // Stop monitoring the dry Ndef:
 Ndef(\b1).stop(1);
@@ -345,7 +347,7 @@ Ndef(\b1).play;
 
 
 // =======================================
-// 9:01 - NJNP for 2 minutes until 10:50 -- add fx?
+// 9:01 - ADD FX ON DOWNBEAT
 // =======================================
 
 (
@@ -367,20 +369,47 @@ Ndef(\bfx, {
 		mix: 0.405,
 		room: 0.57,
 		damp: 0.97,
-		mul: 2
+		mul: 0.5 // start soft, then increase to 2
 	);
 
 }).play;
 )
 
+// stop voices at some point
+Ndef(\prog1).end(10);
+Ndef(\prog2).end(10);
 
-Ndef(\b1).play(vol: 1.0);
-Ndef(\bfx).play(vol: 0);
+Ndef(\b1).play(vol: 0.7); // reduce dry gradually
+Ndef(\bfx).play(vol: 1.0); // adjust wet if needed
 
 
-Ndef(\b1).stop(6);
-Ndef(\bfx).stop(1);
+Ndef(\b1).stop(6); // eventually remove this completely
+Ndef(\bfx).stop(10); // so we end just on this
 
+
+~freeAll.();
+
+(
+~rewindVideo.value(1);
+~closeSCLOrkWatch.value;
+)
+
+
+
+// END //
+
+
+
+
+
+
+
+
+
+
+
+
+/*
 
 // extra
 (
