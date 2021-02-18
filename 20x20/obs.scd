@@ -1,6 +1,28 @@
 /*
-cm20 file
+obs file
 */
+
+// DECEMBER 2020
+// STOP YOUR SERVER
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // Friday stream key

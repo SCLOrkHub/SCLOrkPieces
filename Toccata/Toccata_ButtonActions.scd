@@ -8,13 +8,13 @@
 // ===============
 // OPEN GUI
 // ===============
-q = SCLOrkQuNeo.new.preset(\toggle);
+~quNeo = SCLOrkQuNeo.new.preset(\toggle);
 
 // ===============
 // BUTTON ACTIONS & LABELS
 // ===============
 (
-q.onButtonChange = { | velocity, midinote |
+~quNeo.onButtonChange = { | velocity, midinote |
 	var synth;
 
 	switch(midinote,
@@ -322,24 +322,24 @@ q.onButtonChange = { | velocity, midinote |
 
 };
 
-q.changeButtonLabel(36, "\nPITCH\nVARIATION");
-q.changeButtonLabel(37, "\nLOOPING \nPITCH VAR");
-q.changeButtonLabel(38, "\nSPAWNING \nPITCH VAR");
-q.changeButtonLabel(39, "\nGRAINY\nSOUND");
-q.changeButtonLabel(40, "\nMECHANICAL\nPOPCORN");
-q.changeButtonLabel(41, "\nMECHANICAL\nPHRASER");
-q.changeButtonLabel(42, "\nDRASTIC\nPICTH MOD");
-q.changeButtonLabel(43, "\nFOR LONG TONES");
-q.changeButtonLabel(44, "\nLOOPING\nREVERSE");
-q.changeButtonLabel(45, "\nLOOPING\nPITCH VAR 2");
-q.changeButtonLabel(46, "\nREVREV\nDELAY");
-q.changeButtonLabel(47, "\nGRAINY\nLOW");
-q.changeButtonLabel(48, "\nPITCH\nMODULATION");
-q.changeButtonLabel(49, "\nSOUR\nDELAY");
-// q.changeButtonLabel(50, "empty");
-// q.changeButtonLabel(51, "empty");
+~quNeo.changeButtonLabel(36, "\nPITCH\nVARIATION");
+~quNeo.changeButtonLabel(37, "\nLOOPING \nPITCH VAR");
+~quNeo.changeButtonLabel(38, "\nSPAWNING \nPITCH VAR");
+~quNeo.changeButtonLabel(39, "\nGRAINY\nSOUND");
+~quNeo.changeButtonLabel(40, "\nMECHANICAL\nPOPCORN");
+~quNeo.changeButtonLabel(41, "\nMECHANICAL\nPHRASER");
+~quNeo.changeButtonLabel(42, "\nDRASTIC\nPICTH MOD");
+~quNeo.changeButtonLabel(43, "\nFOR LONG TONES");
+~quNeo.changeButtonLabel(44, "\nLOOPING\nREVERSE");
+~quNeo.changeButtonLabel(45, "\nLOOPING\nPITCH VAR 2");
+~quNeo.changeButtonLabel(46, "\nREVREV\nDELAY");
+~quNeo.changeButtonLabel(47, "\nGRAINY\nLOW");
+~quNeo.changeButtonLabel(48, "\nPITCH\nMODULATION");
+~quNeo.changeButtonLabel(49, "\nSOUR\nDELAY");
+// ~quNeo.changeButtonLabel(50, "empty");
+// ~quNeo.changeButtonLabel(51, "empty");
 
-q.onSliderChange = { |value, sliderNum|
+~quNeo.onSliderChange = { |value, sliderNum|
 	switch(sliderNum,
 		6, {~mixerSynth.set(\directMicLevel, value)},
 		7, {~mixerSynth.set(\reverbAmount, value)},
@@ -349,11 +349,11 @@ q.onSliderChange = { |value, sliderNum|
 	);
 };
 
-q.changeSliderLabel(6, "dry\nout", false);
-q.changeSliderLabel(7, "wet\nout", false);
-q.changeSliderLabel(8, "fx\nout", false);
-q.changeSliderLabel(9, "main\nvol", false);
-q.changeSliderLabel(10, "pan\n", false);
+~quNeo.changeSliderLabel(6, "dry\nout", false);
+~quNeo.changeSliderLabel(7, "wet\nout", false);
+~quNeo.changeSliderLabel(8, "fx\nout", false);
+~quNeo.changeSliderLabel(9, "main\nvol", false);
+~quNeo.changeSliderLabel(10, "pan\n", false);
 
 );
 

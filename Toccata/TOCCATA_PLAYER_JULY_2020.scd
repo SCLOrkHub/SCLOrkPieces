@@ -1,14 +1,10 @@
-// ***************** //
-// July 7th VERSION  //
-// ***************** //
-// [added quick hack to ensure we connect to no matter what cmnXX machine we are using for jacktrip]
-
-// TOCCATA V3
+// TOCCATA V3 - Pandemic version
 // A SCLOrk version of Toccata by Joo Won Park
 // Original score here: http://www.joowonpark.net/Toccata.pdf
 
-// THIS FILE FOR JULY 2020 PERFORMANCE ONLY
-// July 2020 version for Network Music Festival performance over jacktrip
+// THIS FILE FIRST USED FOR JULY 2020 PERFORMANCE
+// July 2020 version for Network Music Festival
+// February 2021 version for Music at Noon
 
 // Run one line at a time. Watch Post window for messages
 
@@ -16,8 +12,9 @@
 
 
 // 1) IF NOT ALREADY RUNNING, START JACKTRIP
-// (will open a small terminal window, just leave it alone)
-"jacktrip -C cmn17.stanford.edu --nojackportsconnect".runInTerminal;
+// (will open a terminal window, just leave it alone)
+
+"xfce4-terminal -x bash -c \"jacktrip -C cmn17.stanford.edu -q4 -r2 --nojackportsconnect; exec bash\" --hold".unixCmd;
 
 // 2) RUN THIS (it will boot server automatically)
 "Toccata_SynthDefs.scd".loadRelative;
@@ -31,11 +28,24 @@
 "Toccata_ButtonActions.scd".loadRelative;
 // - TURN ON MIDI ON QUNEO GUI
 // - BRING UP VERTICAL FADERS 1, 3, 4
+// - BRING LONG SLIDER (PAN) TO MIDDLE
 
 // 5) REDO ALL JACK CONNECTIONS:
 "SCLOrk_JackTrip_Setup_July_2020.scd".loadRelative;
 
-// 6) OPEN SCLOrkChat as usual
+
+
+
+
+// Bruno only (if using MIDI keyboard):
+"zynaddsubfx --output jack --no-gui --load-instrument=\"/usr/share/zynaddsubfx/banks/Organ/0068-Square Organ.xiz\"".runInTerminal;
+
+(
+SCLOrkJack.connectAllFrom([
+	List[ "zynaddsubfx:out_1", "SuperCollider:in_1" ],
+	List[ "zynaddsubfx:out_2", "SuperCollider:in_2" ],
+	List[ "a2j:PCR [28] (capture): PCR 1", "zynaddsubfx:midi_input" ]])
+)
 
 
 
