@@ -620,8 +620,8 @@ w.onClose = {
 				var win, selectButtons;
 				var pieces = [
 					"20x20",
-					"Cycles",
-					"GMO",
+					"Toccata",
+					"GMO (Ndef improv)",
 					"Wherever We Are",
 					"Another piece goes here 1",
 					"Another piece goes here 2",
@@ -643,12 +643,20 @@ w.onClose = {
 								"Loading 20x20...".postln;
 								(Quarks.folder +/+ "SCLOrkPieces/20x20/20x20_Setup.scd").load;
 							},
-							"Cycles", {
-								"Loading cycles".postln;
-							},
-							"GMO", {
-								"Loading gmo".postln;
-							},
+							"Toccata", {
+								var path = PathName.new(Quarks.folder +/+ "SCLOrkPieces/Toccata/TOCCATA_PLAYER_JULY_2020.scd");
+								Document.new(
+									title: path.fileNameWithoutExtension.asString ++ " copy",
+									string: String.readNew(File.new(path.fullPath, "r"));
+								).front;
+					},
+							"GMO (Ndef improv)", {
+								var path = PathName.new(Quarks.folder +/+ "SCLOrkPieces/Demos/Ndef/Basic-HyperSCLOrk.scd");
+								Document.new(
+									title: path.fileNameWithoutExtension.asString ++ " copy",
+									string: String.readNew(File.new(path.fullPath, "r"));
+								).front;
+					},
 							"Wherever We Are", {
 								"Loading WWA".postln;
 							}

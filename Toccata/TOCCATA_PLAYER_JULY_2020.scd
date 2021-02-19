@@ -17,21 +17,23 @@
 "xfce4-terminal -x bash -c \"jacktrip -C cmn17.stanford.edu -q4 -r2 --nojackportsconnect; exec bash\" --hold".unixCmd;
 
 // 2) RUN THIS (it will boot server automatically)
-"Toccata_SynthDefs.scd".loadRelative;
+(Quarks.folder +/+ "SCLOrkPieces/Toccata/Toccata_SynthDefs.scd").load;
 
 // Before running next line, wait until you see message "SynthDefs added" in Post window
 
 // 3) RUN THIS:
-"Toccata_GroupBussesBuffer.scd".loadRelative;
+
+(Quarks.folder +/+ "SCLOrkPieces/Toccata/Toccata_GroupBussesBuffer.scd").load;
 
 // 4) ...AND NOW THIS (it will launch GUI)
-"Toccata_ButtonActions.scd".loadRelative;
+(Quarks.folder +/+ "SCLOrkPieces/Toccata/Toccata_ButtonActions.scd").load;
+
 // - TURN ON MIDI ON QUNEO GUI
 // - BRING UP VERTICAL FADERS 1, 3, 4
 // - BRING LONG SLIDER (PAN) TO MIDDLE
 
 // 5) REDO ALL JACK CONNECTIONS:
-"SCLOrk_JackTrip_Setup_July_2020.scd".loadRelative;
+(Quarks.folder +/+ "SCLOrkPieces/Toccata/SCLOrk_JackTrip_Setup_July_2020.scd").load;
 
 
 
