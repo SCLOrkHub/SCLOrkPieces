@@ -14,7 +14,7 @@
 // 1) IF NOT ALREADY RUNNING, START JACKTRIP
 // (will open a terminal window, just leave it alone)
 
-"xfce4-terminal -x bash -c \"jacktrip -C cmn17.stanford.edu -q4 -r2 --nojackportsconnect; exec bash\" --hold".unixCmd;
+"xfce4-terminal -x bash -c \"jacktrip -C cmn20.stanford.edu -K % --nojackportsconnect; exec bash\" --hold".format(~hostname).unixCmd;
 
 // 2) RUN THIS (it will boot server automatically)
 (Quarks.folder +/+ "SCLOrkPieces/Toccata/Toccata_SynthDefs.scd").load;

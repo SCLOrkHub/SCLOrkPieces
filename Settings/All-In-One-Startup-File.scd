@@ -53,7 +53,12 @@
 
 
 
-var a, w, requiredQuarks, currentPiece;
+var textField, loginWindow, requiredQuarks, currentPiece, pipe;
+
+// get this computer's hostname to use with jacktrip (or anything else)
+pipe = Pipe.new("hostname", "r");
+~hostname = pipe.getLine;
+pipe.close;
 
 requiredQuarks = [
 	"SafetyNet",
@@ -66,15 +71,15 @@ requiredQuarks = [
 	"ddwSnippets"
 ];
 
-w = Window.new(
+loginWindow = Window.new(
 	name: "please type your name or nickname (a single word)",
 	bounds: Window.screenBounds,
 	resizable: false
 ).front;
-w.background = Color.black;
+loginWindow.background = Color.black;
 
-a = TextField(
-	parent: w,
+textField = TextField(
+	parent: loginWindow,
 	bounds: Rect(
 		left: Window.screenBounds.width / 2 - 150,
 		top: Window.screenBounds.height / 2 - 100,
@@ -83,15 +88,15 @@ a = TextField(
 	)
 );
 
-a.font = Font("Arial", 40);
-a.string = "your name?";
-a.align = \center;
-a.stringColor = Color.gray;
-a.mouseDownAction = { a.string = "" };
-a.keyDownAction = { a.string = ""; a.keyDownAction = nil };
-a.action = {arg field; ~myName = field.value.postln; w.close };
+textField.font = Font("Arial", 40);
+textField.string = "your name?";
+textField.align = \center;
+textField.stringColor = Color.gray;
+textField.mouseDownAction = { textField.string = "" };
+textField.keyDownAction = { textField.string = ""; textField.keyDownAction = nil };
+textField.action = {arg field; ~myName = field.value.postln; loginWindow.close };
 
-w.onClose = {
+loginWindow.onClose = {
 
 	"*** SCLOrk ALL IN ONE Startup File"
 	"*** loading startup file.".postln;
@@ -1098,5 +1103,5 @@ w.onClose = {
 
 
 	}); // end of Quark installation if/else
-}; // end of w.onClose
+}; // end of loginWindow.onClose
 
