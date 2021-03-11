@@ -387,7 +387,11 @@ loginWindow.onClose = {
 			});
 
 			Butz.add('JackTrip', {
-				if( false, {
+				var pipe, jackTripIsRunning;
+				pipe = Pipe.new("pgrep jacktrip", "r");
+				jackTripIsRunning = pipe.getLine.notNil;
+				pipe.close;
+				if( jackTripIsRunning, {
 					"JackTrip already running".postln;
 				}, {
 					"Running JackTrip on a terminal window...".postln;
