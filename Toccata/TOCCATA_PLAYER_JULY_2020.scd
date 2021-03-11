@@ -11,10 +11,8 @@
 // Note: Temporary changes in SynthDefs file makes it 2 channels (duplicate mono)
 
 
-// 1) IF NOT ALREADY RUNNING, START JACKTRIP
+// 1) IF NOT ALREADY RUNNING, START JACKTRIP from Red Button
 // (will open a terminal window, just leave it alone)
-
-"xfce4-terminal -x bash -c \"jacktrip -C cmn20.stanford.edu -K % --nojackportsconnect; exec bash\" --hold".format(~hostname).unixCmd;
 
 // 2) RUN THIS (it will boot server automatically)
 (Quarks.folder +/+ "SCLOrkPieces/Toccata/Toccata_SynthDefs.scd").load;

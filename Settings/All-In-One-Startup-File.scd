@@ -386,7 +386,20 @@ loginWindow.onClose = {
 				)
 			});
 
-			Butz.add('Load All The Rest', {
+			Butz.add('JackTrip', {
+				if( false, {
+					"JackTrip already running".postln;
+				}, {
+					"Running JackTrip on a terminal window...".postln;
+					"If you ever need to restart JackTrip:".postln;
+					" - Go to that terminal window and hit Ctrl + C".postln;
+					" - Close the window".postln;
+					" - Push the JackTrip red button again".postln;
+					"xfce4-terminal -x bash -c \"jacktrip -C cmn20.stanford.edu -K % --nojackportsconnect; exec bash\" --hold".format(~hostname).unixCmd;
+				})
+			});
+
+			Butz.add('Reset', {
 
 				// Clear all
 				Ndef.clear;
