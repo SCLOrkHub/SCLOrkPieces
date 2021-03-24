@@ -25,15 +25,26 @@ var path = Quarks.folder +/+ "SCLOrkPieces";
 ("cd " ++ path ++ "; git submodule update --init").unixCmd;
 )
 ```
+## Full List of Quarks used by SCLOrk
 
-So the full list of Quarks typically used by SCLOrk are:
 ```
 Quarks.fetchDirectory;
+Quarks.install("adclib", "ff6174cbd4d4e1d0c09d2b51f58245c11401d555");
 Quarks.install("HyperDisCo");
 Quarks.install("StartupFile");
 Quarks.install("SCLOrkTools");
 Quarks.install("SCLOrkSynths");
-Quarks.install("Dirt-Samples");
 Quarks.install("ddwSnippets");
+Quarks.install("SafetyNet");
 Quarks.install("https://github.com/SCLOrkHub/SCLOrkPieces");
+Quarks.install("Dirt-Samples");
 ```
+After installing, recompile class library and run:
+```
+(Quarks.folder +/+ "SCLOrkPieces/Settings/Move-Startup-File-To-Right-Place.scd").load;
+```
+Then select the All-In-One start up file by running this line and clicking on the right button:
+```
+StartupFile.select;
+```
+Next time you restart SuperCollider you should see the "enter your username" screen and the Red Butz GUI afterwards.
