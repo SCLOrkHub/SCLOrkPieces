@@ -394,12 +394,17 @@ loginWindow.onClose = {
 				if( jackTripIsRunning, {
 					"JackTrip already running".postln;
 				}, {
+					var cmd;
 					"Running JackTrip on a terminal window...".postln;
+					cmd = "jacktrip -C cmn58.stanford.edu -K % --nojackportsconnect".format(~hostname);
+					cmd.postln;
+					cmd = "xfce4-terminal -x bash -c \"%; exec bash\" --hold".format(cmd);
+					cmd.unixCmd;
+
 					"If you ever need to restart JackTrip:".postln;
 					" - Go to that terminal window and hit Ctrl + C".postln;
 					" - Close the window".postln;
 					" - Push the JackTrip red button again".postln;
-					"xfce4-terminal -x bash -c \"jacktrip -C cmn20.stanford.edu -K % --nojackportsconnect; exec bash\" --hold".format(~hostname).unixCmd;
 				})
 			});
 
