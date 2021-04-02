@@ -586,6 +586,7 @@ loginWindow.onClose = {
 								bell = Mix(SinOsc.ar(815 * [1, 2, 6]) * Env.perc(curve: -8).kr * 0.1);
 								snd = Mix([mic1, mic2, bell]);
 								snd = DelayN.ar(Pan2.ar(snd));
+								snd = Limiter.ar(snd, 0.98);
 							}).play;
 							// go magenta
 							Butz.w.background_(Color.magenta);
