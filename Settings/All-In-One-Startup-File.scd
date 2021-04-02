@@ -396,7 +396,7 @@ loginWindow.onClose = {
 				}, {
 					var cmd;
 					"Running JackTrip on a terminal window...".postln;
-					cmd = "jacktrip -C cmn58.stanford.edu -K % --nojackportsconnect".format(~hostname);
+					cmd = "jacktrip -C cmn58.stanford.edu --clientname JackTrip --remotename % --nojackportsconnect".format(~hostname);
 					cmd.postln;
 					cmd = "xfce4-terminal -x bash -c \"%; exec bash\" --hold".format(cmd);
 					cmd.unixCmd;
@@ -411,8 +411,9 @@ loginWindow.onClose = {
 			Butz.add('Reset', {
 
 				// Clear all
+				CmdPeriod.run;
 				Ndef.clear;
-				"Cleared all Ndefs".postln;
+				"Cleared all Ndefs, auto ctrl+period".postln;
 
 				// Create general purpose clock that Ndefs can use;
 				// Also quants all proxies to 1 beat
@@ -492,7 +493,7 @@ loginWindow.onClose = {
 					var exceptions = if( leaveAlone.isArray.not, { [ leaveAlone ] }, { leaveAlone });
 
 					// never free metronome Ndefs
-					exceptions = exceptions.add([\t, \tempo]).flat;
+					exceptions = exceptions.add([\t, \tempo, \audioChat]).flat;
 
 					Ndef.dictFor(s).do({ | ndef |
 						var key = ndef.key;
@@ -511,7 +512,7 @@ loginWindow.onClose = {
 					var exceptions = if( leaveAlone.isArray.not, { [ leaveAlone ] }, { leaveAlone });
 
 					// never free metronome Ndefs
-					exceptions = exceptions.add([\t, \tempo]).flat;
+					exceptions = exceptions.add([\t, \tempo, \audioChat]).flat;
 
 					Ndef.dictFor(s).do({ | ndef |
 						var key = ndef.key;
@@ -567,6 +568,42 @@ loginWindow.onClose = {
 
 			Butz.add(' - ', { "this is just a space divider" });
 
+			~audioChatToggle = 0;
+
+			Butz.add('AudioChat', MFdef(\audioChat,
+				[
+					\toggle, 1,
+					\do, {
+						// just a toggle
+						if(~audioChatToggle == 0, {
+
+							"Turning audio chat ON...".postln;
+							Ndef(\audioChat).fadeTime = 0.1;
+							Ndef(\audioChat, {
+								var snd, mic1, mic2, bell;
+								mic1 = SoundIn.ar(0);
+								mic2 = SoundIn.ar(1);
+								bell = Mix(SinOsc.ar(815 * [1, 2, 6]) * Env.perc(curve: -8).kr * 0.1);
+								snd = Mix([mic1, mic2, bell]);
+								snd = DelayN.ar(Pan2.ar(snd));
+							}).play;
+							// go magenta
+							Butz.w.background_(Color.magenta);
+							// update toggle
+							~audioChatToggle = 1;
+						}, {
+							"Turning audio chat OFF...".postln;
+							Ndef(\audioChat).clear(1);
+							// back to red
+							Butz.w.background_(Color.red);
+							//update toggle
+							~audioChatToggle = 0;
+						});
+					}
+			])
+			);
+
+			Butz.add(' . ', { "this is just a space divider" });
 
 			// All pieces will have this (as long as we are in COVID mode)
 			Butz.add('PUBLIC', MFdef('PUBLIC'));
@@ -592,7 +629,7 @@ loginWindow.onClose = {
 				"*** q.oscRouter has % peers: \n%\n".postf(peers.size, peers.sort)
 			});
 
-			Butz.add('History', { WinBounds.showOrMake('sharedHistory') });
+			// Butz.add('History', { WinBounds.showOrMake('sharedHistory') });
 
 
 			Butz.add('Meter', {
@@ -631,17 +668,17 @@ loginWindow.onClose = {
 				(Quarks.folder +/+ "SCLOrkPieces/Settings/Move-Startup-File-To-Right-Place.scd").load;
 			});
 
-			Butz.add('NdefAuditioner', { (Quarks.quarkNameAsLocalPath("SCLOrkPieces") ++ "/Settings/Ndef-Auditioner.scd").load });
+			// Butz.add('NdefAuditioner', { (Quarks.quarkNameAsLocalPath("SCLOrkPieces") ++ "/Settings/Ndef-Auditioner.scd").load });
 
 			// Butz.add('NdefAuditioner', { WinBounds.showOrMake(\ndefmix) });
 			/*WinBounds.addMake(\ndefmix, {
-				var mixer;
-				mixer = NdefMixer(s, 24);
-				mixer.parent.name_(\ndefmix);
-				ProxyMeter.addMixer(mixer);
-				mixer.parent;
+			var mixer;
+			mixer = NdefMixer(s, 24);
+			mixer.parent.name_(\ndefmix);
+			ProxyMeter.addMixer(mixer);
+			mixer.parent;
 			});
-*/
+			*/
 
 			Butz.add('Load New Piece', {
 				var win, selectButtons;
@@ -671,19 +708,19 @@ loginWindow.onClose = {
 								(Quarks.folder +/+ "SCLOrkPieces/20x20/20x20_Setup.scd").load;
 							},
 							"Toccata", {
-								var path = PathName.new(Quarks.folder +/+ "SCLOrkPieces/Toccata/TOCCATA_PLAYER_JULY_2020.scd");
+								var path = PathName.new(Quarks.folder +/+ "SCLOrkPieces/Toccata/TOCCATA_PLAYER_SPRING_2021.scd");
 								Document.new(
 									title: path.fileNameWithoutExtension.asString ++ " copy",
 									string: String.readNew(File.new(path.fullPath, "r"));
 								).front;
-					},
+							},
 							"GMO (Ndef improv)", {
 								var path = PathName.new(Quarks.folder +/+ "SCLOrkPieces/Demos/Ndef/Basic-HyperSCLOrk.scd");
 								Document.new(
 									title: path.fileNameWithoutExtension.asString ++ " copy",
 									string: String.readNew(File.new(path.fullPath, "r"));
 								).front;
-					},
+							},
 							"Wherever We Are", {
 								"Loading WWA".postln;
 							}
