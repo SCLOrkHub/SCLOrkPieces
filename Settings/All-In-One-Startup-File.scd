@@ -570,21 +570,18 @@ loginWindow.onClose = {
 
 			~audioChatToggle = 0;
 
-			Butz.add('AudioChat', MFdef(\audioChat,
-				[
-					\toggle, 1,
-					\do, {
+			Butz.add('AudioChat', {
 						// just a toggle
 						if(~audioChatToggle == 0, {
 
 							"Turning audio chat ON...".postln;
 							Ndef(\audioChat).fadeTime = 0.1;
 							Ndef(\audioChat, {
-								var snd, mic1, mic2, bell;
-								mic1 = SoundIn.ar(0);
-								mic2 = SoundIn.ar(1);
-								bell = Mix(SinOsc.ar(815 * [1, 2, 6]) * Env.perc(curve: -8).kr * 0.1);
-								snd = Mix([mic1, mic2, bell]);
+								var snd, in1, in2, bell;
+								in1 = SoundIn.ar(0);
+								in2 = SoundIn.ar(1);
+								bell = Mix(SinOsc.ar(Rand(415, 815) * [1, 2, 6]) * Env.perc(curve: -8).kr * 0.1);
+								snd = Mix([in1, in2, bell]);
 								snd = DelayN.ar(Pan2.ar(snd));
 								snd = Limiter.ar(snd, 0.98);
 							}).play;
@@ -601,7 +598,6 @@ loginWindow.onClose = {
 							~audioChatToggle = 0;
 						});
 					}
-			])
 			);
 
 			Butz.add(' . ', { "this is just a space divider" });
@@ -687,10 +683,10 @@ loginWindow.onClose = {
 					"20x20",
 					"Toccata",
 					"GMO (Ndef improv)",
-					"Wherever We Are",
-					"Another piece goes here 1",
-					"Another piece goes here 2",
-					"Another piece goes here 3"
+					"JackTrip Patch #1",
+					"JackTrip Patch #2",
+					"Something else goes here",
+					"etc"
 				];
 
 				win = Window.new(
@@ -722,8 +718,11 @@ loginWindow.onClose = {
 									string: String.readNew(File.new(path.fullPath, "r"));
 								).front;
 							},
-							"Wherever We Are", {
-								"Loading WWA".postln;
+							"JackTrip Patch #1", {
+								(Quarks.folder +/+ "SCLOrkPieces/Settings/JackTrip-Patch-1.scd").load;
+							},
+							"JackTrip Patch #2", {
+								(Quarks.folder +/+ "SCLOrkPieces/Settings/JackTrip-Patch-2.scd").load;
 							}
 						);
 						currentPiece = name;
@@ -1143,6 +1142,9 @@ loginWindow.onClose = {
 						}).add;
 					});
 
+					// Load JackTrip Patch #2 as default (live coding + audio chat)
+
+					(Quarks.folder +/+ "SCLOrkPieces/Settings/JackTrip-Patch-2.scd").load;
 
 					// if we ever use main fx, add here?
 					// (q.hyperfolder +/+ "setup_files/6_HyperMasterFX.scd").loadPaths;
