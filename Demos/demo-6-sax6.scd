@@ -19,24 +19,6 @@ Ndef(\b1, // customize name
 )
 
 (
-var samples;
-samples = [\sax5, \sax6, \sax2, \sax1];
-
-Ndef(\b2).quant = 4;
-Ndef(\b2, // customize name
-	Pbind(
-		\type, \dirt,
-		\sampleName, Prand(samples.flat, inf),
-		\dur, Pseq(~dursFrom.(samples), inf),
-		\stretch, 4,
-		\amp, Pwhite(0.3, 0.5) / 2,
-		\rate, Prand([1, 1, 0.999, 1.001], inf) * [1, 1.5, 20/8],
-		\rate, Pkey(\rate) * Pstutter(8, Pseq([0, 7, 5], inf).midiratio)
-	)
-).play
-)
-
-(
 Ndef(\xax).quant = 1;
 Ndef(\xax).fadeTime = 4;
 Ndef(\xax, {
@@ -54,12 +36,33 @@ Ndef(\xax, {
 	);
 	snd = LPF.ar(
 		in: snd,
-		freq: LFNoise0.ar(p.clock.tempo * 4).range(100, 6000)
+		freq: LFNoise0.ar(p.clock.tempo * 4).range(1000, 6000)
 	);
 	snd = Pan2.ar(Mix.ar(snd), 0.0);
 	snd = Limiter.ar(snd);
 }).play;
 )
+
+
+(
+var samples;
+samples = [\sax6, \r, \sax1, \r];
+
+Ndef(\b2).quant = 4;
+Ndef(\b2, // customize name
+	Pbind(
+		\type, \dirt,
+		\sampleName, Prand(samples.flat, inf),
+		\dur, Pseq(~dursFrom.(samples), inf),
+		\stretch, 8,
+		\amp, Pwhite(0.3, 0.5) / 2,
+		\rate, Prand([1, 1, 0.999, 1.001], inf) * [1, 1.5, 4, 8],
+		\rate, Pkey(\rate) * Pstutter(3, Pseq([0, 7, 5], inf).midiratio)
+	)
+).play
+)
+
+
 
 Ndef(\b1).stop;
 Ndef(\b2).stop;

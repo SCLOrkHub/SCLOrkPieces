@@ -112,6 +112,4 @@ Ndef(\fx, {
 
 Ndef(\fxAmp, { SinOsc.kr(MouseY.kr(5, 10)).range(0, 1) });
 Ndef(\fxAmp, { LFPulse.kr(MouseY.kr(10, 39)).range(0.5, 4) });
-Ndef(\fxAmp, 0).quant_(4);
-
-Ndef(\fx).xset(\amp, 1);
+Ndef(\fxAmp, 1).quant_(4);

@@ -408,13 +408,12 @@ loginWindow.onClose = {
 				})
 			});
 
-			Butz.add('Reset', {
 
-				// Clear all
-				CmdPeriod.run;
+			// This function to be called automatically right after start up, and also when user pushes "Reset" button
+			MFdef(\reset).add(\lotsOfUsefulThings, {
+
+
 				Ndef.clear;
-				"Cleared all Ndefs, auto ctrl+period".postln;
-
 				// Create general purpose clock that Ndefs can use;
 				// Also quants all proxies to 1 beat
 				// Default BPM is 60, can be changed later using custom function
@@ -426,6 +425,10 @@ loginWindow.onClose = {
 
 				"Metronome running at 60 BPM.".postln;
 				"Global quantization set to 1 beat.".postln;
+				"To check current tempo, use ~bpm.()".postln;
+				"To set a new tempo, use ~bpm.(90)".postln;
+				"Pbinds inside Ndefs will use this tempo.".postln;
+				"You can also use Ndef.ar(\\t) anywhere where you would use a trigger.".postln;
 
 				// shortcut to change tempo
 				// usage in performance: ~bpm.(120);
@@ -526,23 +529,25 @@ loginWindow.onClose = {
 					"ending active Ndefs over % seconds... \n".postf(fadeTime);
 				};
 
-				currentEnvironment.pairsDo({ |k, v| [k, v].postln });
+				// currentEnvironment.pairsDo({ |k, v| [k, v].postln });
 
 				"Utility Functions loaded".postln;
+			});
 
-				// If there is need to load other files, place them here?
-				// likely will save those files 'per piece' in their own folder
-				// folder should be inside SCLOrkPieces
-				// so we need a way here to define which piece we are loading
-				// maybe a butz that functions as 'piece picker'
-				// assuming all these settings in startup file will be identical between pieces, the piece picker would load only additional settings for a piece (hopefully clean up as blank slate before loading).
-				// if hard clean up is needed, players should just recompile
-				//
-				// (q.hyperfolder +/+ "customWhatever.scd").load;
-				// chat score messages...
-				// custom synthdefs...
-				// custom snippets
-				// etc
+
+			Butz.add('Reset', {
+
+				// Clear all
+				{
+					Ndef.clear;
+					1.wait;
+					CmdPeriod.run;
+					"Cleared all Ndefs, autoran Ctrl + Period".postln;
+					1.wait;
+					MFdef(\reset).value;
+
+				}.fork(AppClock);
+
 			});
 
 			// this button needs to be reinvented.
@@ -1142,9 +1147,13 @@ loginWindow.onClose = {
 						}).add;
 					});
 
-					// Load JackTrip Patch #2 as default (live coding + audio chat)
+					// Load basic utilities now (Ndef tempo, ~bpm, ~freeAll.(), etc)
+					MFdef(\reset).value;
 
-					(Quarks.folder +/+ "SCLOrkPieces/Settings/JackTrip-Patch-2.scd").load;
+					// I don't want to load any JackTrip patch at startup
+					// because JackTrip will likely not be running yet.
+					// Better to let default connections happen first,
+					// then be explicit about choosing a JackTrip patch
 
 					// if we ever use main fx, add here?
 					// (q.hyperfolder +/+ "setup_files/6_HyperMasterFX.scd").loadPaths;
