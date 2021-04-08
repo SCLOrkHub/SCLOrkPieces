@@ -341,6 +341,24 @@ loginWindow.onClose = {
 						" and I approve of this message"
 					].choose;
 				).postln;
+
+				(
+					["SCLOrkTools", "SCLOrkSynths", "SCLOrkPieces"].do({ |repo|
+						var pipe;
+						pipe = Pipe.new(
+							commandLine: "cd "
+							++ Quarks.folder
+							+/+ repo
+							++ "; git rev-parse --short HEAD",
+							mode: "r"
+						);
+
+						(repo ++ " is at " ++ pipe.getLine).postln;
+						pipe.close;
+					});
+				)
+
+
 			});
 
 			Butz.add('   -   ', { "this is just a space divider" });
@@ -576,33 +594,42 @@ loginWindow.onClose = {
 			~audioChatToggle = 0;
 
 			Butz.add('AudioChat', {
-						// just a toggle
-						if(~audioChatToggle == 0, {
+				// just a toggle
+				if(~audioChatToggle == 0, {
 
-							"Turning audio chat ON...".postln;
-							Ndef(\audioChat).fadeTime = 0.1;
-							Ndef(\audioChat, {
-								var snd, in1, in2, bell;
-								in1 = SoundIn.ar(0);
-								in2 = SoundIn.ar(1);
-								bell = Mix(SinOsc.ar(Rand(415, 815) * [1, 2, 6]) * Env.perc(curve: -8).kr * 0.1);
-								snd = Mix([in1, in2, bell]);
-								snd = DelayN.ar(Pan2.ar(snd));
-								snd = Limiter.ar(snd, 0.98);
-							}).play;
-							// go magenta
-							Butz.w.background_(Color.magenta);
-							// update toggle
-							~audioChatToggle = 1;
-						}, {
-							"Turning audio chat OFF...".postln;
-							Ndef(\audioChat).clear(1);
-							// back to red
-							Butz.w.background_(Color.red);
-							//update toggle
-							~audioChatToggle = 0;
+					"Turning audio chat ON...".postln;
+					Ndef(\audioChat).fadeTime = 0.1;
+					Ndef(\audioChat, {
+						var snd, in1, in2, bell;
+						in1 = SoundIn.ar(0);
+						in2 = SoundIn.ar(1);
+						bell = Mix(SinOsc.ar(Rand(415, 815) * [1, 2, 6]) * Env.perc(curve: -8).kr * 0.1);
+						snd = Mix([in1, in2, bell]);
+						snd = DelayN.ar(Pan2.ar(snd));
+						snd = Limiter.ar(snd, 0.98);
+					}).play;
+					// post notifications
+					~audioChatWarning = {
+						loop({
+							"// *-#$%^&*(*(0 //".scramble.postln;
+							" ".postln;
+							"// AudioChat is ON //".postln;
+							" ".postln;
+							1.wait;
 						});
-					}
+					}.fork(AppClock);
+
+					// update toggle
+					~audioChatToggle = 1;
+				}, {
+					"Turning audio chat OFF...".postln;
+					Ndef(\audioChat).clear(1);
+					// stop printing warning
+					~audioChatWarning.stop;
+					//update toggle
+					~audioChatToggle = 0;
+				});
+			}
 			);
 
 			Butz.add(' . ', { "this is just a space divider" });
