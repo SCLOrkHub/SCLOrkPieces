@@ -417,7 +417,7 @@ loginWindow.onClose = {
 						bounds: Rect(
 							left: Window.screenBounds.width / 2 - 100,
 							top: Window.screenBounds.height / 2,
-							width: 300,
+							width: 350,
 							height: 150
 						),
 						border: false
@@ -426,7 +426,7 @@ loginWindow.onClose = {
 
 					win.layout = VLayout(
 
-						StaticText.new().string_("JackTrip is running. Select a connection patch:"),
+						[StaticText.new().string_("JackTrip is running."), align: \center],
 
 						Button.new()
 						.states_([["JackTrip Patch #1 [use with PRIVATE mode]"]])
@@ -438,7 +438,9 @@ loginWindow.onClose = {
 
 						Button.new()
 						.states_([["nevermind"]])
-						.action_({ "bye".postln; win.close })
+						.action_({ "bye".postln; win.close }),
+
+						[StaticText.new().string_("USE HEADPHONES 3/4!"), align: \center]
 					);
 
 					win.front;
@@ -675,6 +677,8 @@ loginWindow.onClose = {
 
 			Butz.add('  -  ', { "this is just a space divider" });
 
+			Butz.add('NdefAuditioner', { (Quarks.quarkNameAsLocalPath("SCLOrkPieces") ++ "/Settings/Ndef-Auditioner-v2.scd").load });
+
 			// Consider having more than one SyncText "room"
 			Butz.add('SyncText', MFdef(\SyncText) );
 
@@ -684,11 +688,13 @@ loginWindow.onClose = {
 			});
 			*/
 
+			/*
 			Butz.add('Post Peers', {
-				var peers = q.oscRouter.peers;
-				"*** q.oscRouter has % peers: \n%\n".postf(peers.size, peers.sort)
+			var peers = q.oscRouter.peers;
+			"*** q.oscRouter has % peers: \n%\n".postf(peers.size, peers.sort)
 			});
 
+			*/
 			// Butz.add('History', { WinBounds.showOrMake('sharedHistory') });
 
 
@@ -728,7 +734,7 @@ loginWindow.onClose = {
 				(Quarks.folder +/+ "SCLOrkPieces/Settings/Move-Startup-File-To-Right-Place.scd").load;
 			});
 
-			Butz.add('NdefAuditioner', { (Quarks.quarkNameAsLocalPath("SCLOrkPieces") ++ "/Settings/Ndef-Auditioner-v2.scd").load });
+
 
 			// Butz.add('NdefAuditioner', { WinBounds.showOrMake(\ndefmix) });
 			/*WinBounds.addMake(\ndefmix, {
@@ -746,8 +752,6 @@ loginWindow.onClose = {
 					"20x20",
 					"Toccata",
 					"GMO (Ndef improv)",
-					"JackTrip Patch #1",
-					"JackTrip Patch #2",
 					"Something else goes here",
 					"etc"
 				];
@@ -781,12 +785,6 @@ loginWindow.onClose = {
 									string: String.readNew(File.new(path.fullPath, "r"));
 								).front;
 							},
-							"JackTrip Patch #1", {
-								(Quarks.folder +/+ "SCLOrkPieces/Settings/JackTrip-Patch-1.scd").load;
-							},
-							"JackTrip Patch #2", {
-								(Quarks.folder +/+ "SCLOrkPieces/Settings/JackTrip-Patch-2.scd").load;
-							}
 						);
 						currentPiece = name;
 						win.close
