@@ -364,7 +364,7 @@ loginWindow.onClose = {
 			Butz.add('   -   ', { "this is just a space divider" });
 
 			Butz.add('Dirt Samples', {
-				if( d.isNil, {
+				if( d.size < 2000, {
 					d = SCLOrkSamples.loadFolder(Quarks.folder +/+ "Dirt-Samples");
 				}, {
 					d.postln;
@@ -410,7 +410,38 @@ loginWindow.onClose = {
 				jackTripIsRunning = pipe.getLine.notNil;
 				pipe.close;
 				if( jackTripIsRunning, {
-					"JackTrip already running".postln;
+					var win;
+
+					win = Window.new(
+						name: "JackTrip",
+						bounds: Rect(
+							left: Window.screenBounds.width / 2 - 100,
+							top: Window.screenBounds.height / 2,
+							width: 300,
+							height: 150
+						),
+						border: false
+					).front.alwaysOnTop_(true);
+
+
+					win.layout = VLayout(
+
+						StaticText.new().string_("JackTrip is running. Select a connection patch:"),
+
+						Button.new()
+						.states_([["JackTrip Patch #1 [use with PRIVATE mode]"]])
+						.action_({ (Quarks.folder +/+ "SCLOrkPieces/Settings/JackTrip-Patch-1.scd").load; win.close }),
+
+						Button.new()
+						.states_([["JackTrip Patch #2 [use with PUBLIC mode]"]])
+						.action_({ (Quarks.folder +/+ "SCLOrkPieces/Settings/JackTrip-Patch-2.scd").load; win.close }),
+
+						Button.new()
+						.states_([["nevermind"]])
+						.action_({ "bye".postln; win.close })
+					);
+
+					win.front;
 				}, {
 					var cmd;
 					"Running JackTrip on a terminal window...".postln;
@@ -697,7 +728,7 @@ loginWindow.onClose = {
 				(Quarks.folder +/+ "SCLOrkPieces/Settings/Move-Startup-File-To-Right-Place.scd").load;
 			});
 
-			// Butz.add('NdefAuditioner', { (Quarks.quarkNameAsLocalPath("SCLOrkPieces") ++ "/Settings/Ndef-Auditioner.scd").load });
+			Butz.add('NdefAuditioner', { (Quarks.quarkNameAsLocalPath("SCLOrkPieces") ++ "/Settings/Ndef-Auditioner-v2.scd").load });
 
 			// Butz.add('NdefAuditioner', { WinBounds.showOrMake(\ndefmix) });
 			/*WinBounds.addMake(\ndefmix, {
