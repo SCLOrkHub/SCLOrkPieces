@@ -8,7 +8,6 @@ cycle = [1, 0.8, [\r, 1/2, \r, 1/2], [1/2, 1/2]];
 Ndef(\kd, // customize name
 	Pbind(
 		\instrument, "kick_electro",
-		\cycle, Pseq(cycle, inf),
 		\dur, Pseq(~dursFrom.(cycle), inf),
 		\stretch, 4,
 		\amp, Pseq(cycle.flat, inf),
@@ -21,7 +20,7 @@ Ndef(\kd, // customize name
 (
 var cycle;
 cycle = [
-	1, 0.8, 1, 1,
+	2, 0.1, 0.1, 0.1,
 	1, \r, 1, 1,
 	\r, 0.5, \r, 1,
 	\r, \r, 0.5, 1
@@ -29,7 +28,6 @@ cycle = [
 Ndef(\sd, // customize name
 	Pbind(
 		\instrument, "clapElectro",
-		\cycle, Pshuf(cycle, inf),
 		\dur, Pseq(~dursFrom.(cycle), inf),
 		\stretch, 8,
 		\amp, Pseq(cycle.flat, inf) * 2,
@@ -52,7 +50,6 @@ cycle = [
 Ndef(\hh, // customize name
 	Pbind(
 		\instrument, "hihatElectro",
-		\cycle, Pseq(cycle, inf),
 		\dur, Pseq(~dursFrom.(cycle), inf),
 		\stretch, 8,
 		\amp, Pseq(cycle.flat, inf) * Pwhite(0.5, 0.8),
