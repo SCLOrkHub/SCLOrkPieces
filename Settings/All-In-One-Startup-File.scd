@@ -752,7 +752,7 @@ loginWindow.onClose = {
 					"20x20",
 					"Toccata",
 					"GMO (Ndef improv)",
-					"Something else goes here",
+					"Unexpected Museum Night",
 					"etc"
 				];
 
@@ -785,6 +785,11 @@ loginWindow.onClose = {
 									string: String.readNew(File.new(path.fullPath, "r"));
 								).front;
 							},
+							"Unexpected Museum Night", {
+								"Loading Unexpected Museum Night...".postln;
+								(Quarks.folder +/+ "SCLOrkPieces/Unexpected-Museum-Night/Video-Setup.scd").load;
+
+							}
 						);
 						currentPiece = name;
 						win.close
