@@ -430,11 +430,11 @@ loginWindow.onClose = {
 
 						Button.new()
 						.states_([["JackTrip Patch #1 [use with PRIVATE mode]"]])
-						.action_({ (Quarks.folder +/+ "SCLOrkPieces/Settings/JackTrip-Patch-1.scd").load; win.close }),
+						.action_({ (Quarks.folder +/+ "SCLOrkPieces/Settings/JackTrip-Patch-1.scd").load; win.close; "bye".postln; }),
 
 						Button.new()
 						.states_([["JackTrip Patch #2 [use with PUBLIC mode]"]])
-						.action_({ (Quarks.folder +/+ "SCLOrkPieces/Settings/JackTrip-Patch-2.scd").load; win.close }),
+						.action_({ (Quarks.folder +/+ "SCLOrkPieces/Settings/JackTrip-Patch-2.scd").load; win.close; "bye".postln; }),
 
 						Button.new()
 						.states_([["nevermind"]])
@@ -786,8 +786,11 @@ loginWindow.onClose = {
 								).front;
 							},
 							"Unexpected Museum Night", {
-								"Loading Unexpected Museum Night...".postln;
-								(Quarks.folder +/+ "SCLOrkPieces/Unexpected-Museum-Night/Video-Setup.scd").load;
+								"Nothing here yet. Basic instructions:".postln;
+								"1. Start JackTrip \n 2. Load Toccata (Load New Piece > Toccata) \n 3. Headphones 3/4 \n 4. Open SCLOrkChat \n 5. Use PRIVATE mode \n 6. Open museum video, resize, Always on Top".postln;
+
+								// "Loading Unexpected Museum Night...".postln;
+								// (Quarks.folder +/+ "SCLOrkPieces/Unexpected-Museum-Night/Video-Setup.scd").load;
 
 							}
 						);
