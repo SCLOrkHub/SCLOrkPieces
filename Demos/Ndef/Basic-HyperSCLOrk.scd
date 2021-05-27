@@ -2,64 +2,49 @@
 // GMO (Ndef improvisation)
 // =============================
 
-// CLEANING UP
+// FIRST PIECE - JUNE 2nd 2021 CONCERT
 
-// 1) Control Period to clean up any previous leftover synths
+// 1) CONTROL + PERIOD to clean up any previous leftover synths
 
-// 2) If you just played Toccata, close QuNeo GUI (manually, or using line below)
-Window.find("SCLOrkQuNeo").close;
+// 2) Make sure there is no Toccata GUI open (leftover from a previous run)
 
-// 3) Red buttons: Dirt Samples, SCLOrkSynths, Reset
-// (assuming SCLOrkChat and JackTrip are already running; if not, start them now)
+// 3) Push RED buttons:
+// Dirt Samples
+// SCLOrkSynths
+// SCLOrkChat
+// JackTrip (start, then choose patch #2)
+// Reset
 
-// 4) Clean up prior jack connections:
-SCLOrkJack.disconnectAll;
-
-// 5) Redo jack connections for Ndef improv:
-(
-SCLOrkJack.connectAllFrom([
-	// mics to jacktrip for talkback
-	List[ "system:capture_1", "cmn20.stanford.edu:send_1", "cmn20.stanford.edu:send_2" ],
-	List[ "system:capture_2", "cmn20.stanford.edu:send_2", "cmn20.stanford.edu:send_1" ],
-	// sc direct outs to headphones 3/4
-	List[ "SuperCollider:out_1", "system:playback_3" ],
-	List[ "SuperCollider:out_2", "system:playback_4" ],
-	// talkback listening channel on headphones 1/2
-	List[ "cmn20.stanford.edu:receive_1", "system:playback_1" ],
-	List[ "cmn20.stanford.edu:receive_2", "system:playback_2" ]
-])
-)
-
-// (bruno only: also connect sc 1-2 to cmn17 1-2 for live stream)
-
-// 7) NOW YOU CAN GO PUBLIC!
-// (note: if you need to do any of the above again, go PRIVATE first, do what you need, then go public again)
+// 4) NOW YOU CAN GO PUBLIC!
 
 // Scroll down for starter code.
-// (or: if directed by bruno, use the last code from last time to start this one)
+// (or: if directed by bruno, use another one)
 
-// NOTE: listen to SC on headphones 3/4, and talkback mic on headphones 1/2
+// NOTE 1: Headphones 3/4!
+// NOTE 2: Keep your K6 big knob DOWN (at zero position). If you are called to speak about your group piece in the middle of the concert, bring K6 big knob UP to a reasonable level (mic gains as well), speak, then bring K6 knob DOWN before playing the Ndef piece.
 
-
-
-
-
+// There is no more AudioChat button. In the new JackTrip Patch 2, the only thing between your microphone and the live stream is your K6 BIG KNOB. Use it wisely.
 
 
-// ++ code copied from bruno
+
+
+
+
+// STARTER CODE
 (
 // remember to change name!!!!!!!!!!!!!
-Ndef(\bruno).fadeTime = 10;
+Ndef(\bruno).fadeTime = 3;
 Ndef(\bruno, {
 	var snd = SinOsc.ar(
-		freq: 43 * [rrand(2, 6), 7], // choose harmonic from 1 to 32
-		mul: 0.05 // volume
+		freq: 43 * 6, // choose harmonic from 1 to 32
+		mul: 0.04 // volume
 	);
-	snd = Splay.ar(snd);
+	snd = Pan2.ar(in: Mix(snd), pos: 0.0);
 	snd = Limiter.ar(snd) * 1; // another master volume control
 }).play;
 )
-// -- end of copied code
+
+Ndef(\bruno).stop(10);
 
 
 
@@ -68,19 +53,3 @@ Ndef(\bruno, {
 
 
 
-
-
-
-
-
-
-
-
-
-// ========================
-// Bruno only: send to jacktrip to feed OBS on server computer
-
-(
-SCLOrkJack.connect("SuperCollider:out_1", "cmn17.stanford.edu:send_1");
-SCLOrkJack.connect("SuperCollider:out_2", "cmn17.stanford.edu:send_2");
-)

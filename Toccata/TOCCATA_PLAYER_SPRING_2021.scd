@@ -7,6 +7,13 @@
 
 // Run one line at a time. Watch Post window for messages
 
+
+
+// 0) GO PRIVATE!! (do NOT run any code below while in public mode)
+
+
+
+
 // ============================================================
 // 1) IF NOT ALREADY RUNNING, START JACKTRIP from Red Button
 // (will open a terminal window, just leave it alone)
@@ -33,7 +40,11 @@
 
 // ============================================================
 // 6) AUTOMATICALY REDO ALL JACK CONNECTIONS:
+// you can either run this line, or choose JackTrip Patch #1 from the Red button: same thing.
 (Quarks.folder +/+ "SCLOrkPieces/Settings/JackTrip-Patch-1.scd").load;
+
+
+
 
 
 

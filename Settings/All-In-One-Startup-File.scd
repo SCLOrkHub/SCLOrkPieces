@@ -430,17 +430,21 @@ loginWindow.onClose = {
 
 						Button.new()
 						.states_([["JackTrip Patch #1 [use with PRIVATE mode]"]])
-						.action_({ (Quarks.folder +/+ "SCLOrkPieces/Settings/JackTrip-Patch-1.scd").load; win.close; "bye".postln; }),
+						.action_({ (Quarks.folder +/+ "SCLOrkPieces/Settings/JackTrip-Patch-1.scd").load; win.close; "YOU ARE NOW ON JACKTRIP PATCH 1".postln; "Use headphones 3/4!".postln; }),
 
 						Button.new()
 						.states_([["JackTrip Patch #2 [use with PUBLIC mode]"]])
-						.action_({ (Quarks.folder +/+ "SCLOrkPieces/Settings/JackTrip-Patch-2.scd").load; win.close; "bye".postln; }),
+						.action_({ (Quarks.folder +/+ "SCLOrkPieces/Settings/JackTrip-Patch-2-NEW.scd").load; win.close; "YOU ARE NOW ON JACKTRIP PATCH 2".postln; "Use headphones 3/4!".postln; }),
 
 						Button.new()
-						.states_([["nevermind"]])
+						.states_([["No JackTrip - back to default SC I/O"]])
+						.action_({ (Quarks.folder +/+ "SCLOrkPieces/Settings/JackTrip-Patch-0-No-JackTrip.scd").load; win.close; "NO-JACKTRIP PATCH".postln; "Use headphones 1/2!".postln; }),
+
+						Button.new()
+						.states_([["nevermind (don't change anything)"]])
 						.action_({ "bye".postln; win.close }),
 
-						[StaticText.new().string_("USE HEADPHONES 3/4!"), align: \center]
+						[StaticText.new().string_("PATCHES 1 AND 2: USE HEADPHONES 3/4!"), align: \center]
 					);
 
 					win.front;
@@ -547,7 +551,7 @@ loginWindow.onClose = {
 					var exceptions = if( leaveAlone.isArray.not, { [ leaveAlone ] }, { leaveAlone });
 
 					// never free metronome Ndefs
-					exceptions = exceptions.add([\t, \tempo, \audioChat]).flat;
+					exceptions = exceptions.add([\t, \tempo]).flat;
 
 					Ndef.dictFor(s).do({ | ndef |
 						var key = ndef.key;
@@ -566,7 +570,7 @@ loginWindow.onClose = {
 					var exceptions = if( leaveAlone.isArray.not, { [ leaveAlone ] }, { leaveAlone });
 
 					// never free metronome Ndefs
-					exceptions = exceptions.add([\t, \tempo, \audioChat]).flat;
+					exceptions = exceptions.add([\t, \tempo]).flat;
 
 					Ndef.dictFor(s).do({ | ndef |
 						var key = ndef.key;
@@ -624,6 +628,7 @@ loginWindow.onClose = {
 
 			Butz.add(' - ', { "this is just a space divider" });
 
+			/*
 			~audioChatToggle = 0;
 
 			Butz.add('AudioChat', {
@@ -666,6 +671,7 @@ loginWindow.onClose = {
 			);
 
 			Butz.add(' . ', { "this is just a space divider" });
+			*/
 
 			// All pieces will have this (as long as we are in COVID mode)
 			Butz.add('PUBLIC', MFdef('PUBLIC'));
@@ -680,7 +686,7 @@ loginWindow.onClose = {
 			Butz.add('NdefAuditioner', { (Quarks.quarkNameAsLocalPath("SCLOrkPieces") ++ "/Settings/Ndef-Auditioner-v2.scd").load });
 
 			// Consider having more than one SyncText "room"
-			Butz.add('SyncText', MFdef(\SyncText) );
+			// Butz.add('SyncText', MFdef(\SyncText) );
 
 			/*
 			Butz.add('StartupFile', {
@@ -749,10 +755,10 @@ loginWindow.onClose = {
 			Butz.add('Load New Piece', {
 				var win, selectButtons;
 				var pieces = [
-					"20x20",
-					"Toccata",
+					//"20x20",
 					"GMO (Ndef improv)",
-					"Unexpected Museum Night",
+					"Toccata (Museum piece)",
+					//"Unexpected Museum Night",
 					"etc"
 				];
 
@@ -771,7 +777,7 @@ loginWindow.onClose = {
 								"Loading 20x20...".postln;
 								(Quarks.folder +/+ "SCLOrkPieces/20x20/20x20_Setup.scd").load;
 							},
-							"Toccata", {
+							"Toccata (Museum piece)", {
 								var path = PathName.new(Quarks.folder +/+ "SCLOrkPieces/Toccata/TOCCATA_PLAYER_SPRING_2021.scd");
 								Document.new(
 									title: path.fileNameWithoutExtension.asString ++ " copy",
