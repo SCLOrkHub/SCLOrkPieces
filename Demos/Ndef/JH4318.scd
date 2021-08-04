@@ -1,7 +1,6 @@
 // Adapted from James Harkins
 // https://scsynth.org/t/what-kind-of-synthesis-is-this/4318/18
 
-
 b = Buffer.alloc(s, 16384, 1);
 
 (
