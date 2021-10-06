@@ -345,6 +345,56 @@ Ndef(\b1).stop(1);
 Ndef(\b1).play;
 
 
+// ==============
+// NOONAN PART 
+// =============
+// after drums kick in
+// crows get more spotlight after drums begin to get sparse
+(
+var samples;
+samples = [\crow2];
+
+Ndef(\crowzfx).fadeTime = 0.5;
+Ndef(\crowzfx, {
+	var snd;
+
+	snd = Ndef(\crowz,
+		Pbind(
+			\type, \dirt,
+			\sampleName, Pseq(samples.flat, inf),
+			\dur, Pseq(~dursFrom.(samples), inf),
+			\stretch, Pwhite(0.25, 1.5),
+			\amp, 0.5,
+			\rate, Pwhite(0.25, 3.0)
+		)
+	);
+
+	snd = CombC.ar(
+		in: snd,
+		maxdelaytime: 2.5,
+		delaytime: p.clock.tempo, // make delay in sync with tempo
+		decaytime: 2.5*(1/(LFNoise1.ar(p.clock.tempo/4).range(1/5, 2)))
+	);
+
+	snd = FreeVerb.ar(
+		in: snd,
+		mix: 0.75,
+		room: 0.9,
+		damp: 0.97,
+		mul: 4
+	);
+
+	snd.clip.clip.clip;
+
+	snd = Resonz.ar(snd, 100, 2, 2);
+
+
+	snd = BPF.ar(snd, LFNoise2.ar(16).range(LFPulse.ar(1/4).range(100, 1000), LFPulse.ar(1/4).range(2000, 8000)), 0.5, 2);
+
+	snd = Pan2.ar(Mix.ar(snd), SinOsc.ar(LFNoise2.ar(1).range(1/16, 1/4)).range(-0.85, 0.85));
+
+}).play;
+)
 
 // =======================================
 // 9:01 - ADD FX ON DOWNBEAT
