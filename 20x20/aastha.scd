@@ -53,6 +53,29 @@ Ndef(\spookysynths).stop(5);
 Ndef(\spookysynths).play;
 Ndef(\spookysynths).free;
 
+// NOONAN'S PART FOR STANFORD PERFORMANCE OCTOBER 2021
+// around trump and news voices
+(
+var samples;
+samples = [\glitch25, \glitch25, \glitch25, \r, \r, \glitch25!2, \r, \glitch25, \glitch25!4, \r, \glitch25, \r, \glitch25, \r, \r, \r];
+
+Ndef(\glitches).quant = 4;
+Ndef(\glitches,
+	Pbind(
+		\type, \dirt,
+		\sampleName, Pseq(samples.flat, inf),
+		\dur, Pseq(~dursFrom.(samples), inf),
+		\stretch, 16,
+		\amp, Pseq([0.4, 0.29, 0.4, 0.3], inf)*1,
+		\rate, Pwhite(2, 4),
+		\pan, Pwhite(-1, 1)
+	)
+).play;
+)
+
+Ndef(\glitches).free(5);
+
+
 
 // interesting rumbling sounds
 
