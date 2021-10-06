@@ -1,3 +1,44 @@
+(
+var samples;
+samples = [\stab9, \stab8];
+Ndef(\stabz).quant = 4;
+Ndef(\stabz,
+	Pbind(
+		\type, \dirt,
+		\sampleName, Pseq(samples.flat, inf),
+		\dur, Pseq(~dursFrom.(samples), inf),
+		\stretch, 8,
+		\amp, 0.5,
+		\rate, 1/2
+	)
+).play;
+)
+
+Ndef(\stabz).free(20);
+
+// ==================================================
+// When squares get faster
+// ==================================================
+
+(
+var samples;
+samples = [\gretsch19, \gretsch6];
+Ndef(\cymbalz).quant = 4;
+Ndef(\cymbalz,
+	Pbind(
+		\type, \dirt,
+		\sampleName, Pseq(samples.flat, inf),
+		\dur, Pseq(~dursFrom.(samples), inf),
+		\stretch, 4,
+		\amp, Pseq([Pwhite(0.3, 0.5, 13), Pn(1, 6)], inf)*0.35,
+		\rate, Pseq([Pwhite(1, 2, 11), Pn(3, 4)], inf),
+		\pan, Pwhite(-1, 1)
+	)
+).play;
+)
+
+Ndef(\cymbalz).stop(10);
+
 // ==================================================
 // 1:30 or 2:41 - Untested with group
 // ==================================================
