@@ -242,8 +242,8 @@ Ndef(\btrump).end(10);
 
 Ndef(\cov).clear;
 Ndef(\covhi).clear;
-Ndef(\brump).end(10); // if not ended already
-Ndef(\brump).clear(10); // or this
+Ndef(\btrump).end(10); // if not ended already
+Ndef(\btrump).clear(10); // or this
 
 // =====================================
 // 5:57 - bouncing squares BASS ONLY
@@ -327,7 +327,7 @@ Ndef(\b1,
 		\sampleName, Pseq(samples.flat, inf),
 		\dur, Pseq(~dursFrom.(samples), inf),
 		\stretch, 4,
-		\amp, Pseq([0.4, 0.29, 0.4, 0.3], inf) * 7,
+		\amp, Pseq([0.4, 0.29, 0.4, 0.3], inf) * 5,
 		// \amp, Pkey(\amp) * Prand([0, 1, 1, 1, 1], inf),
 		\rate, Pwhite(1, 1.1) * Pwrand([1, 0.5, 0.91], [9, 3, 1].normalizeSum, inf),
 		// \rate, Pwhite(1, 2.5) * Pwrand([1, 0.5, -0.85], [9, 3, 1].normalizeSum, inf)
