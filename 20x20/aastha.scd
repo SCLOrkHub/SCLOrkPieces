@@ -49,9 +49,30 @@ Ndef(\spookysynths,
 ).play
 )
 // !!!STOP AROUND 5:57!!!!
-Ndef(\spookysynths).stop(5);
+Ndef(\spookysynths).stop(10);
 Ndef(\spookysynths).play;
 Ndef(\spookysynths).free;
+
+
+// START AT 42 SECONDS
+(
+var samples;
+samples = [\stab9, \stab8];
+Ndef(\stabz).quant = 4;
+Ndef(\stabz,
+	Pbind(
+		\type, \dirt,
+		\sampleName, Pseq(samples.flat, inf),
+		\dur, Pseq(~dursFrom.(samples), inf),
+		\stretch, 8, // og: 8 (speed up around 3m)
+		\amp, 0.3,
+		\rate, 1/2
+	)
+).play;
+)
+
+Ndef(\stabz).stop(10); // remove around 4:50ish, when voices get really into it
+
 
 // NOONAN'S PART FOR STANFORD PERFORMANCE OCTOBER 2021
 // around trump and news voices
@@ -73,8 +94,7 @@ Ndef(\glitches,
 ).play;
 )
 
-Ndef(\glitches).free(5);
-
+Ndef(\glitches).stop(10);
 
 
 // interesting rumbling sounds
@@ -92,17 +112,17 @@ Ndef(\bouncingrumble,
 	Pbind(
 		\type, \dirt,
 		\sampleName, Pseq(samples.flat, inf),
-		\dur, Pseq(~dursFrom.(samples), inf), // * 0.4 to make it pulse kinda
+		\dur, Pseq(~dursFrom.(samples), inf),// * 0.4, //to make it pulse kinda
 		\stretch, 4, //make it smaller as you progress
 		\amp, Pseq([0.4001, 0.29, 0.4, 0.3], inf) * 0.4,
-		\rate, Pwhite(0, 1.01) * 0.9,
+		\rate, Pwhite(1, 1,0001, 1.33),
 		\pan, Pwhite(-1.0, 1.0),
 	)
-).play
+).play;
 )
 
 // Stop monitoring the dry Ndef:
-Ndef(\bouncingrumble).stop(5); // notice that "stop" really means just stop sending to speakers, does not stop running the Ndef
+Ndef(\bouncingrumble).stop(10); // notice that "stop" really means just stop sending to speakers, does not stop running the Ndef
 Ndef(\bouncingrumble).play; // or bring it back
 Ndef.clear;
 
@@ -123,7 +143,7 @@ Ndef(\oofguitar,
 		\sampleName, Pseq(samples.flat, inf),
 		\dur, Pseq(~dursFrom.(samples), inf),
 		\stretch, 4,
-		\amp, Pseq([0.4, 0.29, 0.4, 0.3], inf) * 0.01, // make this louder eventually
+		\amp, Pseq([0.4, 0.29, 0.4, 0.3], inf) * 0.1, // make this louder eventually
 		\rate, Pwhite(-1, 1.01) * 0.7,
 		\pan, Pwhite(-1.0, 1.0),
 	)
@@ -136,7 +156,7 @@ Ndef(\oofguitar).play; // or bring it back
 
 
 
-// hand washing sound
+// hand washing sound, "it isn't one man"
 
 (
 var samples;
@@ -157,4 +177,30 @@ Ndef(\hands,
 ).play
 )
 
+Ndef(\hands).stop(10);
+
+// ALL ELSE FAILS? STOP EM ALL
+(
+Ndef(\spookysynths).stop(5);
+Ndef(\stabz).stop(5);
+Ndef(\glitches).stop(5);
+Ndef(\bouncingrumble).stop(5);
+Ndef(\oofguitar).stop(5);
 Ndef(\hands).stop(5);
+)
+
+
+/* SCORE:
+0:14	weird ethereal sounds
+0:42    stabz
+1:30 	glitches
+2:41	weird stranger things base & turn it down to like 0.3~
+3:56	more airy bouncy spooky - 0.2
+~voices	bring back stranger things
+5:10	clear glitches
+5:40		FADE EVERYTHING - 10 sec fade
+6:40~	hand sound
+8:48	play moog, make rate over 1, 1.001, 1.33, etc
+9:40	guitar slashes at 0.09
+10:30	bring back weird ethereal sounds
+*/
