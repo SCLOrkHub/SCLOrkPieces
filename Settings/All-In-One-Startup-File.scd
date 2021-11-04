@@ -366,6 +366,7 @@ loginWindow.onClose = {
 			Butz.add('Dirt Samples', {
 				if( d.size < 2000, {
 					d = SCLOrkSamples.loadFolder(Quarks.folder +/+ "Dirt-Samples");
+					d = SCLOrkSamples.loadFolder(Quarks.folder +/+ "SCLOrkPieces/Samples");
 				}, {
 					d.postln;
 					SCLOrkSamples.gui;
