@@ -135,10 +135,11 @@ loginWindow.onClose = {
 		// Also quants all proxies to 1 beat
 		// Default BPM is 60, can be changed later using custom function
 		// shortcut to change bpm will be ~bpm.(120)
-		p = Ndef(\clock).proxyspace.clock = LinkClock.new(60/60).permanent_(true);
+		p = Ndef(\clock).proxyspace.clock = LinkClock.new(60/60).latency_(Server.default.latency)
+		p.clock.permanent_(true);
 		p.quant = 1.0;
 
-		"Metronome running at 60 BPM.".postln;
+		"LinkClock Metronome started at 60 BPM.".postln;
 		"Global quantization set to 1 beat.".postln;
 		"To check current tempo, use ~bpm.()".postln;
 		"To set a new tempo, use ~bpm.(90)".postln;
