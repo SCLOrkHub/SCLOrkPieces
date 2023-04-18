@@ -135,7 +135,7 @@ loginWindow.onClose = {
 		// Also quants all proxies to 1 beat
 		// Default BPM is 60, can be changed later using custom function
 		// shortcut to change bpm will be ~bpm.(120)
-		p = Ndef(\clock).proxyspace.clock = LinkClock.new(60/60).latency_(Server.default.latency)
+		p = Ndef(\clock).proxyspace.clock = LinkClock.new(60/60).latency_(Server.default.latency);
 		p.clock.permanent_(true);
 		p.quant = 1.0;
 
