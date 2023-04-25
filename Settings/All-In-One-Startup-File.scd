@@ -522,6 +522,52 @@ loginWindow.onClose = {
 		win.front;
 	};
 
+	// ==========
+	// BUTTON 10
+	// ==========
+
+	buttonArray[9].states = [ ["nano"] ];
+	buttonArray[9].action = {
+		"Connecting Korg nanoKONTROL2...".postln;
+
+		MIDIClient.init;
+		MIDIIn.connectAll;
+		// MIDIFunc.trace(true);
+		// MIDIFunc.trace(false);
+
+		~nK2srcID = MIDIIn.findPort("nanoKONTROL2", "nanoKONTROL2 nanoKONTROL2 _ CTR").uid;
+
+		~nano = (
+			device: NanoKONTROL2(
+				server: s,
+				srcID: ~nK2srcID,
+				num_of_scenes: 1
+			),
+			knob: { | self, num, lo, hi, int = \lin |
+				var x = self.device.knobs[0][num-1].kr;
+				case
+				{ int == \lin } { x.range(lo, hi) }
+				{ int == \exp } { x.exprange(lo.max(0.0001), hi) }
+			},
+			fader: { | self, num, lo, hi, int = \lin |
+				var x = self.device.faders[0][num-1].kr;
+				case
+				{ int == \lin } { x.linlin(0, 1, lo, hi) }
+				{ int == \exp } { x.linexp(0, 1, lo.max(0.0001), hi) }
+			}
+		);
+
+		"//============= \nnanoKONTROL2 usage inside any Ndef: \n//=============".postln;
+		"".postln;
+		"    ~nano.knob(1, 50, 1000)\n".postln;
+		"// this makes knob #1 to provide \n// kr values between 50 and 1000".postln;
+		"".postln;
+		"    ~nano.fader(2, 0.1, 1.5, \\exp)\n".postln;
+		"// this makes fader #2 to provide \n// kr values between 0.1 and 1.5 with \nexponential mapping".postln;
+		"".postln;
+
+	};
+
 
 	// ===========================================
 	// Place all buttons horizontally in Window
