@@ -316,8 +316,8 @@ loginWindow.onClose = {
 	buttonArray[1].states = [ ["Load Samples"] ];
 	buttonArray[1].action = {
 		if( d.size < 2000, {
-			d = SCLOrkSamples.loadFolder(Quarks.folder +/+ "Dirt-Samples", 0.1);
-			d = SCLOrkSamples.loadFolder(Quarks.folder +/+ "SCLOrkPieces/Samples", 0.1);
+			d = SCLOrkSamples.loadFolder(Quarks.folder +/+ "Dirt-Samples", 0.02);
+			d = SCLOrkSamples.loadFolder(Quarks.folder +/+ "SCLOrkPieces/Samples", 0.02);
 		}, {
 			d.postln;
 			SCLOrkSamples.gui;
