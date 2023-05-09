@@ -273,7 +273,7 @@ loginWindow.onClose = {
 
 
 	// ============
-	// BUTTON 0
+	// BUTTON 1
 	// ============
 
 	buttonArray[0].states = [ [~myName.asSymbol] ];
@@ -310,27 +310,18 @@ loginWindow.onClose = {
 	};
 
 	// ==========
-	// BUTTON 1
+	// BUTTON 2
 	// ==========
 
 	buttonArray[1].states = [ ["Load Samples"] ];
 	buttonArray[1].action = {
 		if( d.size < 2000, {
-			d = SCLOrkSamples.loadFolder(Quarks.folder +/+ "Dirt-Samples", 0.02);
-			d = SCLOrkSamples.loadFolder(Quarks.folder +/+ "SCLOrkPieces/Samples", 0.02);
+			d = SCLOrkSamples.loadFolder(Quarks.folder +/+ "Dirt-Samples", 0.025);
+			d = SCLOrkSamples.loadFolder(Quarks.folder +/+ "SCLOrkPieces/Samples", 0.025);
 		}, {
 			d.postln;
 			SCLOrkSamples.gui;
 		});
-	};
-
-	// ==========
-	// BUTTON 2
-	// ==========
-
-	buttonArray[2].states = [ ["nothing"] ];
-	buttonArray[2].action = {
-		"nothing".postln;
 	};
 
 
@@ -520,7 +511,7 @@ loginWindow.onClose = {
 	// BUTTON 10
 	// ==========
 
-	buttonArray[9].states = [ ["nano"] ];
+	buttonArray[9].states = [ ["Nano"] ];
 	buttonArray[9].action = {
 		"Connecting Korg nanoKONTROL2...".postln;
 
