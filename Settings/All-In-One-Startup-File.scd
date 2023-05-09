@@ -316,8 +316,8 @@ loginWindow.onClose = {
 	buttonArray[1].states = [ ["Load Samples"] ];
 	buttonArray[1].action = {
 		if( d.size < 2000, {
-			d = SCLOrkSamples.loadFolder(Quarks.folder +/+ "Dirt-Samples", 0.01);
-			d = SCLOrkSamples.loadFolder(Quarks.folder +/+ "SCLOrkPieces/Samples", 0.009);
+			d = SCLOrkSamples.loadFolder(Quarks.folder +/+ "Dirt-Samples", 0.02);
+			d = SCLOrkSamples.loadFolder(Quarks.folder +/+ "SCLOrkPieces/Samples", 0.02);
 		}, {
 			d.postln;
 			SCLOrkSamples.gui;
@@ -328,15 +328,9 @@ loginWindow.onClose = {
 	// BUTTON 2
 	// ==========
 
-	buttonArray[2].states = [ ["Dirt Samples"] ];
+	buttonArray[2].states = [ ["nothing"] ];
 	buttonArray[2].action = {
-		if( d.size < 2000, {
-			d = SCLOrkSamples.loadFolder(Quarks.folder +/+ "Dirt-Samples");
-			d = SCLOrkSamples.loadFolder(Quarks.folder +/+ "SCLOrkPieces/Samples");
-		}, {
-			d.postln;
-			SCLOrkSamples.gui;
-		});
+		"nothing".postln;
 	};
 
 
@@ -570,7 +564,7 @@ loginWindow.onClose = {
 
 
 	// ===========================================
-	// Place all buttons horizontally in Window
+	// Place all buttons vertically in Window
 	// ===========================================
 
 	buttonArray.do({ arg b;
