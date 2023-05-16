@@ -634,5 +634,16 @@ loginWindow.onClose = {
 	}); // end of ddwSnippets if/else
 
 
+	// utility function to open a copy of a file (not the original)
+
+	~openCopy = { arg path;
+		path = PathName.new(path);
+		Document.new(
+			title: path.fileNameWithoutExtension.asString ++ " copy",
+			string: String.readNew(File.new(path.fullPath, "r"));
+		).front;
+	};
+
+
 }; // end of loginWindow.onClose
 

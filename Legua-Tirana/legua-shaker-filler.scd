@@ -6,17 +6,17 @@ d.legua1 // check that sample is there
 // ~bpm.(155)
 
 (
-Ndef(\shakerSample).quant = 12;
-Ndef(\shakerSample,
+Ndef(\shakerFiller).quant = 12;
+Ndef(\shakerFiller,
 	Pbind(
 		\instrument, "pb1",
 		\buf, d.legua1,
-		\dur, 12,
+		\dur, Prand([3, 6], inf),
 		\amp, 1,
-		\rate, 1
+		\rate, Pwhite(0.99, 1.01) // * 1.5
 )).play;
 )
 
-Ndef(\shakerSample).stop(4);
+Ndef(\shakerFiller).stop(4);
 
 

@@ -11,8 +11,7 @@ samples = [\cp0, \cp0, \cp1];
 // samples = [\cp0, \cp0, \db1, \cp0, \cp1, \db10!2];
 // samples = [\cp0, \cp0, \db1, \cr4, [\cp0, \feel1], \db10!2];
 // samples = [\cp0, \feel1, \db1, \cr4, [\cp0, \feel1], \db10!2];
-
-samples = [\cp0, \feel1, \db1, \cr4, [\cp0, \feel1], \db10!2];
+// samples = [\cp0, \feel1, \db1, \cr4, [\cp0, \feel1], \db10!2];
 
 // samples = [\cp0, \feel1, \db1, \cr4, [\cp0, \feel1], \db10!2, \flick6, \cp0, \cp0]; stretch = 6;
 
