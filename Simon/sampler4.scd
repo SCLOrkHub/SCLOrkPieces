@@ -1,4 +1,4 @@
-~here = "".resolveRelative;
+~here = Quarks.folder ++ "/SCLOrkPieces/Simon/";
 
 
 // load your samples here
@@ -12,10 +12,10 @@
 ~g = Buffer.read(s, ~here ++ "Santa Clara University 42.wav");
 ~h = Buffer.read(s, ~here ++ "lawnmower1.wav");
 ~i = Buffer.read(s, ~here ++ "Convo.wav");
-~j= Buffer.read(s, ~here ++ "SCLORK-3.wav");
+~j = Buffer.read(s, ~here ++ "SCLORK-3.wav");
 ~k = Buffer.read(s, ~here ++ "Benson 1.wav");
 ~l = Buffer.read(s, ~here ++ "Benson 2.wav");
-~m= Buffer.read(s, ~here ++ "Benson 3.wav");
+~m = Buffer.read(s, ~here ++ "Benson 3.wav");
 ~n = Buffer.read(s, ~here ++ "lawnmower1.wav");
 ~o = Buffer.read(s, ~here ++ "birds.wav");
 ~p = Buffer.read(s, ~here ++ "Sing.wav");
@@ -45,11 +45,6 @@
 ~an = Buffer.read(s, ~here ++  "applestairs.wav");
 ~ao = Buffer.read(s, ~here ++  "ambient1.wav");
 )
-
-
-// test them
-.play;
-.play;
 
 (
 Ndef(\sample1).fadeTime = 6;
