@@ -105,16 +105,14 @@ Ndef(\distant_thunder, {
 
 
 // JUNGLE SAMPLE - 4
-(
 // [\birds0, \birds1, \birds2, \birds3, \birds4, \birds5, \birds6, \birds7, \birds8, \birds9]
-
 // choose one of the above to play at a time, try different ones
-
-//~some_sample = d.footsteps; // <-- chagne the sample here
-//~some_sample = d.tree; // <-- chagne the sample here
-~some_sample = d.birds6; // <-- change the sample here
-)
 (
+//
+// ~some_sample = d.footsteps; // this sample is really quiet
+// ~some_sample = d.tree; 
+~some_sample = d.birds6; // change your bird here
+
 Ndef(\junglesample).fadeTime = 0.1;
 Ndef(\junglesample, {
 	var snd;
