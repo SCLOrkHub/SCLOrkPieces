@@ -1,7 +1,8 @@
 //Just listen for the first while. Once I give you the green light, fade in. After fading in for the first time, eventually set the fadetime to 10-20. Then fluctuate in pitch by changing the frequencies. Move them subtly and stay within this range
 
+// fade in manually with the k6
 (
-Ndef(\cluster3).fadeTime = 60;
+Ndef(\cluster3).fadeTime = 10;
 Ndef(\cluster3, {
 	var snd;
 	snd = Pulse.ar(
