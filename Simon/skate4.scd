@@ -10,7 +10,7 @@
 
 (
 Ndef(\skate4).fadeTime = 10;
-Ndef(\skate4 {
+Ndef(\skate4, {
 	var snd;
 	snd = PlayBuf.ar(
 		numChannels: ~skated.numChannels,
