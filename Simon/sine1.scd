@@ -1,12 +1,12 @@
 // Start out with your fadetime set to 60, after about 60 seconds, bring it down to anywhere between 10-20. At this point you will want to start changing pitch as you please. This will be changing the "freq" parameter. Stay within the range of the pitch. Listen to the sounds around you, you want to create beatings with yourself, and others. Thus change by small number (ex. 140-142).
 
-
+// fade in manually with the k6
 (
-Ndef(\sine1).fadeTime = 60;
+Ndef(\sine1).fadeTime = 7;
 Ndef(\sine1, {
 	var snd;
 	snd = SinOsc.ar(
-		freq: 140,
+		freq: 100,
 		mul: 1.0
 	);
 	snd = Pan2.ar(Mix(snd));
