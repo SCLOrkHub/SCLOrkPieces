@@ -17,12 +17,11 @@
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠙⠋⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 */
 
+// File version: 2023-06-01
+
 // PART 1 - JUNGLE INTRO (Capybara)
 
 // INSTRUCTIONS:
-
-// 0) SET BPM TO 65, Load SCLOrk Samples
-// ~bpm.(65) // <- to set the bpm
 
 // 1) Start with the 'RAIN' Ndef, make sure not to go too loud, you can adjust the volume by the .dbamp (the number is negative) so bigger number means less volume.
 
@@ -40,27 +39,27 @@
 (
 Ndef(\rain).fadeTime = 20;
 Ndef(\rain, {
-	var rain, wind, snd;
+    var rain, wind, snd;
 
-	rain = {
-		Limiter.ar(
-			tanh(
-				3 * GVerb.ar(
-					HPF.ar(
-						PinkNoise.ar(0.08+LFNoise1.kr(0.3,0.02))+LPF.ar(Dust2.ar(LFNoise1.kr(0.2).range(40,50)),7000),
-						400
-					),
-					250,100,0.25,drylevel:0.3
-				) * Line.kr(0,1,10)
-			)
-		)
-	};
+    rain = {
+		    Limiter.ar(
+        tanh(
+            3 * GVerb.ar(
+                HPF.ar(
+                    PinkNoise.ar(0.08+LFNoise1.kr(0.3,0.02))+LPF.ar(Dust2.ar(LFNoise1.kr(0.2).range(40,50)),7000),
+                    400
+                ),
+                250,100,0.25,drylevel:0.3
+            ) * Line.kr(0,1,10)
+        )
+    )
+    };
 
 	snd = (rain * -20.dbamp); // <-- adjust volume here if needed
 
 	snd = FreeVerb.ar(in: snd, mix: 0.5, room: 1.0, damp: 0.5);// add some reverb
 
-	snd;
+    snd;
 }).play;
 )
 
@@ -70,34 +69,34 @@ Ndef(\rain).stop(3);
 (
 Ndef(\wind).fadeTime = 20;
 Ndef(\wind, {
-	var rain, wind, snd;
+    var rain, wind, snd;
 
-	wind = {
-		var snd;
-		snd = { WhiteNoise.ar } ! 2;
-		snd = RLPF.ar(snd, LFNoise2.kr(1).exprange(500, 1000), LFNoise2.kr(2).range(0.5, 0.8));
-		snd;
-	}.();
+    wind = {
+        var snd;
+        snd = { WhiteNoise.ar } ! 2;
+        snd = RLPF.ar(snd, LFNoise2.kr(1).exprange(500, 1000), LFNoise2.kr(2).range(0.5, 0.8));
+        snd;
+    }.();
 
 	snd = (wind * -25.dbamp); // <-- adjust volume here if needed
 
 	snd = FreeVerb.ar(in: snd, mix: 0.3, room: 1.0, damp: 0.5);// add some reverb
 
-	snd;
+    snd;
 }).play;
 )
 
 Ndef(\wind).stop(3);
 
 
-// DISTANT THUNDER - 3 (it can be pretty quiet, try again if you cant hear it)
+// DISTANT THUNDER - 3 (it can be pretty quite, try again if you cant hear it)
 (
 Ndef(\distant_thunder, {
-	var noise, env, filterfreq, snd;
-	noise = PinkNoise.ar(1);
-	filterfreq = LFNoise1.kr(0.2).range(20, 100);
-	noise = RLPF.ar(noise, filterfreq, 0.1);
-	env = EnvGen.kr(Env.perc(0.01, 3, curve: -4), doneAction:2);
+    var noise, env, filterfreq, snd;
+    noise = PinkNoise.ar(1);
+    filterfreq = LFNoise1.kr(0.2).range(20, 100);
+    noise = RLPF.ar(noise, filterfreq, 0.1);
+    env = EnvGen.kr(Env.perc(0.01, 3, curve: -4), doneAction:2);
 	snd = noise * env * rrand(0.2, 0.6);
 	snd = Pan2.ar(Mix(snd), 0.0);
 }).play;
@@ -105,29 +104,30 @@ Ndef(\distant_thunder, {
 
 
 // JUNGLE SAMPLE - 4
-// [\birds0, \birds1, \birds2, \birds3, \birds4, \birds5, \birds6, \birds7, \birds8, \birds9]
-// choose one of the above to play at a time, try different ones
 (
-//
-// ~some_sample = d.footsteps; // this sample is really quiet
-// ~some_sample = d.tree; 
-~some_sample = d.birds6; // change your bird here
 
+// [\birds0, \birds1, \birds2, \birds3, \birds4, \birds5, \birds6, \birds7, \birds8, \birds9]
+
+// choose one of the above to play at a time, try different ones
+
+~some_sample = d.birds3; // <-- change the sample here
+)
+(
 Ndef(\junglesample).fadeTime = 0.1;
 Ndef(\junglesample, {
-	var snd;
-	snd = PlayBuf.ar(
-		numChannels: ~some_sample.numChannels,
-		bufnum: ~some_sample,
+      var snd;
+      snd = PlayBuf.ar(
+            numChannels: ~some_sample.numChannels,
+            bufnum: ~some_sample,
 		rate: SinOsc.ar(1/30).range(0.5, 1.0) * BufRateScale.kr(~some_sample),
-		trigger: Impulse.kr(0),
+            trigger: 0,
 		startPos: 0.0 * BufSamples.kr(~some_sample),
-		loop: 0
-	);
+            loop: 0
+        );
 	snd = FreeVerb.ar(in: snd, mix: 0.4, room: 0.2, damp: 0.1);
 
-	snd = Pan2.ar(Mix(snd));
-	snd = Limiter.ar(snd) * 0.1;
+    snd = Pan2.ar(Mix(snd), 0.0);
+    snd = Limiter.ar(snd) * 0.1;
 }).play;
 )
 
@@ -138,24 +138,24 @@ Ndef(\junglesample).stop(3);
 (
 Ndef(\thunder_strike_shockwave).fadeTime = 0.3;
 Ndef(\thunder_strike_shockwave, {
-	var rain, wind, thunder, snd;
-	thunder = {
-		var trig, snd;
-		snd = WhiteNoise.ar;
-		snd = Latch.ar(snd, Dust.ar(XLine.kr(8000, 16000, 3)));
-		snd = LPF.ar(snd, LFNoise2.kr(8).linexp(-1, 1, 300, 600));
-		snd = (snd * 30.dbamp * Env.perc(0.1, 5.0).kr).tanh;
-		snd = LPF.ar(snd, 3000);
-		snd = snd * Env([0, 1, 0.5, 1, 0], [0.01, 0.25, 0.05, 5], 4).ar;
-		snd = snd ! 2;
-		snd;
-	}.();
+    var rain, wind, thunder, snd;
+    thunder = {
+        var trig, snd;
+        snd = WhiteNoise.ar;
+        snd = Latch.ar(snd, Dust.ar(XLine.kr(8000, 16000, 3)));
+        snd = LPF.ar(snd, LFNoise2.kr(8).linexp(-1, 1, 300, 600));
+        snd = (snd * 30.dbamp * Env.perc(0.1, 5.0).kr).tanh;
+        snd = LPF.ar(snd, 3000);
+        snd = snd * Env([0, 1, 0.5, 1, 0], [0.01, 0.25, 0.05, 5], 4).ar;
+        snd = snd ! 2;
+        snd;
+    }.();
 
 	snd = (thunder * -20.dbamp);
 
 	snd = FreeVerb.ar(in: snd, mix: 0.3, room: 1.0, damp: 0.5);
 
-	snd;
+    snd;
 }).play;
 
 // Fade Out everything else
@@ -168,13 +168,13 @@ Ndef(\junglesample).stop(3);
 
 
 /*
-__   ___.--'_`.     .'_`--.___   __
-( _`.'. -   'o` )   ( 'o`   - .`.'_ )
-_\.'_'      _.-'     `-._      `_`./_
+  __   ___.--'_`.     .'_`--.___   __
+ ( _`.'. -   'o` )   ( 'o`   - .`.'_ )
+ _\.'_'      _.-'     `-._      `_`./_
 ( \`. )    //\`         '/\\    ( .'/ )
-\_`-'`---'\\__,       ,__//`---'`-'_/
-\`        `-\         /-'        '/
-`                               '
+ \_`-'`---'\\__,       ,__//`---'`-'_/
+  \`        `-\         /-'        '/
+   `                               '
 */
 
 // PART 2 - FROGS CLUBIN'
@@ -210,7 +210,7 @@ var samples;
 //samples = [\r, \r, \r, \birds4, \r, \r, \r, \r, \r];
 
 // Somanta
-//samples = [\r, \r, \r, \r, \birds6, \r, \r, \r, \r];
+samples = [\r, \r, \r, \r, \birds6, \r, \r, \r, \r];
 
 // Calen
 //samples = [\r, \r, \r, \r, \r, \birds8, \r, \r, \r];
@@ -239,3 +239,5 @@ Ndef(\bitok,
 	)
 ).play
 )
+
+Ndef(\bitok).stop; // <-- USE THIS TO STOP IN THE END.
