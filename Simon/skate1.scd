@@ -1,5 +1,4 @@
-
-~here = Quarks.folder ++ "/SCLOrkPieces/Simon/";
+~here = "".resolveRelative;
 
 (
 ~skatea = Buffer.read(s, ~here ++ "skate1.wav");
