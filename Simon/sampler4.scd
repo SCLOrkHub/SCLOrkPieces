@@ -31,9 +31,9 @@
 ~z = Buffer.read(s, ~here ++  "walkingskate2.wav");
 ~aa = Buffer.read(s, ~here ++  "washing.wav");
 ~ab = Buffer.read(s, ~here ++  "trifflin1.wav");
-~ac = Buffer.read(s, ~here ++  "stairswalk");
+~ac = Buffer.read(s, ~here ++  "stairswalk.wav");
 ~ad = Buffer.read(s, ~here ++  "quiet.wav");
-~ae = Buffer.read(s, ~here ++  "pressed1");
+~ae = Buffer.read(s, ~here ++  "pressed1.wav");
 ~af = Buffer.read(s, ~here ++  "crosswalk2.wav");
 ~ag = Buffer.read(s, ~here ++  "crosswalk.wav");
 ~ah = Buffer.read(s, ~here ++  "convo5.wav");
