@@ -21,7 +21,7 @@ Ndef(\skate4, {
     );
 	snd = HPF.ar(snd, 600);
 	snd = Pan2.ar(Mix(snd), 0.0);
-	snd = Limiter.ar(snd);
+	snd = Limiter.ar(snd) * 2;
 }).play;
 )
 Ndef(\skate4).stop(20);
