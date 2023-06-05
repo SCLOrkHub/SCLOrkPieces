@@ -1,4 +1,4 @@
-~here = Quarks.folder ++ "/SCLOrkPieces/Simon/";
+~here = "".resolveRelative;
 
 
 // load your samples here
