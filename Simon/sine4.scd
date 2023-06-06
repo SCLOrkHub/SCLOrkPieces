@@ -30,7 +30,7 @@ Ndef(\d, {
 		mul: 0.8
 	);
 
-	snd = BPF.ar(snd, SinOsc.ar(1/8).range(20, 4000), 0.5);
+	snd = BPF.ar(snd, SinOsc.ar(1/12).range(20, 4000), 0.5);
 	snd = snd + CombC.ar(snd, 0.2, 0.05, 2, 0.5);
 	snd = Pan2.ar(Mix(snd));
 	snd = Limiter.ar(snd);
