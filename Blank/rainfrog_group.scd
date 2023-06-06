@@ -107,12 +107,10 @@ Ndef(\distant_thunder, {
 (
 
 // [\birds0, \birds1, \birds2, \birds3, \birds4, \birds5, \birds6, \birds7, \birds8, \birds9]
-
 // choose one of the above to play at a time, try different ones
 
 ~some_sample = d.birds3; // <-- change the sample here
-)
-(
+
 Ndef(\junglesample).fadeTime = 0.1;
 Ndef(\junglesample, {
       var snd;
@@ -210,7 +208,7 @@ var samples;
 //samples = [\r, \r, \r, \birds4, \r, \r, \r, \r, \r];
 
 // Somanta
-samples = [\r, \r, \r, \r, \birds6, \r, \r, \r, \r];
+// samples = [\r, \r, \r, \r, \birds6, \r, \r, \r, \r];
 
 // Calen
 //samples = [\r, \r, \r, \r, \r, \birds8, \r, \r, \r];
@@ -232,7 +230,7 @@ Ndef(\bitok,
 		\sampleName, Pseq(samples.flat, inf),
 		\dur, Pseq(~dursFrom.(samples), inf),
 		\stretch, 4, // don't change
-		\amp, Pseq([1.0, 0.6, 0.5], inf) * 0.1, //Pwhite(0.6, 1),
+		\amp, Pseq([1.0, 0.6, 0.5], inf), //Pwhite(0.6, 1),
 		//\rate, Pwhite(0.97, 1.03, inf),
 		//\rate, Pstutter(3, Pseq([1, 0.5, 2] * 0.5, inf)),
 		\rate, 1 // change, try ones above
