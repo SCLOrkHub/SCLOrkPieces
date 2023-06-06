@@ -1,4 +1,4 @@
-~here = "".resolveRelative;
+~here = "/home/sclork-13/Desktop/SimonSamples/";
 
 (
 ~skatea = Buffer.read(s, ~here ++ "skate1.wav");
