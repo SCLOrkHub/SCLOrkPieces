@@ -467,10 +467,9 @@ loginWindow.onClose = {
 
 		win.onClose = { task.stop; controller.remove };
 
+		CmdPeriod.add( { win.close } );
 
-
-
-		"this is just a space divider".postln };
+	};
 
 
 
