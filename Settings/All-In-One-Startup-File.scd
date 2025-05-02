@@ -131,16 +131,33 @@ loginWindow.onClose = {
 
 
 		Ndef.clear;
+
+		// Check if there was a previous clock running
+		// ...and if so, stop it
+		if(p.notNil,
+			{
+				p.postln;
+				p.clock.postln;
+				if(p.clock.isRunning, { p.clock.stop })
+			},
+			{
+				"variable p is empty".postln;
+			});
+
 		// Create general purpose clock that Ndefs can use;
-		// Also quants all proxies to 1 beat
 		// Default BPM is 60, can be changed later using custom function
 		// shortcut to change bpm will be ~bpm.(120)
-		p = Ndef(\clock).proxyspace.clock = LinkClock.new(60/60).latency_(Server.default.latency);
-		p.clock.permanent_(true);
-		p.quant = 1.0;
+		p = Ndef(\clock).proxyspace.clock = LinkClock.new.latency_(Server.default.latency);
 
-		"LinkClock Metronome started at 60 BPM.".postln;
-		"Global quantization set to 1 beat.".postln;
+		// Make sure it survives control period
+		p.clock.permanent_(true);
+
+		// Quant zero is good for raw Ndef improvs
+		// (but not for Pbind stuff)
+		p.quant = 0.0;
+
+		("LinkClock Metronome is at " ++ (p.clock.tempo * 60).round ++ " BPM.").postln;
+		"Global Ndef quantization set to 0 beat.".postln;
 		"To check current tempo, use ~bpm.()".postln;
 		"To set a new tempo, use ~bpm.(90)".postln;
 		"Pbinds inside Ndefs will use this tempo.".postln;
@@ -399,8 +416,61 @@ loginWindow.onClose = {
 	// BUTTON 6
 	// ==========
 
-	buttonArray[5].states = [ ["   -   "] ];
-	buttonArray[5].action = { "this is just a space divider".postln };
+	buttonArray[5].states = [ ["LinkClock GUI"] ];
+	buttonArray[5].action = {
+
+		var win = Window("LinkClock", Rect(200, 200, 500, 100)).front,
+		peersBox, tempoBox, barsBox, beatsBox,
+		font = Font.default.copy.size_(32),
+		boldFont = font.boldVariant,
+		controller, task;
+
+		win.alwaysOnTop = true;
+
+		win.layout = HLayout(
+			StaticText().font_(font).string_("Peers:"),
+			peersBox = NumberBox().font_(boldFont).align_(\center).fixedWidth_(80),
+			StaticText().font_(font).string_("Tempo:"),
+			tempoBox = NumberBox().font_(boldFont).align_(\center).fixedWidth_(120),
+			StaticText().font_(font).string_("Now:"),
+			barsBox = NumberBox().font_(boldFont).align_(\center).fixedWidth_(80),
+			beatsBox = NumberBox().font_(boldFont).align_(\center).fixedWidth_(80)
+		);
+
+		[peersBox, barsBox, beatsBox].do { |view| view.enabled_(false) };
+
+		tempoBox.action = { |view| p.clock.tempo = view.value / 60 };
+		tempoBox.value = p.clock.tempo * 60;
+		peersBox.value = p.clock.numPeers;
+
+		task = Routine {
+			var bars, beats;
+			loop {
+				bars = p.clock.bar;
+				beats = p.clock.beatInBar;
+				{
+					barsBox.value = bars;
+					beatsBox.value = beats + 1;
+				}.defer(p.clock.latency);
+				1.0.wait;
+			}
+		}.play(p.clock, quant: 1);
+
+		controller = SimpleController(p.clock)
+		.put(\tempo, {
+			defer { tempoBox.value = p.clock.tempo * 60 }
+		})
+		.put(\numPeers, {
+			defer { peersBox.value = p.clock.numPeers }
+		})
+		.put(\stop, { defer { win.close } });
+
+		win.onClose = { task.stop; controller.remove };
+
+
+
+
+		"this is just a space divider".postln };
 
 
 
