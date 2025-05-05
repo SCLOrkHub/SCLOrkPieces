@@ -50,7 +50,7 @@ Ndef(\c,
 		\dur, Pseq([1, 1, Rest(1/2), 1/2, Rest(1/4), 3/4], inf),
 		\att, 0.01,
 		\rel, 0.22,
-		\sinfreq, Pseq([60, 60, \r, 70, \r, 67], inf),
+		\sinFreq, Pseq([60, 60, \r, 100, \r, 47], inf),
 		\glissf, 0.9,
 		\amp, 1,
 	)
@@ -106,7 +106,6 @@ Ndef(\hh,
 ).play;
 )
 
-
 // You could also use many different samples within one same Pbind
 (
 Ndef(\many).quant = 4;
@@ -122,7 +121,7 @@ Ndef(\many,
 				\hh3,
 				\techno1,
 				\amencutup13,
-				\techno1
+				\techno4
 			],
 			inf),
 		\dur, Pseq([
@@ -140,5 +139,6 @@ Ndef(\many,
 	)
 ).play;
 )
+
 
 Ndef(\many).stop(2);

@@ -20,7 +20,7 @@ samples = [\bd0, \techno0, \bd0, \techno1, \cp0, \drum2, \techno1, \drum2];
 // samples = [\amencutup0, [\drum2, \drum2], \drum0!2, \drum1, \hh3, \techno1, \amencutup13, \techno1];
 // samples = [\house5!2, \house2, Prand([\bass112, \sn1, \sn2]), \db3];
 // samples = [\house5, \cp1, \drum1, \sn1];
-samples = [\house5, \cp1, \drum1, \east2];
+// samples = [\house5, \cp1, \drum1, \east2];
 
 Ndef(\b1).quant = 4;
 Ndef(\b1,
@@ -30,7 +30,7 @@ Ndef(\b1,
 		\dur, Pseq(~dursFrom.(samples), inf),
 		\stretch, 4,
 		\amp, Pseq([0.8, 0.6, 0.8, 0.5], inf) * 1, //Pwhite(0.6, 1),
-		\rate, Pstutter(4, Pseq([1, 2, 1.5, 0.5], inf)), //Pwhite(1, 1.01) * Prand([1, 1, 1, 1, 1, -1], inf)
+		\rate, Pdup(4, Pseq([1, 2, 1.5, 0.5], inf)), //Pwhite(1, 1.01) * Prand([1, 1, 1, 1, 1, -1], inf)
 	)
 ).play
 )
